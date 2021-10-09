@@ -30,7 +30,7 @@ public class Instructor {
         return description;
     }
 
-    public Course[] getCourseTeaching() {
-
+    public Object[] getCourseTeaching() {
+        return null;
     }
 }
