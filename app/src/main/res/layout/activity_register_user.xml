@@ -25,7 +25,7 @@
             android:text="Create New Account" />
 
         <EditText
-            android:id="@+id/usernameText"
+            android:id="@+id/usernameTextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -65,7 +65,7 @@
             android:layout_height="32px" />
 
         <EditText
-            android:id="@+id/passwordText"
+            android:id="@+id/passwordTextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

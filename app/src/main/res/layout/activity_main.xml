@@ -28,24 +28,26 @@
             android:textSize="34sp" />
 
         <EditText
-            android:id="@+id/usernameText"
+            android:id="@+id/usernameTextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="username"
-            android:inputType="textPersonName" />
+            android:hint="@string/username_login"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="32px" />
 
         <EditText
-            android:id="@+id/passwordText"
+            android:id="@+id/passwordTextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="password"
-            android:inputType="textPassword" />
+            android:hint="@string/password_login"
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
 
         <Space
             android:layout_width="match_parent"
