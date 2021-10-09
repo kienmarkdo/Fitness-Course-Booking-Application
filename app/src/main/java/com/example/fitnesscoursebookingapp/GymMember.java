@@ -8,7 +8,7 @@ public class GymMember extends User{
 
     Course[] coursesAttending = new Course[][];
 
-    public Object[] courseAttending() {
+    public Course[] courseAttending() {
         return null;
     }
 
