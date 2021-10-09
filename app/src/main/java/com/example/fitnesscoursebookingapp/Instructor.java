@@ -1,12 +1,12 @@
 package com.example.fitnesscoursebookingapp;
 
-public class Instructor {
+public class Instructor extends User{
 
 
     private String name;
     private String description;
 
-    //still need to add coure array for CourseTeaching
+    Course[] courseTeaching;
 
     private void selectCourseToTeach() {
 
@@ -32,7 +32,7 @@ public class Instructor {
         return description;
     }
 
-    public Object[] getCourseTeaching() {
+    public Course[] getCourseTeaching() {
         return null;
     }
 }

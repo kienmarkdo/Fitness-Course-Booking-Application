@@ -1,12 +1,12 @@
 package com.example.fitnesscoursebookingapp;
 
-public class GymMember {
+public class GymMember extends User{
 
     private String name;
 
     private String descriptionOfExperience;
 
-    Object[] coursesAttending = new Object[];
+    Course[] coursesAttending = new Course[][];
 
     public Object[] courseAttending() {
         return null;
