@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/trann/Downloads/Fitness-Course-Booking-App/app/src/main/res/layout/activity_admin.xml" value="0.21240942028985507" />
+        <entry key="..\:/Users/trann/Downloads/Fitness-Course-Booking-App/app/src/main/res/layout/activity_instructor.xml" value="0.21240942028985507" />
         <entry key="..\:/Users/trann/Downloads/Fitness-Course-Booking-App/app/src/main/res/layout/activity_main.xml" value="0.21240942028985507" />
+        <entry key="..\:/Users/trann/Downloads/Fitness-Course-Booking-App/app/src/main/res/layout/activity_member.xml" value="0.21240942028985507" />
+        <entry key="..\:/Users/trann/Downloads/Fitness-Course-Booking-App/app/src/main/res/layout/activity_register.xml" value="0.21240942028985507" />
       </map>
     </option>
   </component>
