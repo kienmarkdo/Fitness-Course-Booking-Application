@@ -6,6 +6,8 @@ public class Instructor {
     private String name;
     private String description;
 
+    //still need to add coure array for CourseTeaching
+
     private void selectCourseToTeach() {
 
     }
