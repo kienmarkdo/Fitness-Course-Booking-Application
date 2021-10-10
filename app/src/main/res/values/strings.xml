@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Fitness Course Booking App</string>
     <!-- Login string resources (activity_main.xml) -->
-    <string name="username_login">Enter username</string>
-    <string name="password_login">Enter password</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_password">Enter Password</string>
+    <!-- Register user string resources (activity_register_user.xml) -->
+    <string name="create_new_account">Create New Account</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>

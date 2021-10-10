@@ -22,15 +22,16 @@
             android:id="@+id/welcomeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create New Account" />
+            android:text="@string/create_new_account" />
 
         <EditText
             android:id="@+id/usernameTextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="username"
-            android:inputType="textPersonName" />
+            android:hint="@string/enter_username"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <Space
             android:layout_width="match_parent"
@@ -69,8 +70,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="password"
-            android:inputType="textPassword" />
+            android:hint="@string/enter_password"
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
 
         <Space
             android:layout_width="match_parent"
@@ -81,8 +83,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="confirm password"
-            android:inputType="textPassword" />
+            android:hint="@string/confirm_password"
+            android:hintTextColor="#757575"
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
 
         <Space
             android:layout_width="match_parent"
@@ -93,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:text="Create New Account" />
+            android:text="@string/create_new_account" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -105,7 +109,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:text="LOGIN"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
