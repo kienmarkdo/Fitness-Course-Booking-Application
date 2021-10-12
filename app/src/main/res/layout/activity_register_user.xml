@@ -84,7 +84,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/confirm_password"
-            android:hintTextColor="#757575"
             android:inputType="textPassword"
             android:minHeight="48dp" />
 
