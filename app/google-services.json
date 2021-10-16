@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "673191971546",
+    "project_id": "fitness-app-c4fea",
+    "storage_bucket": "fitness-app-c4fea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673191971546:android:98fcd7bf799356e8c173e3",
+        "android_client_info": {
+          "package_name": "com.example.fitnesscoursebookingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "673191971546-210lgb8oegrdoephmbplqnk5cv5qjdld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC23inmYEvap_C4JHP-XVe7JDpHWzAayHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "673191971546-210lgb8oegrdoephmbplqnk5cv5qjdld.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
