@@ -14,6 +14,7 @@ public class GymMember extends User {
     /** Constructor */
     public GymMember(String username, String password) {
         super(username, password);
+        usertype = "gymmember";
     }
 
     /** Class methods */

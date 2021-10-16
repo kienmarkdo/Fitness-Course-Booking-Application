@@ -7,6 +7,7 @@ public abstract class User {
 
     protected String username; // NOTE: The username is also a unique identifier for a user ***AND CANNOT BE CHANGED***
     protected String password;
+    protected String usertype;
 
     /** Constructor */
     public User(String username, String password) {

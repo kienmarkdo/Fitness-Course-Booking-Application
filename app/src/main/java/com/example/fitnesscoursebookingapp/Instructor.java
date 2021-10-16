@@ -16,6 +16,7 @@ public class Instructor extends User {
     /** Constructor */
     public Instructor(String username, String password) {
         super(username, password);
+        usertype = "instructor";
     }
 
     /** Class methods */
