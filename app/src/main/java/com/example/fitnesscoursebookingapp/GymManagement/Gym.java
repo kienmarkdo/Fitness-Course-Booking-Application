@@ -1,4 +1,4 @@
-package GymManagement;
+package com.example.fitnesscoursebookingapp.GymManagement;
 
 import com.example.fitnesscoursebookingapp.Course;
 import com.example.fitnesscoursebookingapp.GymMember;

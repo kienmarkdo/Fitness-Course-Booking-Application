@@ -1,4 +1,4 @@
-package GymManagement;
+package com.example.fitnesscoursebookingapp.GymManagement;
 
 /**
  * The administrator manages all possible types of classes that
