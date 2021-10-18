@@ -22,18 +22,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-
+/**
+ * Welcome page / first page of the Fitness Course Booking Application
+ *
+ * Users can login with their username and password or create a new account
+ */
 public class MainActivity extends AppCompatActivity {
 
-
+    // for reading and writing data to the firebase database
     private DatabaseReference localReference;
 
-
+    // buttons and text fields
     Button moveToAdmin, login, createNewAccount;
 
     EditText usernameTextInput;
     EditText passwordTextInput;
 
+    // list of possible activities this activity may navigate to
     private enum NextActivity {
         REGISTER_USER, ADMIN
     }
@@ -43,14 +48,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         login = findViewById(R.id.loginButton);
         createNewAccount = findViewById(R.id.registerButton);
 
-
-       usernameTextInput =  findViewById(R.id.usernameTextInput);
-       passwordTextInput = findViewById(R.id.passwordTextInput);
-
+        usernameTextInput = findViewById(R.id.usernameTextInput);
+        passwordTextInput = findViewById(R.id.passwordTextInput);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,21 +60,25 @@ public class MainActivity extends AppCompatActivity {
                 logIn();
             }
 
-
         });
 
         createNewAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NextActivity temp = NextActivity.REGISTER_USER;
-                switchActivities(temp);
+                switchActivities(NextActivity.REGISTER_USER);
             }
         });
-    }
+    } // end of onCreate
 
+    /**
+     * Performs all the necessary procedures while logging in.
+     * Finds the inputted username in firebase, verifies the password.
+     *  Displays error if username and password do not match or if username does not exist or
+     *  proceeds to a new activity.
+     */
     private void logIn() {
 
-        String usernameInput= usernameTextInput.getText().toString();
+        String usernameInput = usernameTextInput.getText().toString();
         String passwordInput = passwordTextInput.getText().toString();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -90,18 +96,13 @@ public class MainActivity extends AppCompatActivity {
 
                     if (databasePassword.equals(passwordInput)) {
                         if (usernameInput.equals("admin")) {
-                            NextActivity temp = NextActivity.ADMIN;
-                            switchActivities(temp);
+                            switchActivities(NextActivity.ADMIN);
                         }
-                    }
-
-                    else {
+                    } else {
                         passwordTextInput.setError("Wrong password");
                         passwordTextInput.requestFocus();
                     }
-                }
-
-                else {
+                } else {
                     usernameTextInput.setError("No such username exists");
                     usernameTextInput.requestFocus();
                 }
@@ -113,11 +114,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    } // end of login()
 
-
-    }
-
-
+    /**
+     * Reusable selector method for starting new activities
+     * @param val name of the next activity represented with an enum class
+     */
     private void switchActivities(NextActivity val) {
 
         Intent intent = new Intent();
@@ -131,10 +133,7 @@ public class MainActivity extends AppCompatActivity {
         }
         startActivity(intent);
 
+    } // end of switchActivities()
 
 
-
-    }
-
-
-}
+} // end of MainActivity

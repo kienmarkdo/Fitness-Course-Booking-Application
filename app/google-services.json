@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "673191971546",
+    "firebase_url": "https://fitness-app-c4fea-default-rtdb.firebaseio.com",
     "project_id": "fitness-app-c4fea",
     "storage_bucket": "fitness-app-c4fea.appspot.com"
   },
