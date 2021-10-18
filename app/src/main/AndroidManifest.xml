@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FitnessCourseBookingApp">
+        <activity
+            android:name=".activity_welcome_screen"
+            android:exported="false" />
         <activity android:name=".activity_admin" />
         <activity android:name=".activity_register_user" />
         <activity android:name=".activity_instructor" />

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     // list of possible activities this activity may navigate to
     private enum NextActivity {
-        REGISTER_USER, ADMIN
+        REGISTER_USER, ADMIN, WELCOME_SCREEN
     }
 
     @Override
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         createNewAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switchActivities(NextActivity.REGISTER_USER);
+                switchActivities(NextActivity.REGISTER_USER, null);
             }
         });
     } // end of onCreate
@@ -85,19 +85,40 @@ public class MainActivity extends AppCompatActivity {
 
         Query checkUser = reference.orderByChild("username").equalTo(usernameInput);
 
+        System.out.println(checkUser.toString());
+
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
+
+                    System.out.println(dataSnapshot.toString());
+
                     usernameTextInput.setError(null);
 
-                    String databasePassword = dataSnapshot.child(usernameInput).child("password").getValue(String.class);
+                    boolean exists = dataSnapshot.child(usernameInput).exists();
 
-                    if (databasePassword.equals(passwordInput)) {
+                    System.out.println(exists);
+
+                    DataSnapshot user = dataSnapshot.getChildren().iterator().next();
+
+
+                    String databasePassword = user.child("password").getValue(String.class);
+
+                    System.out.println(databasePassword);
+
+                    if (passwordInput.equals(databasePassword)) {
                         if (usernameInput.equals("admin")) {
-                            switchActivities(NextActivity.ADMIN);
+                            switchActivities(NextActivity.ADMIN, null);
                         }
+
+                        else {
+                            String role = user.child("userType").getValue(String.class);
+                            String[] infoArr = {role, usernameInput};
+                            switchActivities(NextActivity.WELCOME_SCREEN, infoArr);
+                        }
+
                     } else {
                         passwordTextInput.setError("Wrong password");
                         passwordTextInput.requestFocus();
@@ -120,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
      * Reusable selector method for starting new activities
      * @param val name of the next activity represented with an enum class
      */
-    private void switchActivities(NextActivity val) {
+    private void switchActivities(NextActivity val, String extra[]) {
 
         Intent intent = new Intent();
         switch (val) {
@@ -129,6 +150,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case REGISTER_USER:
                 intent = new Intent(this, activity_register_user.class);
+                break;
+            case WELCOME_SCREEN:
+                intent = new Intent(this, activity_welcome_screen.class);
+                intent.putExtra("strings", extra);
                 break;
         }
         startActivity(intent);
