@@ -22,6 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * Register new account page of the Fitness Course Booking Application
+ *
+ * The user enters this page if they do not have a username and password yet and would like to
+ *  create one.
+ */
 public class activity_register_user extends Activity {
 
     // buttons and text fields
