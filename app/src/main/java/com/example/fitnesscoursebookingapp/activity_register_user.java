@@ -1,18 +1,34 @@
 package com.example.fitnesscoursebookingapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class activity_register_user extends Activity {
 
     // buttons and text fields
     Button login, createNewAccount;
     EditText usernameTextInput, passwordTextInput, confirmPasswordTextInput;
+    RadioButton memberBtn, instructorBtn;
+    RadioGroup selectAccountGroup;
 
     // list of possible activities this activity may navigate to
     private enum NextActivity {
@@ -22,7 +38,7 @@ public class activity_register_user extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_register_user);
 
         // initialize buttons and text field ids
         login = findViewById(R.id.loginButton);
@@ -32,6 +48,11 @@ public class activity_register_user extends Activity {
         passwordTextInput = findViewById(R.id.passwordTextInput);
         confirmPasswordTextInput = findViewById(R.id.confirmPasswordTextInput);
 
+        memberBtn = findViewById(R.id.memberBtn);
+        instructorBtn = findViewById(R.id.instructorBtn);
+
+        selectAccountGroup = findViewById(R.id.selectAccountTypeGroup);
+
         // TODO: Write the methods for checking if the new username exists or not,
         //  if the new username does not already exist, add the new username and password to the database
         //  **OPTIONAL**: Add a minimum requirement for username and password (ie: password must be at least 8 characters long)
@@ -39,7 +60,7 @@ public class activity_register_user extends Activity {
         createNewAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                verifyUserInput();
+                verifyAllUserInput();
             }
         });
 
@@ -55,33 +76,155 @@ public class activity_register_user extends Activity {
     // =============================   HELPER METHODS   =============================
 
     /**
-     * Verifies the following
+     * Verifies the following,
      * - All buttons and text fields are filled in (no text fields are left empty, one of the Select Account Type buttons are selected)
      * - The user inputted username does not exist in the database and is therefore a valid username
      * - The password and the confirm password text fields match
      * - OPTIONAL: Verify if username and password meet minimum requirements (i.e.: must be at least 8 characters)
-     *
+     * <p>
+     * NOTE: Each of the bullet points above have their own methods
      * TODO: Should the new user be able to add their legal names upon creating a new account? We know they will be able to do that
      *  in their own settings menu after logging in, but should they be able to write their legal names upon creating a new account or not?
      */
-    private void verifyUserInput() {
-        // check if all text fields and buttons are filled in
+    private void verifyAllUserInput() {
 
-        // go through firebase to see if this user already exists or not
-            // if yes, display error to user telling them to type in a new username
-            // if no, proceed with valid steps
+        // TODO: Username and password are currently swapped for some reason
+        //  Full backend not fully tested yet. For example, when password and confirm password are not the same.
 
-        // check to see if password fields match or not
+        if (allFieldsFilledIn() && passwordsMatch()) {
+            addNewAccount();
+        }
 
-        // show success screen and/or automatically jump to the login screen
     } // end of verifyUserInput()
+
+    /**
+     * Verifies whether all buttons and text fields are filled in or not
+     * That is, no text fields are left empty AND one of the Select Account Type buttons are selected
+     *
+     * @return true if all fields are filled in, false otherwise
+     */
+    private boolean allFieldsFilledIn() {
+
+        boolean isAllFilledIn = true;
+
+        if (TextUtils.isEmpty(usernameTextInput.getText().toString())) {
+            usernameTextInput.setError("Username cannot be empty.");
+            isAllFilledIn = false;
+        }
+        if (TextUtils.isEmpty(passwordTextInput.getText().toString())) {
+            passwordTextInput.setError("Password cannot be empty.");
+            isAllFilledIn = false;
+        }
+        if (TextUtils.isEmpty(confirmPasswordTextInput.getText().toString())) {
+            confirmPasswordTextInput.setError("Confirm password cannot be empty.");
+            isAllFilledIn = false;
+        }
+        if (!instructorBtn.isChecked() && !memberBtn.isChecked()) {
+            usernameTextInput.setError("Please select an account type.");
+            isAllFilledIn = false;
+        }
+
+        return isAllFilledIn;
+    } // end of allFieldsFilledIn()
+
+
+    /**
+     * Checks to see if the password and confirm passwords entered by the user match or not
+     *
+     * @return true if the passwords match
+     */
+    private boolean passwordsMatch() {
+
+        String password = passwordTextInput.getText().toString();
+        String confirmPassword = confirmPasswordTextInput.getText().toString();
+
+        return password.equals(confirmPassword);
+    } // end of passwordsMatch()
+
+    /**
+     * Registers the new account into firebase
+     *
+     * This method includes the following functionalities:
+     *  - Checking to see whether the username already exists or not and prompts the user to re-enter a new username if true
+     *  - Adds the new username and password into the database
+     */
+    private void addNewAccount() {
+
+        String usernameInputStr = usernameTextInput.getText().toString();
+        String passwordInputStr = passwordTextInput.getText().toString();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+
+        Query checkUser = reference.orderByChild("username").equalTo(usernameInputStr);
+
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // checks whether the username already exists or not
+                if (dataSnapshot.exists()) {
+                    usernameTextInput.setError("This username already exists. Please re-enter a new username.");
+                } else {
+                    usernameTextInput.setError(null);
+
+                    // account type is gym member
+                    if (memberBtn.isChecked() && !instructorBtn.isChecked()) {
+                        User newMember = new GymMember(usernameInputStr, passwordInputStr);
+                        newMember.usertype = "gymMember";
+                        reference.push().setValue(newMember); // add the new Gym Member here
+                        printUserAddedSuccessMessage();
+                    }
+                    // account type is instructor
+                    else if (!memberBtn.isChecked() && instructorBtn.isChecked()) {
+                        User newInstructor = new Instructor(usernameInputStr, passwordInputStr);
+                        newInstructor.usertype = "instructor";
+                        reference.push().setValue(newInstructor); // add the new Gym Member here
+                        printUserAddedSuccessMessage();
+                    }
+
+                } // end of outer if/else
+
+            } // end of onDataChange()
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            } // end of onCalled()
+        }); // end of checkUser listener
+    } // end of usernameAlreadyExists()
+
+    /**
+     * Displays a small pop-up at the bottom of the screen indicating that registering the user was a success
+     */
+    private void printUserAddedSuccessMessage() {
+
+        // hides the keyboard
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+        usernameTextInput.getText().clear();
+        passwordTextInput.getText().clear();
+        confirmPasswordTextInput.getText().clear();
+        selectAccountGroup.clearCheck();
+
+        // displays the success message
+        Context context = getApplicationContext();
+        CharSequence text = "Account Registered Successfully!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    } // end of printUserAddedSuccessMessage()
 
 
     /**
      * Reusable selector method for starting new activities
+     *
      * @param val name of the next activity represented with an enum class
      */
-    private void switchActivities(activity_register_user.NextActivity val) {
+    private void switchActivities(NextActivity val) {
 
         Intent intent = new Intent();
         switch (val) {
@@ -92,7 +235,6 @@ public class activity_register_user extends Activity {
         startActivity(intent);
 
     } // end of switchActivities()
-
 
 
 } // end of activity_register_user
