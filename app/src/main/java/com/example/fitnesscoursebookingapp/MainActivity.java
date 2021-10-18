@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        // TODO: onclick leads to a blank/white screen instead of leading to activity_register_user.xml
         createNewAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

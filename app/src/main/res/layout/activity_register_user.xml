@@ -79,7 +79,7 @@
             android:layout_height="32px" />
 
         <EditText
-            android:id="@+id/confirmPasswordText"
+            android:id="@+id/confirmPasswordTextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
