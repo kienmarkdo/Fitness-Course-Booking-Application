@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+app/src/main/res/layout/activity_member.xml
+app/src/main/res/layout/activity_instructor.xml
