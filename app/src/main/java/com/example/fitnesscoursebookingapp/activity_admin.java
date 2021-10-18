@@ -15,31 +15,8 @@ public class activity_admin extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        createClass = findViewById(R.id.createClass);
-        editClass = findViewById(R.id.editClass);
-        deleteClass = findViewById(R.id.deleteClass);
 
-
-        /*
-        createClass.setOnClickListener( {
-            public void onClick(View v) {
-
-            }
-        });
-
-        editClass.setOnClickListener( {
-            public void onClick(View v) {
-
-            }
-        });
-
-        deleteClass.setOnClickListener( {
-            public void onClick(View v) {
-
-            }
-        });
-
-        */
+        TextView success = findViewById(R.id.loginSuccessfull);
 
 
     }

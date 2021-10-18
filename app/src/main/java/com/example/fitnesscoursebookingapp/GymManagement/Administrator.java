@@ -1,16 +1,18 @@
 package com.example.fitnesscoursebookingapp.GymManagement;
 
+import com.example.fitnesscoursebookingapp.User;
 /**
  * The administrator manages all possible types of classes that
  * can be offered to members at the fitness centre.
  */
-public class Administrator {
+public class Administrator extends User {
 
     Gym gym;
 
     /** Constructor */
     public Administrator() {
-
+        super();
+        gym = null;
     }
 
     /** Class Methods */
