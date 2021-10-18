@@ -9,10 +9,22 @@ public class Administrator extends User {
 
     Gym gym;
 
-    /** Constructor */
     public Administrator() {
-        super();
+    }
+
+    /** Constructor */
+    public Administrator(String password, String username) {
+        super(password, username);
         gym = null;
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     /** Class Methods */

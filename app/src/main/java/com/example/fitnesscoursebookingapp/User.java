@@ -15,7 +15,7 @@ public abstract class User {
 
     }
 
-    public User(String username, String password) {
+    public User(String password, String username) {
         this.username = username;
         this.password = password;
     }
@@ -35,5 +35,13 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserType() {
+        return usertype;
+    }
+
+    public void setUserType(String usertype) {
+        this.usertype = usertype;
     }
 }

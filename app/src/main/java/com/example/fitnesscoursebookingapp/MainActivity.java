@@ -1,5 +1,6 @@
 package com.example.fitnesscoursebookingapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button moveToAdmin, login, createNewAccount;
 
-    Administrator admin = new Administrator();
-
+    EditText usernameTextInput;
+    EditText passwordTextInput;
 
     private enum NextActivity {
         REGISTER_USER, ADMIN
@@ -47,49 +48,17 @@ public class MainActivity extends AppCompatActivity {
         createNewAccount = findViewById(R.id.registerButton);
 
 
-        EditText usernameTextInput = findViewById(R.id.usernameTextInput);
-        EditText passwordTextInput = findViewById(R.id.passwordTextInput);
-
-        String usernameInput= usernameTextInput.getText().toString();
-        String passwordInput = passwordTextInput.getText().toString();
-
-
-        FirebaseDatabase database= FirebaseDatabase.getInstance();
-
-        DatabaseReference myRef = database.getReference("Users").child("admin");
-
+       usernameTextInput =  findViewById(R.id.usernameTextInput);
+       passwordTextInput = findViewById(R.id.passwordTextInput);
 
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                ValueEventListener listener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        admin = dataSnapshot.getValue(Administrator.class);
-                        Log.d("userNametest", admin.getUsername());
-                        Log.d("passwordTest", admin.getPassword());
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-
-
-
-                };
-
-                String tempPassword = admin.getPassword();
-
-                Toast toast = Toast.makeText(getApplicationContext(), tempPassword, Toast.LENGTH_SHORT);
-                toast.show();
-
-
-
+                logIn();
             }
+
+
         });
 
         createNewAccount.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +69,54 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void logIn() {
+
+        String usernameInput= usernameTextInput.getText().toString();
+        String passwordInput = passwordTextInput.getText().toString();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+
+        Query checkUser = reference.orderByChild("username").equalTo(usernameInput);
+
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    usernameTextInput.setError(null);
+
+                    String databasePassword = dataSnapshot.child(usernameInput).child("password").getValue(String.class);
+
+                    if (databasePassword.equals(passwordInput)) {
+                        if (usernameInput.equals("admin")) {
+                            NextActivity temp = NextActivity.ADMIN;
+                            switchActivities(temp);
+                        }
+                    }
+
+                    else {
+                        passwordTextInput.setError("Wrong password");
+                        passwordTextInput.requestFocus();
+                    }
+                }
+
+                else {
+                    usernameTextInput.setError("No such username exists");
+                    usernameTextInput.requestFocus();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
+
 
     private void switchActivities(NextActivity val) {
 
