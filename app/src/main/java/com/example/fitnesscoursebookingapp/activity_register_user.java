@@ -126,7 +126,8 @@ public class activity_register_user extends Activity {
             isAllFilledIn = false;
         }
         if (!instructorBtn.isChecked() && !memberBtn.isChecked()) {
-            usernameTextInput.setError("Please select an account type.");
+            memberBtn.setError("Please select an account type.");
+            instructorBtn.setError("Please select an account type.");
             isAllFilledIn = false;
         }
 
@@ -143,8 +144,18 @@ public class activity_register_user extends Activity {
 
         String password = passwordTextInput.getText().toString();
         String confirmPassword = confirmPasswordTextInput.getText().toString();
+        boolean isMatch = password.equals(confirmPassword);
 
-        return password.equals(confirmPassword);
+        if (!isMatch) {
+            passwordTextInput.getText().clear();
+            confirmPasswordTextInput.getText().clear();
+            passwordTextInput.requestFocus();
+            passwordTextInput.setError("Passwords do not match.");
+        } else {
+            passwordTextInput.setError(null);
+        }
+
+        return isMatch;
     } // end of passwordsMatch()
 
     /**
@@ -175,14 +186,12 @@ public class activity_register_user extends Activity {
                     // account type is gym member
                     if (memberBtn.isChecked() && !instructorBtn.isChecked()) {
                         User newMember = new GymMember(usernameInputStr, passwordInputStr);
-                        newMember.usertype = "gymMember";
                         reference.push().setValue(newMember); // add the new Gym Member here
                         printUserAddedSuccessMessage();
                     }
                     // account type is instructor
                     else if (!memberBtn.isChecked() && instructorBtn.isChecked()) {
                         User newInstructor = new Instructor(usernameInputStr, passwordInputStr);
-                        newInstructor.usertype = "instructor";
                         reference.push().setValue(newInstructor); // add the new Gym Member here
                         printUserAddedSuccessMessage();
                     }

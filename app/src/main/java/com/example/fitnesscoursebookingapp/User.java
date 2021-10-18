@@ -5,7 +5,7 @@ package com.example.fitnesscoursebookingapp;
  */
 public abstract class User {
 
-    protected String username; // NOTE: The username is also a unique identifier for a user ***AND CANNOT BE CHANGED***
+    protected String username; // NOTE: The username is also a unique identifier for a user ***AND CANNOT/SHOULD NOT BE CHANGED***
     protected String password;
     protected String usertype;
 
@@ -15,7 +15,7 @@ public abstract class User {
 
     }
 
-    public User(String password, String username) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
