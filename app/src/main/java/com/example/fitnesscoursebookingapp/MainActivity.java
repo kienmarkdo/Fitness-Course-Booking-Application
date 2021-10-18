@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        // TODO: onclick leads to a blank/white screen instead of leading to activity_register_user.xml
         createNewAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     usernameTextInput.setError("No such username exists");
                     usernameTextInput.requestFocus();
                 }
-            }
+            } // end of onDataChange()
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
