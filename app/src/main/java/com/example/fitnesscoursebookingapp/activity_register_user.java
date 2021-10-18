@@ -59,8 +59,7 @@ public class activity_register_user extends Activity {
 
         selectAccountGroup = findViewById(R.id.selectAccountTypeGroup);
 
-        // TODO: Write the methods for checking if the new username exists or not,
-        //  if the new username does not already exist, add the new username and password to the database
+        // TODO:
         //  **OPTIONAL**: Add a minimum requirement for username and password (ie: password must be at least 8 characters long)
 
         createNewAccount.setOnClickListener(new View.OnClickListener() {
@@ -245,7 +244,7 @@ public class activity_register_user extends Activity {
         Intent intent = new Intent();
         switch (val) {
             case MAIN_ACTIVITY:
-                intent = new Intent(this, activity_admin.class);
+                intent = new Intent(this, MainActivity.class);
                 break;
         }
         startActivity(intent);
