@@ -94,9 +94,6 @@ public class activity_register_user extends Activity {
      */
     private void verifyAllUserInput() {
 
-        // TODO: Username and password are currently swapped for some reason
-        //  Full backend not fully tested yet. For example, when password and confirm password are not the same.
-
         if (allFieldsFilledIn() && passwordsMatch()) {
             addNewAccount();
         }
@@ -167,6 +164,9 @@ public class activity_register_user extends Activity {
      */
     private void addNewAccount() {
 
+        // TODO: Currently, we do not convert the user-inputted username to lowercase/uniformcase.
+        //  Therefore, the usernames "Bob1234" and "bob1234" can co-exist.
+
         String usernameInputStr = usernameTextInput.getText().toString();
         String passwordInputStr = passwordTextInput.getText().toString();
 
@@ -180,6 +180,7 @@ public class activity_register_user extends Activity {
                 // checks whether the username already exists or not
                 if (dataSnapshot.exists()) {
                     usernameTextInput.setError("This username already exists. Please re-enter a new username.");
+                    usernameTextInput.requestFocus();
                 } else {
                     usernameTextInput.setError(null);
 
