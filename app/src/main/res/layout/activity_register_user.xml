@@ -33,6 +33,21 @@
             android:inputType="textPersonName"
             android:minHeight="48dp" />
 
+        <TextView
+            android:id="@+id/enterNameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_legal_name" />
+
+        <EditText
+            android:id="@+id/legalNameTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter Full Name"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="32px" />

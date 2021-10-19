@@ -32,7 +32,7 @@ public class activity_register_user extends Activity {
 
     // buttons and text fields
     Button login, createNewAccount;
-    EditText usernameTextInput, passwordTextInput, confirmPasswordTextInput;
+    EditText usernameTextInput, passwordTextInput, confirmPasswordTextInput, fullNameTextInput;
     RadioButton memberBtn, instructorBtn;
     RadioGroup selectAccountGroup;
 
@@ -53,6 +53,7 @@ public class activity_register_user extends Activity {
         usernameTextInput = findViewById(R.id.usernameTextInput);
         passwordTextInput = findViewById(R.id.passwordTextInput);
         confirmPasswordTextInput = findViewById(R.id.confirmPasswordTextInput);
+        fullNameTextInput = findViewById(R.id.legalNameTextInput);
 
         memberBtn = findViewById(R.id.memberBtn);
         instructorBtn = findViewById(R.id.instructorBtn);
@@ -76,6 +77,20 @@ public class activity_register_user extends Activity {
             }
         });
 
+        memberBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                instructorBtn.setError(null);
+            }
+        });
+
+        instructorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                instructorBtn.setError(null);
+            }
+        });
+
     } // end of onCreate()
 
     // =============================   HELPER METHODS   =============================
@@ -88,8 +103,6 @@ public class activity_register_user extends Activity {
      * - OPTIONAL: Verify if username and password meet minimum requirements (i.e.: must be at least 8 characters)
      * <p>
      * NOTE: Each of the bullet points above have their own methods
-     * TODO: Should the new user be able to add their legal names upon creating a new account? We know they will be able to do that
-     *  in their own settings menu after logging in, but should they be able to write their legal names upon creating a new account or not?
      */
     private void verifyAllUserInput() {
 
@@ -113,6 +126,10 @@ public class activity_register_user extends Activity {
             usernameTextInput.setError("Username cannot be empty.");
             isAllFilledIn = false;
         }
+        if (TextUtils.isEmpty(fullNameTextInput.getText().toString())) {
+            fullNameTextInput.setError("Please enter your full legal name.");
+            isAllFilledIn = false;
+        }
         if (TextUtils.isEmpty(passwordTextInput.getText().toString())) {
             passwordTextInput.setError("Password cannot be empty.");
             isAllFilledIn = false;
@@ -122,9 +139,10 @@ public class activity_register_user extends Activity {
             isAllFilledIn = false;
         }
         if (!instructorBtn.isChecked() && !memberBtn.isChecked()) {
-            memberBtn.setError("Please select an account type.");
             instructorBtn.setError("Please select an account type.");
             isAllFilledIn = false;
+        } else {
+            instructorBtn.setError(null);
         }
 
         return isAllFilledIn;
@@ -168,6 +186,7 @@ public class activity_register_user extends Activity {
 
         String usernameInputStr = usernameTextInput.getText().toString();
         String passwordInputStr = passwordTextInput.getText().toString();
+        String fullNameInputStr = fullNameTextInput.getText().toString();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -185,13 +204,13 @@ public class activity_register_user extends Activity {
 
                     // account type is gym member
                     if (memberBtn.isChecked() && !instructorBtn.isChecked()) {
-                        User newMember = new GymMember(usernameInputStr, passwordInputStr);
+                        User newMember = new GymMember(usernameInputStr, passwordInputStr, fullNameInputStr);
                         reference.push().setValue(newMember); // add the new Gym Member here
                         printUserAddedSuccessMessage();
                     }
                     // account type is instructor
                     else if (!memberBtn.isChecked() && instructorBtn.isChecked()) {
-                        User newInstructor = new Instructor(usernameInputStr, passwordInputStr);
+                        User newInstructor = new Instructor(usernameInputStr, passwordInputStr, fullNameInputStr);
                         reference.push().setValue(newInstructor); // add the new Gym Member here
                         printUserAddedSuccessMessage();
                     }

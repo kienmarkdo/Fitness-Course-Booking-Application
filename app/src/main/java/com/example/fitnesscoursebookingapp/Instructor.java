@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Instructor extends User {
 
-    private String name;
+    private String legalName;
     private String description;
     ArrayList<Course> courseTeaching;
 
@@ -17,6 +17,12 @@ public class Instructor extends User {
     public Instructor(String username, String password) {
         super(username, password);
         usertype = "instructor";
+    }
+
+    public Instructor(String username, String password, String legalName) {
+        super(username, password);
+        usertype = "instructor";
+        this.legalName = legalName;
     }
 
     /** Class methods */
@@ -38,8 +44,12 @@ public class Instructor extends User {
 
     }
 
-    public String getName() {
-        return name;
+    public String getLegalName() {
+        return legalName;
+    }
+
+    public void setLegalName(String legalName) {
+        this.legalName = legalName;
     }
 
     public String getDescription() {

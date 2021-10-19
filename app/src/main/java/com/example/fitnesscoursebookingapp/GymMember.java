@@ -17,6 +17,12 @@ public class GymMember extends User {
         usertype = "gymMember";
     }
 
+    public GymMember(String username, String password, String legalName) {
+        super(username, password);
+        usertype = "gymMember";
+        this.legalName = legalName;
+    }
+
     /** Class methods */
 
     public void selectCourseToEnrol() {

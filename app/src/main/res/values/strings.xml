@@ -5,8 +5,8 @@
     <string name="enter_password">Enter Password</string>
     <!-- Register user string resources (activity_register_user.xml) -->
     <string name="create_new_account">Create New Account</string>
+    <string name="enter_legal_name">Enter Legal Name</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="username_login"></string>
     <string name="title_activity_welcome_screen">activity_welcome_screen</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
