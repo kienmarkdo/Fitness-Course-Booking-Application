@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class activity_admin extends Activity {
 
-    Button createCourse, editCourse, deleteCourse;
+    Button createCourse, editCourse, deleteCourse, deleteUser;
 
     //brainstorming
     EditText courseNameTextInput;
@@ -26,32 +26,32 @@ public class activity_admin extends Activity {
         //brainstorming
         //
 
+
+        createCourse = findViewById(R.id.createCourse);
+        editCourse = findViewById(R.id.editCourse);
+        deleteCourse = findViewById(R.id.deleteCourse);
+        deleteUser = findViewById(R.id.deleteUser);
+
+        courseNameTextInput = findViewById(R.id.courseNameTextInput); // for adding / deleting courses
+        courseDescriptionTextInput = findViewById(R.id.courseDescriptionTextInput); // for adding a description
+        accountInput = findViewById(R.id.usernameTextInput); // for deleting a user account
         /*
-        createCourse = findViewById(R.id.createCourseButton);
-        editCourse = findViewById(R.id.editCourseButton);
-        deleteCourse = findViewById(R.id.deleteCourseButton);
-        deleteAccount = findViewById(R.id.deleteAccountButton);
-
-        courseNameInput = findViewById(R.id.courseNameInput); " for adding / deleting courses"
-        courseDescriptionInput = findViewById(R.id.courseDescriptionInput); "for adding a description"
-        accountInput = findViewById(R.id.accountInput); "for deleting a user account"
-
-          createCourse.setOnClickListener(new View.OnClickListener() {
+        createCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { createCourse(); }
         });
 
-          editCourse.setOnClickListener(new View.OnClickListener() {
+        editCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { editCourse(); }
         });
 
-          deleteCourse.setOnClickListener(new View.OnClickListener() {
+        deleteCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { deleteCourse(); }
         });
 
-          deleteAccount.setOnClickListener(new View.OnClickListener() {
+        deleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { deleteAccount(); }
         });
