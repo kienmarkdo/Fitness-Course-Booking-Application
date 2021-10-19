@@ -242,6 +242,7 @@ public class activity_register_user extends Activity {
         passwordTextInput.getText().clear();
         confirmPasswordTextInput.getText().clear();
         selectAccountGroup.clearCheck();
+        fullNameTextInput.getText().clear();
 
         // displays the success message
         Context context = getApplicationContext();
