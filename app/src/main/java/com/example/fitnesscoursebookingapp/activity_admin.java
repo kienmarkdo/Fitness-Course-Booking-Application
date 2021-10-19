@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 public class activity_admin extends Activity {
 
-    Button createCourse,editCourse, deleteCourse;
+    Button createCourse, editCourse, deleteCourse;
 
     //brainstorming
-    EditText courseNameInput;
-    EditText courseDescriptionInput;
+    EditText courseNameTextInput;
+    EditText courseDescriptionTextInput;
     EditText accountInput;
 
 
@@ -63,19 +63,19 @@ public class activity_admin extends Activity {
 
     //commented out methods to add in once front end is complete
     //may be separate depending on how front-end is implemented
-    private void createCourse(){
+    private void createCourse() {
 
     }
 
-    private void editCourse(){
+    private void editCourse() {
 
     }
 
-    private void deleteCourse(){
+    private void deleteCourse() {
 
     }
 
-    private void deleteAccount(){
+    private void deleteAccount() {
 
     }
 

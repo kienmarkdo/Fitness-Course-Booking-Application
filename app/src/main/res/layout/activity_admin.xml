@@ -10,11 +10,90 @@
 
     <TextView
         android:id="@+id/loginSuccessfull"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="-7dp"
+        android:layout_marginTop="33dp"
+        android:text="Admin Page"
+        android:textAlignment="center"
+        android:textSize="32sp" />
+
+    <Button
+        android:id="@+id/createCourse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="166dp"
-        android:layout_marginTop="152dp"
-        android:text="You logged in" />
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="406dp"
+        android:text="Create Course" />
+
+    <Button
+        android:id="@+id/editCourse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="142dp"
+        android:layout_marginTop="463dp"
+        android:text="Edit Course" />
+
+    <Button
+        android:id="@+id/deleteCourse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="517dp"
+        android:text="Delete Course" />
+
+    <Button
+        android:id="@+id/deleteUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="574dp"
+        android:text="Delete User" />
+
+    <EditText
+        android:id="@+id/usernameTextInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="300dp"
+        android:ems="10"
+        android:hint="Existing Username"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textAlignment="textStart" />
+
+    <EditText
+        android:id="@+id/courseDescriptionTextInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="200dp"
+        android:ems="10"
+        android:hint="Course Description"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textAlignment="textStart" />
+
+    <EditText
+        android:id="@+id/courseNameTextInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:hint="Course Name"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textAlignment="textStart" />
+
 </RelativeLayout>
