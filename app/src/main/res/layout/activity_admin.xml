@@ -1,99 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/loginSuccessfull"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginStart="-7dp"
         android:layout_marginTop="33dp"
+        android:gravity="center_horizontal"
         android:text="Admin Page"
         android:textAlignment="center"
         android:textSize="32sp" />
+
+    <EditText
+        android:id="@+id/courseNameTextInput"
+        android:layout_width="203dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Course Name"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/courseDescriptionTextInput"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Course Description"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/createCourse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="129dp"
-        android:layout_marginTop="406dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
         android:text="Create Course" />
 
     <Button
         android:id="@+id/editCourse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="142dp"
-        android:layout_marginTop="463dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
         android:text="Edit Course" />
 
     <Button
         android:id="@+id/deleteCourse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="129dp"
-        android:layout_marginTop="517dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
         android:text="Delete Course" />
-
-    <Button
-        android:id="@+id/deleteUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="574dp"
-        android:text="Delete User" />
 
     <EditText
         android:id="@+id/usernameTextInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="50dp"
         android:ems="10"
+        android:gravity="center"
         android:hint="Existing Username"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        android:textAlignment="textStart" />
+        android:textAlignment="center" />
 
-    <EditText
-        android:id="@+id/courseDescriptionTextInput"
+    <Button
+        android:id="@+id/deleteUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="200dp"
-        android:ems="10"
-        android:hint="Course Description"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:textAlignment="textStart" />
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:text="Delete User" />
 
-    <EditText
-        android:id="@+id/courseNameTextInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="100dp"
-        android:ems="10"
-        android:hint="Course Name"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:textAlignment="textStart" />
-
-</RelativeLayout>
+</LinearLayout>
