@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:scrollbars="none">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -55,12 +57,29 @@
             android:orientation="vertical">
 
 
-            <TextView
-
+            <EditText
+                android:id="@+id/addCourseInput"
                 android:layout_width="match_parent"
-                android:layout_height="133dp"
-                android:text="Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters"
-                android:textSize="20sp" />
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter Course name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/addCourseDescriptionInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginTop="50dp"
+                android:hint="Enter Course Description"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/createCourseButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:text="CREATE COURSE" />
 
 
         </RelativeLayout>
@@ -95,16 +114,35 @@
             android:animateLayoutChanges="true"
             android:id="@+id/expandable1"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:layout_marginTop="30dp"
             android:background="@color/colorPrimary">
 
-            <TextView
-
+            <EditText
+                android:id="@+id/courseNameChangeInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters"
-                android:textSize="20sp" />
+                android:ems="10"
+                android:hint="Course name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/courseDescriptionChangeInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginTop="50dp"
+                android:hint="Course Description"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/editCourseButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:text="EDIT COURSE" />
+
+
 
 
         </RelativeLayout>
@@ -142,12 +180,21 @@
             android:layout_marginTop="30dp"
             android:background="@color/colorPrimary">
 
-            <TextView
-
+            <EditText
+                android:id="@+id/deleteCourseNameInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters"
-                android:textSize="20sp" />
+                android:ems="10"
+                android:hint=" Enter Course name"
+                android:inputType="textPersonName" />
+
+
+            <Button
+                android:id="@+id/deleteCourseButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Delete COURSE" />
 
 
         </RelativeLayout>
@@ -185,12 +232,21 @@
             android:layout_marginTop="30dp"
             android:background="@color/colorPrimary">
 
-            <TextView
-
+            <EditText
+                android:id="@+id/deleteUserNameInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters"
-                android:textSize="20sp" />
+                android:ems="10"
+                android:hint=" Enter User's Name"
+                android:inputType="textPersonName" />
+
+
+            <Button
+                android:id="@+id/deleteUserButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Delete USER" />
 
 
         </RelativeLayout>
