@@ -1,6 +1,5 @@
-package com.example.fitnesscoursebookingapp.GymManagement;
+package com.example.fitnesscoursebookingapp;
 
-import com.example.fitnesscoursebookingapp.User;
 /**
  * The administrator manages all possible types of classes that
  * can be offered to members at the fitness centre.
