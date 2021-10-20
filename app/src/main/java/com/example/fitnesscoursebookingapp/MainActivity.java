@@ -23,9 +23,6 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class MainActivity extends AppCompatActivity {
 
-    // for reading and writing data to the firebase database
-    private DatabaseReference localReference;
-
     // buttons and text fields
     Button moveToAdmin, login, createNewAccount;
 
