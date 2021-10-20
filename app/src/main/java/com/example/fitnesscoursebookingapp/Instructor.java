@@ -25,6 +25,12 @@ public class Instructor extends User {
         this.legalName = legalName;
     }
 
+    public Instructor(String username, String password, String legalName, boolean isBothTypes) {
+        super(username, password);
+        usertype = isBothTypes ? "both" : "instructor";
+        this.legalName = legalName;
+    }
+
     /** Class methods */
 
     private void selectCourseToTeach() {
