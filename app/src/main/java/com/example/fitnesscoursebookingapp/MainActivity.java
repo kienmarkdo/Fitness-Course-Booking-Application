@@ -72,37 +72,39 @@ public class MainActivity extends AppCompatActivity {
      */
     private void logIn() {
 
+
+        //Takes input from user
         String usernameInput = usernameTextInput.getText().toString();
         String passwordInput = passwordTextInput.getText().toString();
 
+        //Fetches instance of database.
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 
+        //Orders in search for the username
         Query checkUser = reference.orderByChild("username").equalTo(usernameInput);
 
-        System.out.println(checkUser.toString());
 
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                //Check if username input matches to existing name in database
                 if (dataSnapshot.exists()) {
 
-                    System.out.println(dataSnapshot.toString());
-
+                    //Reset error tracking
                     usernameTextInput.setError(null);
 
-                    boolean exists = dataSnapshot.child(usernameInput).exists();
-
-                    System.out.println(exists);
-
+                    //Moves the datasnapshot to reference user
                     DataSnapshot user = dataSnapshot.getChildren().iterator().next();
-
 
                     String databasePassword = user.child("password").getValue(String.class);
 
-                    System.out.println(databasePassword);
-
+                    //Checks if passowrd inputs matches to associatd passowrd with user.
                     if (passwordInput.equals(databasePassword)) {
+
+                        //Reset error tracking
+                        usernameTextInput.setError(null);
+
                         if (usernameInput.equals("admin")) {
                             switchActivities(NextActivity.ADMIN, null);
                         }
@@ -113,11 +115,15 @@ public class MainActivity extends AppCompatActivity {
                             switchActivities(NextActivity.WELCOME_SCREEN, infoArr);
                         }
 
-                    } else {
+                    }
+                    else {
+                        //Set error indicating user inputted password incorrectly
                         passwordTextInput.setError("Wrong password");
                         passwordTextInput.requestFocus();
                     }
-                } else {
+                }
+                else {
+                    //Set error indicating user inputted username incorrectly
                     usernameTextInput.setError("No such username exists");
                     usernameTextInput.requestFocus();
                 }

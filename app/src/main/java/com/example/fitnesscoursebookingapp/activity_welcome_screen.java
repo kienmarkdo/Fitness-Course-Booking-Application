@@ -17,6 +17,10 @@ public class activity_welcome_screen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Simply displays user information
+        //Strings passed through intent are created within
+        //main activity under the appropraite sign in.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
 
