@@ -16,15 +16,15 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
     RelativeLayout relativeLayout, relativeLayout1, relativeLayout2, relativeLayout3;
     Button viewmore, viewmore1, viewmore2, viewmore3;
-    Button createCourseButton, editCourseButton, deleteCourseButton, deleteUserButton;
+    //Button createCourseButton, editCourseButton, deleteCourseButton, deleteUserButton;
     int height, height1, height2, height3;
 
-    EditText addCourseInput;
+    /*EditText addCourseInput;
     EditText addCourseDescriptionInput;
     EditText courseNameChangeInput;
     EditText courseDescriptionChangeInput;
     EditText deleteCourseNameInput;
-    EditText deleteUserNameInput;
+    EditText deleteUserNameInput;*/
 
 
     @Override
@@ -49,7 +49,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
         viewmore3.setOnClickListener(this);
 
         // initializers for different Admin Commands
-        addCourseInput = findViewById(R.id.addCourseInput);
+        /*addCourseInput = findViewById(R.id.addCourseInput);
         addCourseDescriptionInput = findViewById(R.id.addCourseDescriptionInput);
         courseNameChangeInput = findViewById(R.id.courseNameChangeInput);
         courseDescriptionChangeInput = findViewById(R.id.courseDescriptionChangeInput);
@@ -86,7 +86,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
                 deleteUser();
             }
 
-        });
+        });*/
 
 
 
@@ -207,7 +207,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
     // **** METHODS FOR ADMIN BUTTONS ****
 
-    private void createCourse(){
+   /* private void createCourse(){
 
     }
 
@@ -221,7 +221,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
     private void deleteUser(){
 
-    }
+    }*/
 
 } // end of activity_admin
 
