@@ -6,24 +6,13 @@ package com.example.fitnesscoursebookingapp;
  */
 public class Administrator extends User {
 
-    Gym gym;
-
     public Administrator() {
     }
 
     /** Constructor */
     public Administrator(String password, String username) {
-        super(password, username);
-        gym = null;
-    }
-
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
+        super(username, password);
+        usertype = "admin";
     }
 
     /** Class Methods */

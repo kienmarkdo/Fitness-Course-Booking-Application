@@ -23,6 +23,12 @@ public class GymMember extends User {
         this.legalName = legalName;
     }
 
+    public GymMember(String username, String password, String legalName, boolean isBothTypes) {
+        super(username, password);
+        usertype = isBothTypes ? "both" : "gymMember";
+        this.legalName = legalName;
+    }
+
     /** Class methods */
 
     public void selectCourseToEnrol() {
