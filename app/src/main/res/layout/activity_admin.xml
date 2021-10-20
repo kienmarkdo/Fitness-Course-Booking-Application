@@ -1,97 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:scrollbars="none">
 
-    <TextView
-        android:id="@+id/loginSuccessfull"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="-7dp"
-        android:layout_marginTop="33dp"
-        android:gravity="center_horizontal"
-        android:text="Admin Page"
-        android:textAlignment="center"
-        android:textSize="32sp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/courseNameTextInput"
-        android:layout_width="203dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="25dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Course Name"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:textAlignment="center" />
+        <TextView
+            android:id="@+id/welcomeTextAdminPage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Admin Page"
+            android:textAlignment="center"
+            android:textSize="30sp" />
 
-    <EditText
-        android:id="@+id/courseDescriptionTextInput"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="25dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Course Description"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:textAlignment="center" />
+        <RelativeLayout
 
-    <Button
-        android:id="@+id/createCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="25dp"
-        android:gravity="center"
-        android:text="Create Course" />
+            android:layout_width="fill_parent"
+            android:layout_height="64dp"
+            android:background="#FFF"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/editCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="25dp"
-        android:gravity="center"
-        android:text="Edit Course" />
+            <TextView
 
-    <Button
-        android:id="@+id/deleteCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="25dp"
-        android:gravity="center"
-        android:text="Delete Course" />
+                android:id="@+id/createCourseBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create Course"
+                android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/usernameTextInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="50dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Existing Username"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:textAlignment="center" />
+            <Button
+                android:id="@+id/viewmore"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="280dp"
+                android:background="@null"
+                android:text="viewmore" />
 
-    <Button
-        android:id="@+id/deleteUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="25dp"
-        android:gravity="center"
-        android:text="Delete User" />
 
-</LinearLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+
+            android:visibility="gone"
+            android:id="@+id/expandable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:background="@color/colorAccent"
+            android:orientation="vertical">
+
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="133dp"
+                android:text="Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters"
+                android:textSize="20sp" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/editCourseBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Course"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/viewmore1"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="280dp"
+                android:background="@null"
+                android:text="viewmore" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:animateLayoutChanges="true"
+            android:id="@+id/expandable1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters"
+                android:textSize="20sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:id="@+id/deleteCourseBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Course"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/viewmore2"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="280dp"
+                android:background="@null"
+                android:text="viewmore" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:animateLayoutChanges="true"
+            android:id="@+id/expandable2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters"
+                android:textSize="20sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:id="@+id/deleteUserBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete User"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/viewmore3"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="280dp"
+                android:background="@null"
+                android:text="viewmore" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:animateLayoutChanges="true"
+            android:id="@+id/expandable3"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters"
+                android:textSize="20sp" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</ScrollView>
