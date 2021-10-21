@@ -31,14 +31,13 @@ public class Course {
     }
 
     public Course(String name, String description, String time, float hourDuration,
-                  Instructor teacher, String experienceLevel, ArrayList<GymMember> students) {
+                  Instructor teacher, String experienceLevel) {
         this.name = name;
         this.description = description;
         this.time = time;
         this.hourDuration = hourDuration;
         this.teacher = teacher;
         this.experienceLevel = experienceLevel;
-        this.students = students;
     }
 
     /** Get and Set methods */

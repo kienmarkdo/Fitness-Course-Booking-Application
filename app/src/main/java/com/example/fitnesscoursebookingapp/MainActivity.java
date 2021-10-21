@@ -19,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 /**
  * Welcome page / first page of the Fitness Course Booking Application
  *
@@ -176,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         Gym.listOfGymMember.clear();
         Gym.listOfInstructors.clear();
 
-        // listen for further changes
+        // instantiate and actively update user information in Gym
         db.getReference("Users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -237,5 +239,52 @@ public class MainActivity extends AppCompatActivity {
             );
         }
     } // end of addUser()
+
+    /**
+     * Called when the app is opened. Initializes and keeps Gym updated with
+     * the course information throughout the app's runtime.
+     * @param db
+     */
+    private void updateCourses(FirebaseDatabase db) {
+        Gym.listOfCourses.clear();
+
+        // instantiate and actively update course information in Gym.
+        db.getReference("Courses").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Gym.listOfCourses.put(dataSnapshot.getKey(), new Course(
+                    dataSnapshot.child("username").getValue(String.class),
+                        dataSnapshot.child("description").getValue(String.class),
+                        dataSnapshot.child("time").getValue(String.class),
+                        dataSnapshot.child("hourDuration").getValue(Float.class),
+                        Gym.listOfInstructors.get(dataSnapshot.child("teacher").getValue(String.class)),
+                        dataSnapshot.child("experienceLevel").getValue(String.class)
+                ));
+            }
+
+            //TODO implement the changed and removed methods
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                /*for (DataSnapshot property : dataSnapshot.getChildren()) {
+
+                }*/
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 } // end of MainActivity
