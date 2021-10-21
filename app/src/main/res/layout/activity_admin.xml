@@ -10,6 +10,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="25dp" />
+
         <TextView
             android:id="@+id/welcomeTextAdminPage"
             android:layout_width="match_parent"
@@ -17,6 +22,11 @@
             android:text="Admin Page"
             android:textAlignment="center"
             android:textSize="30sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="20dp" />
 
         <RelativeLayout
 
@@ -39,7 +49,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="280dp"
                 android:background="@null"
-                android:text="view more" />
+                android:text="@string/viewmore" />
 
 
         </RelativeLayout>
