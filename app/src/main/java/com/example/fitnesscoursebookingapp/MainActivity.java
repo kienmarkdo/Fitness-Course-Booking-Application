@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         passwordTextInput = findViewById(R.id.passwordTextInput);
 
         updateUsers(db);
-        updateCourses(db);
+        // updateCourses(db);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,12 +79,6 @@ public class MainActivity extends AppCompatActivity {
      *  proceeds to a new activity.
      */
     private void logIn() {
-
-        /////////////TEST//////////////
-        for (Course c : Gym.listOfCourses.values()) {
-            Log.i("MainActivity", c.getName());
-        }
-        ///////////////////////////////
 
 
         //Takes input from user
@@ -259,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Gym.listOfCourses.put(dataSnapshot.getKey(), new Course(
-                    dataSnapshot.child("name").getValue(String.class),
+                    dataSnapshot.child("username").getValue(String.class),
                         dataSnapshot.child("description").getValue(String.class),
                         dataSnapshot.child("time").getValue(String.class),
                         dataSnapshot.child("hourDuration").getValue(Float.class),
@@ -268,28 +262,28 @@ public class MainActivity extends AppCompatActivity {
                 ));
             }
 
+            //TODO implement the changed and removed methods
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Course c = Gym.listOfCourses.get(dataSnapshot.getKey());
+                /*for (DataSnapshot property : dataSnapshot.getChildren()) {
 
-                c.setDescription(dataSnapshot.child("description").getValue(String.class));
-                c.setExperienceLevel(dataSnapshot.child("experienceLevel").getValue(String.class));
-                c.setHourDuration(dataSnapshot.child("hourDuration").getValue(Float.class));
-                c.setName(dataSnapshot.child("name").getValue(String.class));
-                c.setTeacher(Gym.listOfInstructors.get(dataSnapshot.child("teacher").getValue(String.class)));
-                c.setTime(dataSnapshot.child("time").getValue(String.class));
+                }*/
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Gym.listOfInstructors.remove(dataSnapshot.getKey());
+
             }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
     }
 

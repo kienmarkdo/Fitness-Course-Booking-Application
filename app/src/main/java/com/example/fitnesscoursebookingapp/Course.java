@@ -103,9 +103,4 @@ public class Course {
 
     public void setStudents(ArrayList<GymMember> students) { this.students = students; }
 
-    public void addStudent(GymMember student) {
-        students.add(student);
-        numberOfStudents++;
-    }
-
 } // end of Course class
