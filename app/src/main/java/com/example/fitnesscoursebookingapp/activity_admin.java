@@ -43,6 +43,12 @@ public class activity_admin extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        // TODO: Refactor program to listView after Deliverable 1
+        //  currently takes in text as input from the user
+        //  the reason we want listView is because:
+        //  1. It shows the user what options they have
+        //  2. It removes error from the user keyboard input (i.e.: a course that doesn't exist OR an empty string)
+
         // initializers for the Dropdown menu in Admin
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
@@ -74,15 +80,12 @@ public class activity_admin extends Activity implements View.OnClickListener {
         deleteCourseBtn = (Button) findViewById(R.id.deleteCourseButton);
         deleteUserBtn = (Button) findViewById(R.id.deleteUserButton);
 
-        // TODO: setting on click listener on createCourseButton will cause the app to crash after logging in
-        //  Commenting out this block of code below will stop the app from crashing.
         createCourseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createCourse();
             }
         });
-
 
 //        editCourseBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -105,7 +108,6 @@ public class activity_admin extends Activity implements View.OnClickListener {
             public void onClick(View view) {
                 deleteUser();
             }
-
         });
 
 
@@ -133,7 +135,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
                         return true;
                     }
                 });
-    }
+    } // end of relativeLayout
 
     //************** CODE TO CREATE THE DROPDOWN MENU FOR ACTIVITY_ADMIN.XML****************
     private void expand(RelativeLayout layout, int layoutHeight) {
@@ -306,6 +308,9 @@ public class activity_admin extends Activity implements View.OnClickListener {
      */
     private void deleteUser() {
 
+        // TODO: Pressing on the delete user button returns the user to the MainActivity page
+        //  Needs to fix but is not urgent.
+
         // NOTE: The reason we are NOT checking to see if the username to be deleted or not
         //  is because we are selecting the pre-existing user from a list view. Therefore, we cannot
         //  have an inputted username that does not exist.
@@ -332,8 +337,6 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
             } // end of onCalled()
         }); // end of listener
-
-
 
     } // end of deleteUser()
 
