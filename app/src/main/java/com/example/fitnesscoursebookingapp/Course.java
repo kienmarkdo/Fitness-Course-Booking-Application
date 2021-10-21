@@ -108,4 +108,9 @@ public class Course {
         numberOfStudents++;
     }
 
+    public void removeStudent(GymMember student) {
+        students.remove(student);
+        numberOfStudents--;
+    }
+
 } // end of Course class

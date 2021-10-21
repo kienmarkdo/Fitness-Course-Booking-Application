@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Called when the app is opened. Initializes and keeps Gym updated with
      * the course information throughout the app's runtime.
-     * @param db
+     * @param db is the FirebaseDatabase to fetch the data from.
      */
     private void updateCourses(FirebaseDatabase db) {
         Gym.listOfCourses.clear();
@@ -258,31 +258,71 @@ public class MainActivity extends AppCompatActivity {
         db.getReference("Courses").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Gym.listOfCourses.put(dataSnapshot.getKey(), new Course(
-                    dataSnapshot.child("name").getValue(String.class),
+                Instructor t = Gym.listOfInstructors.get(dataSnapshot.child("teacher").getValue(String.class));
+                Course newCourse = new Course(
+                        dataSnapshot.child("name").getValue(String.class),
                         dataSnapshot.child("description").getValue(String.class),
                         dataSnapshot.child("time").getValue(String.class),
                         dataSnapshot.child("hourDuration").getValue(Float.class),
-                        Gym.listOfInstructors.get(dataSnapshot.child("teacher").getValue(String.class)),
+                        t,
                         dataSnapshot.child("experienceLevel").getValue(String.class)
-                ));
+                );
+
+                Gym.listOfCourses.put(dataSnapshot.getKey(), newCourse);
+                t.addCourseTeaching(newCourse);
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Course c = Gym.listOfCourses.get(dataSnapshot.getKey());
+                Instructor t = Gym.listOfInstructors.get(dataSnapshot.child("teacher").getValue(String.class));
 
                 c.setDescription(dataSnapshot.child("description").getValue(String.class));
                 c.setExperienceLevel(dataSnapshot.child("experienceLevel").getValue(String.class));
                 c.setHourDuration(dataSnapshot.child("hourDuration").getValue(Float.class));
                 c.setName(dataSnapshot.child("name").getValue(String.class));
-                c.setTeacher(Gym.listOfInstructors.get(dataSnapshot.child("teacher").getValue(String.class)));
+                if (c.getTeacher() != t) {
+                    c.setTeacher(t);
+                    t.addCourseTeaching(c);
+                }
+                c.setTeacher(t);
                 c.setTime(dataSnapshot.child("time").getValue(String.class));
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 Gym.listOfInstructors.remove(dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+
+        // instantiate and constantly update course-student pairs in Gym and associated
+        // GymMember and Course objects.
+        db.getReference("Attendees").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                GymMember student = Gym.listOfGymMember.get(dataSnapshot.child("member").getValue(String.class));
+                Course course = Gym.listOfCourses.get(dataSnapshot.child("course").getValue(String.class));
+
+                student.addCourseAttending(course);
+                course.addStudent(student);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                GymMember student = Gym.listOfGymMember.get(dataSnapshot.child("member").getValue(String.class));
+                Course course = Gym.listOfCourses.get(dataSnapshot.child("course").getValue(String.class));
+
+                course.removeStudent(student);
+                student.removeCourseAttending(course);
             }
 
             @Override

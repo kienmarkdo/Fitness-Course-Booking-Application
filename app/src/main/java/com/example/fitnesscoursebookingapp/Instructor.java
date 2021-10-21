@@ -65,4 +65,6 @@ public class Instructor extends User {
     public Course[] getCourseTeaching() {
         return null;
     }
+
+    public void addCourseTeaching(Course c) { courseTeaching.add(c); }
 }
