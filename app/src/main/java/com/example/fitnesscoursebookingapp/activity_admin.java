@@ -84,7 +84,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
         });
 
         /*
-        editCourseButton.setOnClickListener(new View.OnClickListener() {
+        editCourseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editCourse();
@@ -92,7 +92,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
         });
 
-        deleteCourseButton.setOnClickListener(new View.OnClickListener() {
+        deleteCourseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteCourse();
@@ -100,7 +100,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
         });
 
-        deleteUserButton.setOnClickListener(new View.OnClickListener() {
+        deleteUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteUser();
