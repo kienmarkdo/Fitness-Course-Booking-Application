@@ -37,6 +37,8 @@ public class activity_admin extends Activity implements View.OnClickListener {
     EditText courseDescriptionChangeInput;
     EditText deleteCourseNameInput;
     EditText deleteUsernameInput;
+    EditText editCourseNameInput;
+    EditText editCourseDescriptionInput;
 
 
     @SuppressLint("WrongViewCast")
@@ -74,6 +76,8 @@ public class activity_admin extends Activity implements View.OnClickListener {
         courseDescriptionChangeInput = findViewById(R.id.courseDescriptionChangeInput);
         deleteCourseNameInput = findViewById(R.id.deleteCourseNameInput);
         deleteUsernameInput = findViewById(R.id.deleteUserNameInput);
+        editCourseNameInput = findViewById(R.id.courseNameChangeInput);
+        editCourseDescriptionInput = findViewById(R.id.courseDescriptionChangeInput);
 
         createCourseBtn = (Button) findViewById(R.id.createCourseButton);
         editCourseBtn = (Button) findViewById(R.id.editCourseButton);
@@ -95,18 +99,25 @@ public class activity_admin extends Activity implements View.OnClickListener {
 //
 //        });
 
-//        deleteCourseBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                deleteCourse();
-//            }
-//
-//        });
+        deleteCourseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteCourse();
+            }
+
+        });
 
         deleteUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteUser();
+            }
+        });
+
+        editCourseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editCourse();
             }
         });
 
@@ -294,13 +305,87 @@ public class activity_admin extends Activity implements View.OnClickListener {
     } // end of createCourse()
 
 
-//    private void editCourse(){
-//
-//    }
+    private void editCourse(){
+        String courseNameStr = addCourseInput.getText().toString();
+        String courseDescriptionStr = addCourseDescriptionInput.getText().toString();
 
-//    private void deleteCourse(){
-//
-//    }
+        // =======  check if the course name is empty or not  =======
+        if (courseNameStr.equals("")) {
+            addCourseInput.setError("The course name cannot be blank.");
+            addCourseInput.requestFocus();
+            return;
+        }
+
+        // NOTE: The input is case sensitive, which means the course "Tennis" and "tennis" may co-exist at the same time
+
+        // =======  check if the course exists in the database or not  =======
+
+        // fetches instance of database.
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Courses");
+
+        // Orders in search for the course name
+        Query checkCourse = reference.orderByChild("name").equalTo(courseNameStr);
+
+        checkCourse.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // checks whether the username already exists or not
+                if (!dataSnapshot.exists()) {
+                    addCourseInput.setError("Could not find the course with given name.");
+                    addCourseInput.requestFocus();
+                } else {
+                    addCourseInput.setError(null);
+                    String key = dataSnapshot.getChildren().iterator().next().getRef().getKey();
+                    reference.child(key).child("description").setValue(courseDescriptionStr);
+                    printCourseEditSuccessMessage();
+                } // end of outer if/else
+
+            } // end of onDataChange()
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            } // end of onCalled()
+        }); // end of checkCourse listener
+    }
+
+    private void deleteCourse(){
+
+        // NOTE: The reason we are NOT checking to see if the username to be deleted or not
+        //  is because we are selecting the pre-existing user from a list view. Therefore, we cannot
+        //  have an inputted username that does not exist.
+
+        String deleteCourseStr = deleteCourseNameInput.getText().toString();
+
+        // fetches instance of database.
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Courses");
+
+        // Orders in search for the course name
+        Query checkUser = reference.orderByChild("name").equalTo(deleteCourseStr);
+
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (!dataSnapshot.exists()) {
+                    deleteCourseNameInput.setError("This course name does not exist.");
+                    deleteCourseNameInput.requestFocus();
+                } else {
+                    deleteCourseNameInput.setError(null);
+                    // remove the username here
+                    dataSnapshot.getChildren().iterator().next().getRef().removeValue();
+                    printCourseRemovedSuccessMessage();
+                }
+
+
+            } // end of onDataChange()
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            } // end of onCalled()
+        }); // end of listener
+    }
 
     /**
      * Deleting the user from the firebase
@@ -308,8 +393,6 @@ public class activity_admin extends Activity implements View.OnClickListener {
      */
     private void deleteUser() {
 
-        // TODO: Pressing on the delete user button returns the user to the MainActivity page
-        //  Needs to fix but is not urgent.
 
         // NOTE: The reason we are NOT checking to see if the username to be deleted or not
         //  is because we are selecting the pre-existing user from a list view. Therefore, we cannot
@@ -397,6 +480,43 @@ public class activity_admin extends Activity implements View.OnClickListener {
         toast.show();
     } // end of printUserRemovedSuccessMessage()
 
+    private void printCourseRemovedSuccessMessage() {
+        // hides the keyboard
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
 
+        deleteCourseNameInput.getText().clear();
+
+        // displays the success message
+        Context context = getApplicationContext();
+        CharSequence text = "Course Removed Successfully!";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    private void printCourseEditSuccessMessage() {
+        // hides the keyboard
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+        editCourseNameInput.getText().clear();
+        editCourseDescriptionInput.getText().clear();
+
+        // displays the success message
+        Context context = getApplicationContext();
+        CharSequence text = "Course description edited successfully!";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
 } // end of activity_admin
 
