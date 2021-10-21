@@ -37,7 +37,7 @@
 
             <TextView
 
-                android:id="@+id/createCourseBtn"
+                android:id="@+id/createCourseExpand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Create Course"
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/editCourseBtn"
+                android:id="@+id/editCourseExpand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Edit Course"
@@ -159,7 +159,7 @@
 
             <TextView
 
-                android:id="@+id/deleteCourseBtn"
+                android:id="@+id/deleteCourseExpand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Delete Course"
@@ -210,7 +210,7 @@
 
             <TextView
 
-                android:id="@+id/deleteUserBtn"
+                android:id="@+id/deleteUserExpand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Delete User"

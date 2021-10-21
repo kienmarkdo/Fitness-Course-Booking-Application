@@ -2,6 +2,7 @@ package com.example.fitnesscoursebookingapp;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,7 +28,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
     RelativeLayout relativeLayout, relativeLayout1, relativeLayout2, relativeLayout3;
     Button viewmore, viewmore1, viewmore2, viewmore3;
-    Button createCourseButton, editCourseButton, deleteCourseButton, deleteUserButton;
+    Button createCourseBtn, editCourseBtn, deleteCourseBtn, deleteUserBtn;
     int height, height1, height2, height3;
 
     EditText addCourseInput;
@@ -39,6 +39,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
     EditText deleteUsernameInput;
 
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -68,9 +69,14 @@ public class activity_admin extends Activity implements View.OnClickListener {
         deleteCourseNameInput = findViewById(R.id.deleteCourseNameInput);
         deleteUsernameInput = findViewById(R.id.deleteUserNameInput);
 
+        createCourseBtn = (Button) findViewById(R.id.createCourseButton);
+        editCourseBtn = (Button) findViewById(R.id.editCourseButton);
+        deleteCourseBtn = (Button) findViewById(R.id.deleteCourseButton);
+        deleteUserBtn = (Button) findViewById(R.id.deleteUserButton);
+
         // TODO: setting on click listener on createCourseButton will cause the app to crash after logging in
         //  Commenting out this block of code below will stop the app from crashing.
-        createCourseButton.setOnClickListener(new View.OnClickListener() {
+        createCourseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createCourse();
