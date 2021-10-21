@@ -1,5 +1,7 @@
 package com.example.fitnesscoursebookingapp;
 
+import java.util.ArrayList;
+
 /**
  * A course in the gym
  *
@@ -15,7 +17,7 @@ public class Course {
     private String time; // hour, date, month, year
     private float hourDuration; // how long the course lasts (i.e.: 1.5 hours)
     private int numberOfStudents; // number of students enrolled in a course
-    private GymMember[] students; // list of all students (this stays as an array because there is a max num of students)
+    private ArrayList<GymMember> students; // list of all students (this stays as an array because there is a max num of students)
 
     /** Constructor methods */
     public Course() {
@@ -26,6 +28,17 @@ public class Course {
     public Course(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public Course(String name, String description, String time, float hourDuration,
+                  Instructor teacher, String experienceLevel, ArrayList<GymMember> students) {
+        this.name = name;
+        this.description = description;
+        this.time = time;
+        this.hourDuration = hourDuration;
+        this.teacher = teacher;
+        this.experienceLevel = experienceLevel;
+        this.students = students;
     }
 
     /** Get and Set methods */
@@ -85,12 +98,10 @@ public class Course {
         this.numberOfStudents = numberOfStudents;
     }
 
-    public GymMember[] getStudents() {
+    public ArrayList<GymMember> getStudents() {
         return students;
     }
 
-    public void setStudents(GymMember[] students) {
-        this.students = students;
-    }
+    public void setStudents(ArrayList<GymMember> students) { this.students = students; }
 
 } // end of Course class

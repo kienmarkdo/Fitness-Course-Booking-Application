@@ -243,7 +243,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
         // =======  check if the course name is empty or not  =======
         if (courseNameStr.equals("")) {
             addCourseInput.setError("The course name cannot be blank.");
-            addCourseDescriptionInput.requestFocus();
+            addCourseInput.requestFocus();
             return;
         }
 
@@ -267,7 +267,11 @@ public class activity_admin extends Activity implements View.OnClickListener {
                 } else {
                     addCourseInput.setError(null);
                     Course newCourse = new Course(courseNameStr, courseDescriptionStr);
-                    reference.push().setValue(newCourse); // add new course here
+                    DatabaseReference ref = reference.push(); // add new course here
+                    ref.child("experienceLevel").setValue("");
+                    ref.child("hourDuration").setValue(0);
+                    ref.child("teacher").setValue("");
+                    ref.child("time").setValue("");
                     printCourseAddedSuccessMessage();
                 } // end of outer if/else
 
