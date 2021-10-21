@@ -83,22 +83,22 @@ public class activity_admin extends Activity implements View.OnClickListener {
             }
         });
 
-        /*
-        editCourseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editCourse();
-            }
 
-        });
+//        editCourseBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                editCourse();
+//            }
+//
+//        });
 
-        deleteCourseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteCourse();
-            }
-
-        });
+//        deleteCourseBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                deleteCourse();
+//            }
+//
+//        });
 
         deleteUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +106,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
                 deleteUser();
             }
 
-        });*/
+        });
 
 
         relativeLayout.getViewTreeObserver().addOnPreDrawListener(
@@ -291,18 +291,51 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
     } // end of createCourse()
 
-    /*
-    private void editCourse(){
 
-    }
+//    private void editCourse(){
+//
+//    }
 
-    private void deleteCourse(){
+//    private void deleteCourse(){
+//
+//    }
 
-    }
+    /**
+     * Deleting the user from the firebase
+     * Instead of directly deleting from firebase, performs the method through the hashmap in Gym
+     */
+    private void deleteUser() {
 
-    private void deleteUser(){
+        // NOTE: The reason we are NOT checking to see if the username to be deleted or not
+        //  is because we are selecting the pre-existing user from a list view. Therefore, we cannot
+        //  have an inputted username that does not exist.
 
-    }*/
+        String deleteUsernameStr = deleteUsernameInput.getText().toString();
+
+        // fetches instance of database.
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+
+        // Orders in search for the course name
+        Query checkUser = reference.orderByChild("username").equalTo(deleteUsernameStr);
+
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                // remove the username here
+                dataSnapshot.getChildren().iterator().next().getRef().removeValue();
+
+            } // end of onDataChange()
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            } // end of onCalled()
+        }); // end of listener
+
+
+
+    } // end of deleteUser()
 
 
     /**
