@@ -39,6 +39,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
     EditText deleteUsernameInput;
     EditText editCourseNameInput;
     EditText editCourseDescriptionInput;
+    EditText newCourseNameInput;
 
 
     @SuppressLint("WrongViewCast")
@@ -78,6 +79,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
         deleteUsernameInput = findViewById(R.id.deleteUserNameInput);
         editCourseNameInput = findViewById(R.id.courseNameChangeInput);
         editCourseDescriptionInput = findViewById(R.id.courseDescriptionChangeInput);
+        newCourseNameInput = findViewById(R.id.courseNameChangeInput);
 
         createCourseBtn = (Button) findViewById(R.id.createCourseButton);
         editCourseBtn = (Button) findViewById(R.id.editCourseButton);
@@ -306,15 +308,17 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
 
     private void editCourse(){
-        String courseNameStr = addCourseInput.getText().toString();
-        String courseDescriptionStr = addCourseDescriptionInput.getText().toString();
+        String courseNameStr = editCourseNameInput.getText().toString();
+        String courseDescriptionStr = editCourseDescriptionInput.getText().toString();
+        String courseNewNameStr = newCourseNameInput.getText().toString();
 
         // =======  check if the course name is empty or not  =======
         if (courseNameStr.equals("")) {
-            addCourseInput.setError("The course name cannot be blank.");
-            addCourseInput.requestFocus();
+            editCourseNameInput.setError("The course name cannot be blank.");
+            editCourseNameInput.requestFocus();
             return;
         }
+
 
         // NOTE: The input is case sensitive, which means the course "Tennis" and "tennis" may co-exist at the same time
 
@@ -331,14 +335,21 @@ public class activity_admin extends Activity implements View.OnClickListener {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // checks whether the username already exists or not
                 if (!dataSnapshot.exists()) {
-                    addCourseInput.setError("Could not find the course with given name.");
-                    addCourseInput.requestFocus();
+                    editCourseNameInput.setError("Could not find the course with given name.");
+                    editCourseNameInput.requestFocus();
                 } else {
-                    addCourseInput.setError(null);
+                    editCourseNameInput.setError(null);
                     String key = dataSnapshot.getChildren().iterator().next().getRef().getKey();
                     reference.child(key).child("description").setValue(courseDescriptionStr);
                     printCourseEditSuccessMessage();
                 } // end of outer if/else
+
+                if (!courseNewNameStr.equals("")) {
+                    newCourseNameInput.setError(null);
+                    String key = dataSnapshot.getChildren().iterator().next().getRef().getKey();
+                    reference.child(key).child("name").setValue(courseNewNameStr);
+                    printCourseEditSuccessMessage();
+                }
 
             } // end of onDataChange()
 

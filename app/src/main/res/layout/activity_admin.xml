@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none">
@@ -120,10 +121,10 @@
         <RelativeLayout
             android:id="@+id/expandable1"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:animateLayoutChanges="true"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <EditText
                 android:id="@+id/courseNameChangeInput"
@@ -139,14 +140,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:ems="10"
-                android:hint="Course Description"
+                android:hint="New course description"
                 android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/newNameChangeInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:hint="New course name (if applicable)" />
 
             <Button
                 android:id="@+id/editCourseButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="150dp"
                 android:text="EDIT COURSE" />
 
 
