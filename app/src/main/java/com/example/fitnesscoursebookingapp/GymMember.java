@@ -63,8 +63,4 @@ public class GymMember extends User {
     public void setLegalName(String legalName) {
         this.legalName = legalName;
     }
-
-    public void addCourseAttending(Course c) { coursesAttending.add(c); }
-
-    public void removeCourseAttending(Course c) { coursesAttending.remove(c); }
 }
