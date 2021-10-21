@@ -190,16 +190,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot user : dataSnapshot.getChildren()) {
-                    boolean isBothTypes = user.child("userType").getValue().equals("both");
 
-                    if (isBothTypes || user.child("userType").getValue().equals("gymMember")) {
-                        Gym.listOfGymMember.remove(user.getKey());
-                    }
-                    if (isBothTypes || user.child("userType").getValue().equals("instructor")){
-                        Gym.listOfInstructors.remove(user.getKey());
-                    }
+                boolean isBothTypes = dataSnapshot.child("userType").getValue().equals("both");
+
+                if (isBothTypes || dataSnapshot.child("userType").getValue().equals("gymMember")) {
+                    Gym.listOfGymMember.remove(dataSnapshot.getKey());
                 }
+                if (isBothTypes || dataSnapshot.child("userType").getValue().equals("instructor")){
+                    Gym.listOfInstructors.remove(dataSnapshot.getKey());
+                }
+
             }
 
             @Override

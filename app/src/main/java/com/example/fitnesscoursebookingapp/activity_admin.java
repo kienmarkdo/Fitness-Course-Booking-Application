@@ -327,8 +327,16 @@ public class activity_admin extends Activity implements View.OnClickListener {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                // remove the username here
-                dataSnapshot.getChildren().iterator().next().getRef().removeValue();
+                if (!dataSnapshot.exists()) {
+                    deleteUsernameInput.setError("This username does not exist.");
+                    deleteUsernameInput.requestFocus();
+                } else {
+                    deleteUsernameInput.setError(null);
+                    // remove the username here
+                    dataSnapshot.getChildren().iterator().next().getRef().removeValue();
+                    printUserRemovedSuccessMessage();
+                }
+
 
             } // end of onDataChange()
 
@@ -340,6 +348,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
     } // end of deleteUser()
 
+    // ================  Print Success Messages  ================
 
     /**
      * Displays a small pop-up at the bottom of the screen indicating that adding a course was a success
@@ -364,6 +373,29 @@ public class activity_admin extends Activity implements View.OnClickListener {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     } // end of printCourseAddedSuccessMessage()
+
+    /**
+     * Displays a small pop-up at the bottom of the screen indicating that removing user was a success
+     */
+    private void printUserRemovedSuccessMessage() {
+
+        // hides the keyboard
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+        deleteUsernameInput.getText().clear();
+
+        // displays the success message
+        Context context = getApplicationContext();
+        CharSequence text = "User Removed Successfully!";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    } // end of printUserRemovedSuccessMessage()
 
 
 } // end of activity_admin
