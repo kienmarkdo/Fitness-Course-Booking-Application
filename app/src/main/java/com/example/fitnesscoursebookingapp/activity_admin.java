@@ -272,8 +272,8 @@ public class activity_admin extends Activity implements View.OnClickListener {
                     addCourseInput.requestFocus();
                 } else {
                     addCourseInput.setError(null);
-                    reference.setValue(new Course(courseNameStr, courseDescriptionStr));
                     DatabaseReference ref = reference.push(); // add new course here
+                    ref.setValue(new Course(courseNameStr, courseDescriptionStr));
                     ref.child("experienceLevel").setValue("");
                     ref.child("hourDuration").setValue(0);
                     ref.child("teacher").setValue("");
