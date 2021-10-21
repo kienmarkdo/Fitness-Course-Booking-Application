@@ -73,13 +73,12 @@ public class activity_admin extends Activity implements View.OnClickListener {
         // initializers for different Admin Commands
         addCourseInput = findViewById(R.id.addCourseInput);
         addCourseDescriptionInput = findViewById(R.id.addCourseDescriptionInput);
-        courseNameChangeInput = findViewById(R.id.courseNameChangeInput);
         courseDescriptionChangeInput = findViewById(R.id.courseDescriptionChangeInput);
         deleteCourseNameInput = findViewById(R.id.deleteCourseNameInput);
         deleteUsernameInput = findViewById(R.id.deleteUserNameInput);
         editCourseNameInput = findViewById(R.id.courseNameChangeInput);
         editCourseDescriptionInput = findViewById(R.id.courseDescriptionChangeInput);
-        newCourseNameInput = findViewById(R.id.courseNameChangeInput);
+        newCourseNameInput = findViewById(R.id.newNameChangeInput);
 
         createCourseBtn = (Button) findViewById(R.id.createCourseButton);
         editCourseBtn = (Button) findViewById(R.id.editCourseButton);
@@ -153,7 +152,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
     //************** CODE TO CREATE THE DROPDOWN MENU FOR ACTIVITY_ADMIN.XML****************
     private void expand(RelativeLayout layout, int layoutHeight) {
         layout.setVisibility(View.VISIBLE);
-        ValueAnimator animator = slideAnimator(layout, 0, layoutHeight);
+        ValueAnimator animator = slideAnimator(layout, 0, 1500); // TODO: Third parameter was layoutHeight before. Fix this so that the height is automatic.
         animator.start();
     }
 
@@ -339,17 +338,15 @@ public class activity_admin extends Activity implements View.OnClickListener {
                     editCourseNameInput.requestFocus();
                 } else {
                     editCourseNameInput.setError(null);
-                    String key = dataSnapshot.getChildren().iterator().next().getRef().getKey();
-                    reference.child(key).child("description").setValue(courseDescriptionStr);
+                    DatabaseReference course = dataSnapshot.getChildren().iterator().next().getRef();
+                    course.child("description").setValue(courseDescriptionStr);
+
+                    if (!courseNewNameStr.equals("")) {
+                        newCourseNameInput.setError(null);
+                        course.child("name").setValue(courseNewNameStr);
+                    }
                     printCourseEditSuccessMessage();
                 } // end of outer if/else
-
-                if (!courseNewNameStr.equals("")) {
-                    newCourseNameInput.setError(null);
-                    String key = dataSnapshot.getChildren().iterator().next().getRef().getKey();
-                    reference.child(key).child("name").setValue(courseNewNameStr);
-                    printCourseEditSuccessMessage();
-                }
 
             } // end of onDataChange()
 
@@ -520,6 +517,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
         editCourseNameInput.getText().clear();
         editCourseDescriptionInput.getText().clear();
+        newCourseNameInput.getText().clear();
 
         // displays the success message
         Context context = getApplicationContext();

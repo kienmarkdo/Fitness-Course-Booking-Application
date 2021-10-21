@@ -132,7 +132,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Course name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/courseDescriptionChangeInput"
@@ -141,14 +142,18 @@
                 android:layout_marginTop="50dp"
                 android:ems="10"
                 android:hint="New course description"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/newNameChangeInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
-                android:hint="New course name (if applicable)" />
+                android:ems="10"
+                android:hint="New course name (if applicable)"
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
 
             <Button
                 android:id="@+id/editCourseButton"

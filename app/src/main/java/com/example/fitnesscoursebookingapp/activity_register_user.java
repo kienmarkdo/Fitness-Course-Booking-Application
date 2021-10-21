@@ -43,6 +43,10 @@ public class activity_register_user extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // TODO: Currently, this register user page does not allow a user to create an account
+        //  as BOTH instructor AND gym member. Need to implement this at a later deliverable.
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
