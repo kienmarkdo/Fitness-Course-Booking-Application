@@ -89,8 +89,6 @@ public class activity_admin extends Activity implements View.OnClickListener {
         });*/
 
 
-
-
         relativeLayout.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
 
@@ -117,7 +115,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
                 });
     }
 
-  //************** CODE TO CREATE THE DROPDOWN MENU FOR ACTIVITY_ADMIN.XML****************
+    //************** CODE TO CREATE THE DROPDOWN MENU FOR ACTIVITY_ADMIN.XML****************
     private void expand(RelativeLayout layout, int layoutHeight) {
         layout.setVisibility(View.VISIBLE);
         ValueAnimator animator = slideAnimator(layout, 0, layoutHeight);
@@ -173,6 +171,9 @@ public class activity_admin extends Activity implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.viewmore:
                 if (relativeLayout.getVisibility() == View.GONE) {
+                    collapse(relativeLayout1);
+                    collapse(relativeLayout2);
+                    collapse(relativeLayout3);
                     expand(relativeLayout, height);
                 } else {
                     collapse(relativeLayout);
@@ -181,6 +182,9 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
             case R.id.viewmore1:
                 if (relativeLayout1.getVisibility() == View.GONE) {
+                    collapse(relativeLayout);
+                    collapse(relativeLayout2);
+                    collapse(relativeLayout3);
                     expand(relativeLayout1, height1);
                 } else {
                     collapse(relativeLayout1);
@@ -189,6 +193,9 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
             case R.id.viewmore2:
                 if (relativeLayout2.getVisibility() == View.GONE) {
+                    collapse(relativeLayout);
+                    collapse(relativeLayout1);
+                    collapse(relativeLayout3);
                     expand(relativeLayout2, height2);
                 } else {
                     collapse(relativeLayout2);
@@ -197,6 +204,9 @@ public class activity_admin extends Activity implements View.OnClickListener {
 
             case R.id.viewmore3:
                 if (relativeLayout3.getVisibility() == View.GONE) {
+                    collapse(relativeLayout);
+                    collapse(relativeLayout1);
+                    collapse(relativeLayout2);
                     expand(relativeLayout3, height3);
                 } else {
                     collapse(relativeLayout3);

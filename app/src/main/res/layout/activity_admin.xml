@@ -5,7 +5,6 @@
     android:scrollbars="none">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="280dp"
                 android:background="@null"
-                android:text="viewmore" />
+                android:text="view more" />
 
 
         </RelativeLayout>
@@ -48,13 +47,12 @@
 
         <RelativeLayout
 
-            android:visibility="gone"
             android:id="@+id/expandable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:background="@color/colorAccent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
 
             <EditText
@@ -69,8 +67,8 @@
                 android:id="@+id/addCourseDescriptionInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_marginTop="50dp"
+                android:ems="10"
                 android:hint="Enter Course Description"
                 android:inputType="textPersonName" />
 
@@ -104,19 +102,18 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="280dp"
                 android:background="@null"
-                android:text="viewmore" />
+                android:text="@string/viewmore" />
 
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:visibility="gone"
-            android:animateLayoutChanges="true"
             android:id="@+id/expandable1"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="30dp"
-            android:background="@color/colorPrimary">
+            android:animateLayoutChanges="true"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/courseNameChangeInput"
@@ -130,8 +127,8 @@
                 android:id="@+id/courseDescriptionChangeInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_marginTop="50dp"
+                android:ems="10"
                 android:hint="Course Description"
                 android:inputType="textPersonName" />
 
@@ -141,8 +138,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
                 android:text="EDIT COURSE" />
-
-
 
 
         </RelativeLayout>
@@ -166,19 +161,18 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="280dp"
                 android:background="@null"
-                android:text="viewmore" />
+                android:text="@string/viewmore" />
 
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:visibility="gone"
-            android:animateLayoutChanges="true"
             android:id="@+id/expandable2"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginTop="30dp"
-            android:background="@color/colorPrimary">
+            android:animateLayoutChanges="true"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/deleteCourseNameInput"
@@ -218,19 +212,18 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="280dp"
                 android:background="@null"
-                android:text="viewmore" />
+                android:text="@string/viewmore" />
 
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:visibility="gone"
-            android:animateLayoutChanges="true"
             android:id="@+id/expandable3"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginTop="30dp"
-            android:background="@color/colorPrimary">
+            android:animateLayoutChanges="true"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/deleteUserNameInput"
