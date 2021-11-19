@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     // list of possible activities this activity may navigate to
     private enum NextActivity {
-        REGISTER_USER, ADMIN, WELCOME_SCREEN
+        REGISTER_USER, ADMIN, WELCOME_SCREEN, INSTRUCTOR;
     }
 
     @Override
@@ -107,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
 
                     String databasePassword = user.child("password").getValue(String.class);
 
+                    String role = user.child("userType").getValue(String.class);
+
                     //Checks if passowrd inputs matches to associatd passowrd with user.
                     if (passwordInput.equals(databasePassword)) {
 
@@ -117,8 +119,13 @@ public class MainActivity extends AppCompatActivity {
                             switchActivities(NextActivity.ADMIN, null);
                         }
 
+                        else if (role.equals("instructor")) {
+                            String[] infoArr = {usernameInput};
+                            switchActivities(NextActivity.INSTRUCTOR, infoArr);
+                        }
+
                         else {
-                            String role = user.child("userType").getValue(String.class);
+                            //String role = user.child("userType").getValue(String.class);
                             String[] infoArr = {role, usernameInput};
                             switchActivities(NextActivity.WELCOME_SCREEN, infoArr);
                         }
@@ -153,6 +160,10 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent();
         switch (val) {
+            case INSTRUCTOR:
+                intent = new Intent(this, activity_instructor.class);
+                intent.putExtra("strings", extra);
+                break;
             case ADMIN:
                 intent = new Intent(this, activity_admin.class);
                 break;
