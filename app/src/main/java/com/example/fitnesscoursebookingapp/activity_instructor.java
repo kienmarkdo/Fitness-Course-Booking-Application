@@ -113,8 +113,9 @@ public class activity_instructor extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 courseList.clear();
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    Course course = postSnapshot.getValue(Course.class);
-                    courseList.add(course);
+
+                    Course tempCourse = postSnapshot.getValue(Course.class);
+                    courseList.add(tempCourse);
                 }
                 CourseList courseAdapter = new CourseList(activity_instructor.this, courseList);
                 listViewCourses.setAdapter(courseAdapter);
@@ -127,6 +128,7 @@ public class activity_instructor extends Activity {
 
         });
     }
+
 
     public void createCourse() {
         /*

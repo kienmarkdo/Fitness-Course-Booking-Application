@@ -14,6 +14,15 @@ public class Instructor extends User {
     ArrayList<Course> courseTeaching;
 
     /** Constructor */
+
+    public Instructor() {
+
+    }
+
+    public Instructor(String legalName) {
+        this.legalName = legalName;
+    }
+
     public Instructor(String username, String password) {
         super(username, password);
         usertype = "instructor";

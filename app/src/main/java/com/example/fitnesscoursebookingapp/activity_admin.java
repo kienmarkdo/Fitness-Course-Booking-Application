@@ -287,11 +287,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
                 } else {
                     addCourseInput.setError(null);
                     DatabaseReference ref = reference.push(); // add new course here
-                    ref.setValue(new Course(courseNameStr, courseDescriptionStr));
-                    ref.child("experienceLevel").setValue("");
-                    ref.child("hourDuration").setValue(0);
-                    ref.child("teacher").setValue("");
-                    ref.child("time").setValue("");
+                    ref.setValue(new Course(courseNameStr, courseDescriptionStr, "", 0, new Instructor("Blank"), "" ));
                     printCourseAddedSuccessMessage();
                 } // end of outer if/else
 
