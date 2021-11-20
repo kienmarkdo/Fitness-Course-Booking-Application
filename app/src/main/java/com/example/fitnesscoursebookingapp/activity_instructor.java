@@ -194,7 +194,7 @@ public class activity_instructor extends Activity {
                     editDuration.setText("");
 
                 } else {
-                    editCourseName.setError("Cannot contain empty field");
+                    editCourseName.setError("Class type does not exist");
                     editCourseName.requestFocus();
                 } // end of outer if/else
 
@@ -209,6 +209,68 @@ public class activity_instructor extends Activity {
     }
 
     public void cancelCourse() {
+
+        String courseName = editCourseName.getText().toString();
+        String day = editDay.getText().toString();
+
+
+        boolean check1 = courseName.equals("");
+
+        boolean check3 = day.equals("");
+
+        // =======  check if the course name is empty or not  =======
+        /*if (!(check1 && check2 && check3 && check4 && check5)) {
+            editCourseName.setError("Cannot contain empty field");
+            editCourseName.requestFocus();
+            return;
+        }*/
+
+        // NOTE: The input is case sensitive, which means the course "Tennis" and "tennis" may co-exist at the same time
+
+        // =======  check if the course exists in the database or not  =======
+
+        // fetches instance of database.
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Courses");
+
+        // Orders in search for the course name
+        Query checkCourse = reference.orderByChild("name").equalTo(courseName);
+
+
+
+        checkCourse.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+                    for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        Course tempCourse = postSnapshot.getValue(Course.class);
+
+                        if (tempCourse.getTime().equals(day)) {
+                            editCourseName.setError(null);
+                            editCourseName.setError(null);
+                            postSnapshot.getRef().removeValue();
+                            editCourseName.setText("");
+                            editDay.setText("");
+                            return;
+                        }
+                    }
+
+
+
+
+                } else {
+                    editCourseName.setError("Class does not exist");
+                    editCourseName.requestFocus();
+                } // end of outer if/else
+
+            } // end of onDataChange()
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            } // end of onCalled()
+        }); // end of checkCourse listener
 
     }
 
