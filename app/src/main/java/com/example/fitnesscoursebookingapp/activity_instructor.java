@@ -129,49 +129,73 @@ public class activity_instructor extends Activity {
         });
     }
 
+    public void checkSchedulingConflict() {
+
+    }
+
 
     public void createCourse() {
-        /*
-        String productName= editProductName.getText().toString();
-        String productPrice = editProductPrice.getText().toString();
+
+        String courseName = editCourseName.getText().toString();
+        String experience = editExperience.getText().toString();
+        String day = editDay.getText().toString();
+        String capacityLimit = editCapacityLimit.getText().toString();
+        String duration = editDuration.getText().toString();
+
+        boolean check1 = courseName.equals("");
+        boolean check2 = experience.equals("");
+        boolean check3 = day.equals("");
+        boolean check4 = capacityLimit.equals("");
+        boolean check5 = duration.equals("");
 
         // =======  check if the course name is empty or not  =======
-        if (productName.equals("")) {
-            editProductName.setError("The product name cannot be blank.");
-            editProductName.requestFocus();
+        /*if (!(check1 && check2 && check3 && check4 && check5)) {
+            editCourseName.setError("Cannot contain empty field");
+            editCourseName.requestFocus();
             return;
-        }
-
-        else if (productPrice.equals("")) {
-            editProductPrice.setError("The price cannot be blank.");
-            editProductPrice.requestFocus();
-            return;
-        }
+        }*/
 
         // NOTE: The input is case sensitive, which means the course "Tennis" and "tennis" may co-exist at the same time
 
         // =======  check if the course exists in the database or not  =======
 
         // fetches instance of database.
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Products");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Courses");
 
         // Orders in search for the course name
-        Query checkCourse = reference.orderByChild("productName").equalTo(productName);
+        Query checkCourse = reference.orderByChild("name").equalTo(courseName);
+
+
 
         checkCourse.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // checks whether the username already exists or not
+
                 if (dataSnapshot.exists()) {
-                    editProductName.setError("This product already exists. Please re-enter a new product name.");
-                    editProductName.requestFocus();
-                } else {
-                    editProductName.setError(null);
-                    editProductPrice.setError(null);
+
+                    for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        Course tempCourse = postSnapshot.getValue(Course.class);
+
+                        if (tempCourse.getTime().equals(day)) {
+                            editCourseName.setError("Day already scheduled");
+                            editCourseName.requestFocus();
+                            return;
+                        }
+                    }
+
+                    editCourseName.setError(null);
+                    editCourseName.setError(null);
                     DatabaseReference ref = reference.push(); // add new course here
-                    ref.setValue(new Product(productList.size(), productName, Double.parseDouble(productPrice)));
-                    editProductName.setText("");
-                    editProductPrice.setText("");
+                    ref.setValue(new Course(courseName, "placeholder", day, Float.parseFloat(duration), new Instructor(instructorId), experience));
+                    editCourseName.setText("");
+                    editExperience.setText("");
+                    editDay.setText("");
+                    editCapacityLimit.setText("");
+                    editDuration.setText("");
+
+                } else {
+                    editCourseName.setError("Cannot contain empty field");
+                    editCourseName.requestFocus();
                 } // end of outer if/else
 
             } // end of onDataChange()
@@ -181,109 +205,14 @@ public class activity_instructor extends Activity {
 
             } // end of onCalled()
         }); // end of checkCourse listener
-        */
+
     }
 
     public void cancelCourse() {
-        /*
-        String productName= editProductName.getText().toString();
 
-        // =======  check if the course name is empty or not  =======
-        if (productName.equals("")) {
-            editProductName.setError("The product name cannot be blank.");
-            editProductName.requestFocus();
-            return;
-        }
-
-        // NOTE: The input is case sensitive, which means the course "Tennis" and "tennis" may co-exist at the same time
-
-        // =======  check if the course exists in the database or not  =======
-
-        // fetches instance of database.
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Products");
-
-        // Orders in search for the course name
-        Query checkCourse = reference.orderByChild("productName").equalTo(productName);
-
-        checkCourse.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // checks whether the username already exists or not
-                if (!dataSnapshot.exists()) {
-                    editProductName.setError("Product does not exist");
-                    editProductName.requestFocus();
-                } else {
-                    editProductName.setError(null);
-                    editProductPrice.setError(null);
-                    Product temp = (Product) dataSnapshot.getChildren().iterator().next().getValue(Product.class);
-
-                    textViewDisplayId.setText( String.valueOf(temp.getID()) );
-
-                    editProductPrice.setText( String.valueOf(temp.getPrice()) );
-                } // end of outer if/else
-
-            } // end of onDataChange()
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            } // end of onCalled()
-        }); // end of checkCourse listener
-
-         */
     }
 
     public void editCourse() {
 
-        /*
-        String productName= editProductName.getText().toString();
-        String productPrice = editProductPrice.getText().toString();
-
-        // =======  check if the course name is empty or not  =======
-        if (productName.equals("")) {
-            editProductName.setError("The product name cannot be blank.");
-            editProductName.requestFocus();
-            return;
-        }
-
-        else if (productPrice.equals("")) {
-            editProductPrice.setError("The price cannot be blank.");
-            editProductPrice.requestFocus();
-            return;
-        }
-
-        // NOTE: The input is case sensitive, which means the course "Tennis" and "tennis" may co-exist at the same time
-
-        // =======  check if the course exists in the database or not  =======
-
-        // fetches instance of database.
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Products");
-
-        // Orders in search for the course name
-        Query checkCourse = reference.orderByChild("productName").equalTo(productName);
-
-        checkCourse.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // checks whether the username already exists or not
-                if (!dataSnapshot.exists()) {
-                    editProductName.setError("This product doesn't exist. Please re-enter a new product name.");
-                    editProductName.requestFocus();
-                } else {
-                    editProductName.setError(null);
-                    editProductPrice.setError(null);
-                    dataSnapshot.getChildren().iterator().next().getRef().removeValue();
-                    editProductName.setText("");
-                    editProductPrice.setText("");
-                } // end of outer if/else
-
-            } // end of onDataChange()
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            } // end of onCalled()
-        }); // end of checkCourse listener
-        */
     }
 }

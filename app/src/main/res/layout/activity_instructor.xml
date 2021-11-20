@@ -17,7 +17,7 @@
             android:id="@+id/editCourseName"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="TextView" />
+            android:hint="Class Name" />
     </TableRow>
 
     <TableRow
@@ -28,13 +28,13 @@
             android:id="@+id/experience"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Experience" />
 
         <EditText
             android:id="@+id/editExperience"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="TextView" />
+            android:hint="Experience" />
     </TableRow>
 
     <TableRow
@@ -45,19 +45,19 @@
             android:id="@+id/dayView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Date: Day/Month/Year" />
 
         <EditText
             android:id="@+id/editDay"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="TextView" />
+            android:hint="Current Date" />
 
         <EditText
-            android:id="@+id/textView"
+            android:id="@+id/newDateView"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="TextView" />
+            android:hint="New Date" />
     </TableRow>
 
     <TableRow
@@ -68,13 +68,13 @@
             android:id="@+id/capacityLimit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Capacity" />
 
         <EditText
             android:id="@+id/editCapacityLimit"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="TextView" />
+            android:hint="Capacity" />
     </TableRow>
 
     <TableRow
@@ -85,22 +85,18 @@
             android:id="@+id/durationView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Duration" />
 
         <EditText
             android:id="@+id/editDuration"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="TextView" />
+            android:hint="Duration" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/createCourse"
