@@ -54,7 +54,7 @@ public class activity_instructor extends Activity {
 
     DatabaseReference databaseCourses;
 
-    String[] dayString = {"MON", "TUES", "WED", "THUR", "FRI"};
+    static String[] dayStrings = {"MON", "TUE", "WED", "THU", "FRI"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,12 +152,26 @@ public class activity_instructor extends Activity {
 
 
     public static boolean verifyValidCapacityLimit(String capacityLimit) {
+        try {
 
-        int capLim = Integer.parseInt(capacityLimit);
+            // Parsing user input to integer
+            // using the parseInt() method
+            int capLim = Integer.parseInt(capacityLimit);
 
-        if (capLim <= 0) {
+            if (capLim <= 0) {
+                return false;
+            }
+
+        }
+
+        // Catch block to handle NumberFormatException
+            catch (NumberFormatException e) {
+
+            // Print the message if exception occured
+            System.out.println("NumberFormatException occured");
             return false;
         }
+
 
         return true;
     }
@@ -165,17 +179,43 @@ public class activity_instructor extends Activity {
 
     public static boolean verifyValidStartTime(String startTime) {
 
-        int temp = Integer.parseInt(startTime);
+        try {
 
-        if (temp <= 0 || temp >= 24) {
+            // Parsing user input to integer
+            // using the parseInt() method
+            int temp = Integer.parseInt(startTime);
+
+            if (temp <= 0 || temp >= 24) {
+                return false;
+            }
+
+        }
+
+        // Catch block to handle NumberFormatException
+        catch (NumberFormatException e) {
+
+            // Print the message if exception occured
+            System.out.println("NumberFormatException occured");
             return false;
         }
+
 
         return true;
     }
 
 
-    public static boolean verifyDay(String day) {
+    public static boolean verifyValidDay(String day) {
+
+        for (int i = 0; i < 5; i++) {
+            if (day.equals(dayStrings[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public static boolean verifyDuration() {
         return false;
     }
 
@@ -213,6 +253,7 @@ public class activity_instructor extends Activity {
                         if (tempCourse.getTime().equals(day)) {
                             editCourseName.setError("Day already scheduled");
                             editCourseName.requestFocus();
+                            editInstructor.setText(tempCourse.getTeacher().getLegalName());
                             return;
                         }
                     }

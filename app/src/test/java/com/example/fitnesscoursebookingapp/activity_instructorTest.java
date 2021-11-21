@@ -29,6 +29,45 @@ public class activity_instructorTest {
 
     }
 
+    @Test
+    public void testVerifyDay() {
+
+        System.out.println("In verify day");
+
+        String test1 = "1";
+        String test2 = "8";
+        String test3 = "MON";
+        String test4 = "TUES";
+        String test5 = "TUESDAY";
+
+        assertFalse(activity_instructor.verifyValidDay(test1));
+        assertFalse(activity_instructor.verifyValidDay(test2));
+        assertTrue(activity_instructor.verifyValidDay(test3));
+        assertTrue(activity_instructor.verifyValidDay(test4));
+        assertFalse(activity_instructor.verifyValidDay(test5));
+
+    }
+
+
+
+    public void testVerifyStartTime() {
+        System.out.println("In verify start time");
+
+        String test1 = "1";
+        String test2 = "8";
+        String test3 = "1.5";
+        String test4 = "TUES";
+        String test5 = "Blarg";
+
+        assertFalse(activity_instructor.verifyValidStartTime(test1));
+        assertFalse(activity_instructor.verifyValidStartTime(test2));
+        assertTrue(activity_instructor.verifyValidStartTime(test3));
+        assertTrue(activity_instructor.verifyValidStartTime(test4));
+        assertFalse(activity_instructor.verifyValidStartTime(test5));
+    }
+
+
+
     /*@org.junit.After
     public void tearDown() throws Exception {
     }*/
