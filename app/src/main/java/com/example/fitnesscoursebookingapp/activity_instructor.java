@@ -236,10 +236,7 @@ public class activity_instructor extends Activity {
 
 
     public void createCourse() {
-
-        // TODO: Error trap to see if the user inputted a valid DAY OF THE WEEK or not
-        //  this way, we can error trap from a list of 7 abbreviated strings (MON, TUE, WED...)
-
+        clearErrors();
 
         String courseName = editCourseName.getText().toString();
         String experience = editExperience.getText().toString();
@@ -328,6 +325,7 @@ public class activity_instructor extends Activity {
     }
 
     public void cancelCourse() {
+        clearErrors();
 
         String courseName = editCourseName.getText().toString();
         String day = editDay.getText().toString();
@@ -417,10 +415,7 @@ public class activity_instructor extends Activity {
      * Edit a course that this instructor currently teaches (a course that is within this java class's courseList).
      */
     public void editCourse() {
-
-        // TODO: Error trap to see if the user inputted a valid DAY OF THE WEEK or not
-        //  this way, we can error trap from a list of 7 abbreviated strings (MON, TUES, WED...)
-
+        clearErrors();
 
         String courseName = editCourseName.getText().toString();
         String experience = editExperience.getText().toString();
@@ -435,6 +430,32 @@ public class activity_instructor extends Activity {
         boolean check3 = day.equals("");
         boolean check4 = capacityLimit.equals("");
         boolean check5 = duration.equals("");
+
+        boolean problem = false;
+        if (courseName.isEmpty()) {
+            editCourseName.setError("Must set a name");
+            editCourseName.requestFocus();
+            problem = true;
+        } if (!verifyValidDay(day)) {
+            editDay.setError("Must be a valid day");
+            editDay.requestFocus();
+            problem = true;
+        } if (!capacityLimit.isEmpty() && !verifyValidCapacityLimit(capacityLimit)) {
+            editCapacityLimit.setError("Must be a number larger than 0");
+            editCapacityLimit.requestFocus();
+            problem = true;
+        } if (!startTime.isEmpty() && verifyValidStartTime(startTime)) {
+            editStartTime.setError("Must be between 0 and 23 inclusive");
+            editStartTime.requestFocus();
+            problem = true;
+        } if (!duration.isEmpty() && !verifyDuration(duration)) {
+            editDuration.setError("Must be 1 or 1.5");
+            editDuration.requestFocus();
+            problem = true;
+        }
+        if (problem) {
+            return;
+        }
 
         // =======  check if the course name is empty or not  =======
         /*if (!(check1 && check2 && check3 && check4 && check5)) {
@@ -469,17 +490,30 @@ public class activity_instructor extends Activity {
                             if (tempCourse.getTeacher().getLegalName().equals(instructorId)) {
                                 editCourseName.setError(null);
                                 DatabaseReference course = dataSnapshot.getChildren().iterator().next().getRef();
-                                course.child("experienceLevel").setValue(experience);
-                                course.child("hourDuration").setValue(Float.parseFloat(duration));
-                                course.child("capacity").setValue(Integer.parseInt(capacityLimit));
-                                course.child("time").setValue(newDay);
-                                course.child("startTime").setValue(Float.parseFloat(startTime));
-                                return;
+
+                                // editing the actual values in the database
+                                if (!experience.isEmpty()) {
+                                    course.child("experienceLevel").setValue(experience);
+                                } if (!duration.isEmpty()) {
+                                    course.child("hourDuration").setValue(Float.parseFloat(duration));
+                                } if (!capacityLimit.isEmpty()) {
+                                    course.child("capacity").setValue(Integer.parseInt(capacityLimit));
+                                } if (!newDay.isEmpty()) {
+                                    course.child("time").setValue(newDay);
+                                } if (!startTime.isEmpty()) {
+                                    course.child("startTime").setValue(Float.parseFloat(startTime));
+                                }
+                            } else {
+                                editCourseName.setError("Must edit your own course");
                             }
+
+                            return;
                         }
                     }
 
-
+                    // if there is no class on the specified day
+                    editDay.setError("There is no class to edit on this day");
+                    editDay.requestFocus();
 
                 } else {
                     editCourseName.setError("Class type does not exist");
@@ -505,6 +539,7 @@ public class activity_instructor extends Activity {
      *  - Both of the above (i.e.: display all Judo courses taught by John Doe)
      */
     public void searchCourse() {
+        clearErrors();
 
         // TODO: Add a search course button
         //  once the user clicks on search (assume no errors), change the text in the "Search" button
@@ -590,5 +625,19 @@ public class activity_instructor extends Activity {
         });
 
 
+    }
+
+    /**
+     * Used as an auxiliary method at the beginning of the create, cancel, edit, and search
+     * functionalities.
+     */
+    private void clearErrors() {
+        editCourseName.setError(null);
+        editExperience.setError(null);
+        editDay.setError(null);
+        editNewDay.setError(null);
+        editCapacityLimit.setError(null);
+        editStartTime.setError(null);
+        editDuration.setError(null);
     }
 }
