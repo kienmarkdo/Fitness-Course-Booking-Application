@@ -21,7 +21,7 @@
     <string name="viewmoreOpen">▼</string>
 
     <string-array name="weekdays_string_resource">
-        <item>Select day</item>
+        <item></item>
         <item>Monday</item>
         <item>Tuesday</item>
         <item>Wednesday</item>

@@ -37,7 +37,6 @@ public class activity_instructor extends Activity implements AdapterView.OnItemS
 
     EditText editCourseName;
     EditText editExperience;
-    EditText editDay;
     EditText editCapacityLimit;
     EditText editDuration;
 
@@ -159,11 +158,21 @@ public class activity_instructor extends Activity implements AdapterView.OnItemS
         });
     }
 
+    /**
+     * Helper class that checks whether a class may be added on a day or not
+     * Example: If there already exists a Judo course that is taught on Mondays by some instructor A,
+     *  instructor B cannot add a Judo course on Monday.
+     */
     public void checkSchedulingConflict() {
 
     }
 
 
+    /**
+     * Lets the instructor creates a course for which the instructor will teach.
+     * Instantiates a new course from a pre-existing course type and assigns the current instructor
+     *  as this new course's instructor.
+     */
     public void createCourse() {
 
         // TODO: Error trap to see if the user inputted a valid DAY OF THE WEEK or not
@@ -172,7 +181,6 @@ public class activity_instructor extends Activity implements AdapterView.OnItemS
 
         String courseName = editCourseName.getText().toString();
         String experience = editExperience.getText().toString();
-        String day = editDay.getText().toString();
         String capacityLimit = editCapacityLimit.getText().toString();
         String duration = editDuration.getText().toString();
 
@@ -210,7 +218,7 @@ public class activity_instructor extends Activity implements AdapterView.OnItemS
                     for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                         Course tempCourse = postSnapshot.getValue(Course.class);
 
-                        if (tempCourse.getTime().equals(day)) {
+                        if (tempCourse.getTime().equals(currentDayChoice)) {
                             editCourseName.setError("Day already scheduled");
                             editCourseName.requestFocus();
                             return;
@@ -220,15 +228,15 @@ public class activity_instructor extends Activity implements AdapterView.OnItemS
                     editCourseName.setError(null);
                     editCourseName.setError(null);
                     DatabaseReference ref = reference.push(); // add new course here
-                    ref.setValue(new Course(courseName, "placeholder", day, Float.parseFloat(duration), new Instructor(instructorId), experience));
+                    ref.setValue(new Course(courseName, "", currentDayChoice,
+                            Float.parseFloat(duration), new Instructor(instructorId), experience));
                     editCourseName.setText("");
                     editExperience.setText("");
-                    editDay.setText("");
                     editCapacityLimit.setText("");
                     editDuration.setText("");
 
                 } else {
-                    editCourseName.setError("Class type does not exist");
+                    editCourseName.setError("Course type does not exist");
                     editCourseName.requestFocus();
                 } // end of outer if/else
 
@@ -242,10 +250,15 @@ public class activity_instructor extends Activity implements AdapterView.OnItemS
 
     }
 
+    /**
+     * Instructor can cancel a class. This deletes the existing class details (day, hours, difficulty, capacity)
+     * Search criteria is Course Name and Day.
+     * NOTE: If instructor A is logged in, instructor A cannot cancel instructor B's class.
+     */
     public void cancelCourse() {
 
         String courseName = editCourseName.getText().toString();
-        String day = editDay.getText().toString();
+        String day = currentDayChoice;
 
 
         boolean check1 = courseName.equals("");
@@ -285,7 +298,6 @@ public class activity_instructor extends Activity implements AdapterView.OnItemS
                             editCourseName.setError(null);
                             postSnapshot.getRef().removeValue();
                             editCourseName.setText("");
-                            editDay.setText("");
                             return;
                         }
                     }
@@ -294,7 +306,7 @@ public class activity_instructor extends Activity implements AdapterView.OnItemS
 
 
                 } else {
-                    editCourseName.setError("Class does not exist");
+                    editCourseName.setError("Course does not exist");
                     editCourseName.requestFocus();
                 } // end of outer if/else
 
@@ -309,11 +321,61 @@ public class activity_instructor extends Activity implements AdapterView.OnItemS
     }
 
     /**
-     * Edit a course that this instructor currently teaches (a course that is within this java class's courseList).
-     * IMPORTANT: This means the instructor can only edit courses for which they are the instructor.
+     * Instructor can edit the class day, hours, difficulty level, and
+     * capacity for classes they are instructing (a course that is within this java class's courseList).
+     *
+     * Search criteria is Course Name and Day.
+     *
+     * IMPORTANT: The instructor can only edit courses for which they are the instructor.
      */
     public void editCourse() {
 
+        String courseName = editCourseName.getText().toString();
+        String day = currentDayChoice;
+
+
+        boolean courseNameIsEmpty = courseName.equals("");
+        boolean dayIsEmpty = day.equals("");
+
+
+        // NOTE: The input is case sensitive, which means the course "Tennis" and "tennis" may co-exist at the same time
+
+        // =======  check if the course exists in the database or not  =======
+
+        // fetches instance of database.
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Courses");
+
+        // Orders in search for the course name
+        Query checkCourse = reference.orderByChild("name").equalTo(courseName);
+
+        checkCourse.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+                    for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        Course tempCourse = postSnapshot.getValue(Course.class);
+
+                        if (tempCourse.getTime().equals(day)) {
+
+                            return;
+                        }
+                    }
+
+
+                } else {
+                    editCourseName.setError("Course does not exist");
+                    editCourseName.requestFocus();
+                } // end of outer if/else
+
+            } // end of onDataChange()
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            } // end of onCalled()
+        }); // end of checkCourse listener
 
     }
 
