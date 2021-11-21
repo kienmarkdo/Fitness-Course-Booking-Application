@@ -31,16 +31,20 @@ public class activity_instructor extends Activity {
     TextView day;
     TextView capacityLimit;
     TextView duration;
+    TextView instructor;
 
     EditText editCourseName;
     EditText editExperience;
     EditText editDay;
     EditText editCapacityLimit;
     EditText editDuration;
+    EditText editNewDay;
+    EditText editInstructor;
 
     Button createCourseButton;
     Button editCourseButton;
     Button cancelCourseButton;
+    Button searchButton;
 
     ListView listViewCourses;
 
@@ -64,16 +68,20 @@ public class activity_instructor extends Activity {
         TextView textViewDay = (TextView) findViewById(R.id.dayView);
         TextView textViewCapacity = (TextView) findViewById(R.id.capacityLimit);
         TextView textViewDuration = (TextView) findViewById(R.id.durationView);
+        TextView textViewInstructor = (TextView) findViewById(R.id.instructorView);
 
         editCourseName = (EditText) findViewById(R.id.editCourseName);
         editExperience = (EditText) findViewById(R.id.editExperience);
         editDay= (EditText) findViewById(R.id.editDay);
         editCapacityLimit = (EditText) findViewById(R.id.editCapacityLimit);
         editDuration= (EditText) findViewById(R.id.editDuration);
+        editNewDay = (EditText) findViewById(R.id.newDateView);
+        editInstructor = (EditText) findViewById(R.id.editInstructor);
 
         createCourseButton = (Button) findViewById(R.id.createCourse);
         cancelCourseButton = (Button) findViewById(R.id.cancelButton);
         editCourseButton = (Button) findViewById(R.id.editCourse);
+        searchButton = (Button) findViewById(R.id.searchButton);
 
         courseList = new ArrayList<>();
         databaseCourses = FirebaseDatabase.getInstance().getReference("Courses");
@@ -190,7 +198,7 @@ public class activity_instructor extends Activity {
                     editCourseName.setError(null);
                     editCourseName.setError(null);
                     DatabaseReference ref = reference.push(); // add new course here
-                    ref.setValue(new Course(courseName, "placeholder", day, Float.parseFloat(duration), new Instructor(instructorId), experience));
+                    ref.setValue(new Course(courseName, "placeholder", day, Float.parseFloat(duration), new Instructor(instructorId), experience, Integer.parseInt(capacityLimit)));
                     editCourseName.setText("");
                     editExperience.setText("");
                     editDay.setText("");
@@ -283,6 +291,80 @@ public class activity_instructor extends Activity {
      */
     public void editCourse() {
 
+        // TODO: Error trap to see if the user inputted a valid DAY OF THE WEEK or not
+        //  this way, we can error trap from a list of 7 abbreviated strings (MON, TUES, WED...)
+
+
+        String courseName = editCourseName.getText().toString();
+        String experience = editExperience.getText().toString();
+        String day = editDay.getText().toString();
+        String capacityLimit = editCapacityLimit.getText().toString();
+        String duration = editDuration.getText().toString();
+        String newDay = editNewDay.getText().toString();
+
+        boolean check1 = courseName.equals("");
+        boolean check2 = experience.equals("");
+        boolean check3 = day.equals("");
+        boolean check4 = capacityLimit.equals("");
+        boolean check5 = duration.equals("");
+
+        // =======  check if the course name is empty or not  =======
+        /*if (!(check1 && check2 && check3 && check4 && check5)) {
+            editCourseName.setError("Cannot contain empty field");
+            editCourseName.requestFocus();
+            return;
+        }*/
+
+        // NOTE: The input is case sensitive, which means the course "Tennis" and "tennis" may co-exist at the same time
+
+        // =======  check if the course exists in the database or not  =======
+
+        // fetches instance of database.
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Courses");
+
+        // Orders in search for the course name
+        Query checkCourse = reference.orderByChild("name").equalTo(courseName);
+
+
+
+        checkCourse.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+                    for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        Course tempCourse = postSnapshot.getValue(Course.class);
+
+                        if (tempCourse.getTime().equals(day)) {
+
+                            if (tempCourse.getTeacher().getLegalName().equals(instructorId)) {
+                                editCourseName.setError(null);
+                                DatabaseReference course = dataSnapshot.getChildren().iterator().next().getRef();
+                                course.child("experienceLevel").setValue(experience);
+                                course.child("hourDuration").setValue(Float.parseFloat(duration));
+                                course.child("capacity").setValue(Integer.parseInt(capacityLimit));
+                                course.child("time").setValue(newDay);
+                                return;
+                            }
+                        }
+                    }
+
+
+
+                } else {
+                    editCourseName.setError("Class type does not exist");
+                    editCourseName.requestFocus();
+                } // end of outer if/else
+
+            } // end of onDataChange()
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            } // end of onCalled()
+        }); // end of checkCourse listener
+
 
     }
 
@@ -298,5 +380,36 @@ public class activity_instructor extends Activity {
         // TODO: Add a search course button
         //  once the user clicks on search (assume no errors), change the text in the "Search" button
         //  to "Reset". Clear all text fields and redisplay all courses again.
+
+        String courseName = editCourseName.getText().toString();
+        String experience = editExperience.getText().toString();
+        String day = editDay.getText().toString();
+        String capacityLimit = editCapacityLimit.getText().toString();
+        String duration = editDuration.getText().toString();
+        String instructor = editInstructor.getText().toString();
+
+
+
+        databaseCourses.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                courseList.clear();
+                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+
+                    Course tempCourse = postSnapshot.getValue(Course.class);
+                    courseList.add(tempCourse);
+                }
+                CourseList courseAdapter = new CourseList(activity_instructor.this, courseList);
+                listViewCourses.setAdapter(courseAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
     }
 }

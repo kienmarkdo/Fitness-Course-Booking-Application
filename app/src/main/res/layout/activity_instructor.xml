@@ -45,7 +45,7 @@
             android:id="@+id/dayView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date: Day/Month/Year" />
+            android:text="Weekday: (MON..)" />
 
         <EditText
             android:id="@+id/editDay"
@@ -96,6 +96,23 @@
 
     <TableRow
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/instructorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instructor(Search)" />
+
+        <EditText
+            android:id="@+id/editInstructor"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:hint="Instructor" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <Button
@@ -115,6 +132,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit" />
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search" />
     </TableRow>
 
     <TableRow

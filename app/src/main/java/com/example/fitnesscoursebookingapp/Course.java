@@ -18,6 +18,7 @@ public class Course {
     private float hourDuration; // how long the course lasts (i.e.: 1.5 hours)
     private int numberOfStudents; // number of students enrolled in a course
     private ArrayList<GymMember> students; // list of all students (this stays as an array because there is a max num of students)
+    private int capacity;
 
     /** Constructor methods */
     public Course() {
@@ -30,14 +31,17 @@ public class Course {
         this.description = description;
     }
 
+
+
     public Course(String name, String description, String time, float hourDuration,
-                  Instructor teacher, String experienceLevel) {
+                  Instructor teacher, String experienceLevel, int capacity) {
         this.name = name;
         this.description = description;
         this.time = time;
         this.hourDuration = hourDuration;
         this.teacher = teacher;
         this.experienceLevel = experienceLevel;
+        this.capacity = capacity;
     }
 
     /** Get and Set methods */
@@ -102,5 +106,13 @@ public class Course {
     }
 
     public void setStudents(ArrayList<GymMember> students) { this.students = students; }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
 
 } // end of Course class
