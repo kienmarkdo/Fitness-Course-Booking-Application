@@ -1,165 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TableRow
+    <TableLayout
+        android:id="@+id/button_table"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/courseNameView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Class Name" />
-
-        <EditText
-            android:id="@+id/editCourseName"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="Class Name" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:id="@+id/experience"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Experience" />
-
-        <EditText
-            android:id="@+id/editExperience"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="Experience" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:id="@+id/dayView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Weekday: (MON..)" />
-
-        <EditText
-            android:id="@+id/editDay"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="Current Date" />
-
-        <EditText
-            android:id="@+id/newDateView"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="New Date" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:id="@+id/capacityLimit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Capacity" />
-
-        <EditText
-            android:id="@+id/editCapacityLimit"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="Capacity" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:id="@+id/startTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start time:" />
-
-        <EditText
-            android:id="@+id/editStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:hint="Start Time" />
-
-        <TextView
-            android:id="@+id/durationView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Duration" />
-
-        <EditText
-            android:id="@+id/editDuration"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="Duration" />
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/instructorView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Instructor(Search)" />
-
-        <EditText
-            android:id="@+id/editInstructor"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:hint="Instructor" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <Button
-            android:id="@+id/createCourse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create" />
-
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel" />
-
-        <Button
-            android:id="@+id/editCourse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit" />
-
-        <Button
-            android:id="@+id/searchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <ListView
-            android:id="@+id/courseList"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </TableRow>
-</TableLayout>
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/courseNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Class Name" />
+
+            <EditText
+                android:id="@+id/editCourseName"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="Class Name" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/experience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Experience" />
+
+            <EditText
+                android:id="@+id/editExperience"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="Experience" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/dayView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weekday: (MON..)" />
+
+            <EditText
+                android:id="@+id/editDay"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="Current Date" />
+
+            <EditText
+                android:id="@+id/newDateView"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="New Date" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/capacityLimit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Capacity" />
+
+            <EditText
+                android:id="@+id/editCapacityLimit"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="Capacity" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start time:" />
+
+            <EditText
+                android:id="@+id/editStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:hint="Start Time" />
+
+            <TextView
+                android:id="@+id/durationView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Duration"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/editDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="Duration" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/instructorView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instructor(Search)" />
+
+            <EditText
+                android:id="@+id/editInstructor"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:hint="Instructor" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/createCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create" />
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/editCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit" />
+
+            <Button
+                android:id="@+id/searchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search" />
+        </TableRow>
+
+    </TableLayout>
+
+    <ListView
+        android:id="@+id/courseList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_table" />
+
+</RelativeLayout>
