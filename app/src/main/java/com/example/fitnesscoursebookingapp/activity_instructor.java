@@ -54,6 +54,8 @@ public class activity_instructor extends Activity {
 
     DatabaseReference databaseCourses;
 
+    String[] dayString = {"MON", "TUES", "WED", "THUR", "FRI"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -161,6 +163,23 @@ public class activity_instructor extends Activity {
     }
 
 
+    public static boolean verifyValidStartTime(String startTime) {
+
+        int temp = Integer.parseInt(startTime);
+
+        if (temp <= 0 || temp >= 24) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public static boolean verifyDay(String day) {
+        return false;
+    }
+
+
     public void createCourse() {
 
         // TODO: Error trap to see if the user inputted a valid DAY OF THE WEEK or not
@@ -262,12 +281,21 @@ public class activity_instructor extends Activity {
                         Course tempCourse = postSnapshot.getValue(Course.class);
 
                         if (tempCourse.getTime().equals(day)) {
-                            editCourseName.setError(null);
-                            editCourseName.setError(null);
-                            postSnapshot.getRef().removeValue();
-                            editCourseName.setText("");
-                            editDay.setText("");
-                            return;
+
+                            if (tempCourse.getTeacher().getLegalName().equals(instructorId)) {
+                                editCourseName.setError(null);
+                                editCourseName.setError(null);
+                                postSnapshot.getRef().removeValue();
+                                editCourseName.setText("");
+                                editDay.setText("");
+                                return;
+                            }
+
+                            else {
+                                editCourseName.setError("Must edit your own course.");
+                                editCourseName.requestFocus();
+                                return;
+                            }
                         }
                     }
 
