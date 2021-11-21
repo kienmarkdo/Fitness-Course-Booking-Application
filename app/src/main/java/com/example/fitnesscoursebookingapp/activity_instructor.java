@@ -136,6 +136,10 @@ public class activity_instructor extends Activity {
 
     public void createCourse() {
 
+        // TODO: Error trap to see if the user inputted a valid DAY OF THE WEEK or not
+        //  this way, we can error trap from a list of 7 abbreviated strings (MON, TUES, WED...)
+
+
         String courseName = editCourseName.getText().toString();
         String experience = editExperience.getText().toString();
         String day = editDay.getText().toString();
@@ -274,7 +278,25 @@ public class activity_instructor extends Activity {
 
     }
 
+    /**
+     * Edit a course that this instructor currently teaches (a course that is within this java class's courseList).
+     */
     public void editCourse() {
 
+
+    }
+
+    /**
+     * Searches and displays the courses found on the database.
+     * Can display all courses taught by the following search criterias
+     *  - Instructor name (i.e.: display all courses taught by John Doe)
+     *  - Course type (i.e.: display all Basketball courses)
+     *  - Both of the above (i.e.: display all Judo courses taught by John Doe)
+     */
+    public void searchCourse() {
+
+        // TODO: Add a search course button
+        //  once the user clicks on search (assume no errors), change the text in the "Search" button
+        //  to "Reset". Clear all text fields and redisplay all courses again.
     }
 }
