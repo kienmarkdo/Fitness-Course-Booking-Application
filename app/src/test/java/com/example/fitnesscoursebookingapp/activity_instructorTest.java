@@ -49,7 +49,7 @@ public class activity_instructorTest {
     }
 
 
-
+    @Test
     public void testVerifyStartTime() {
         System.out.println("In verify start time");
 

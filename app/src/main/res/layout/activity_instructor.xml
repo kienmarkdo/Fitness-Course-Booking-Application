@@ -90,7 +90,7 @@
                 android:id="@+id/startTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Start time:" />
+                android:text="Start time:(24H)" />
 
             <EditText
                 android:id="@+id/editStartTime"
