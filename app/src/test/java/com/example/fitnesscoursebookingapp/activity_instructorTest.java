@@ -66,6 +66,22 @@ public class activity_instructorTest {
         assertFalse(activity_instructor.verifyValidStartTime(test5));
     }
 
+    public void testVerifyDuration() {
+        System.out.println("In verify duration");
+
+        String test1 = "1";
+        String test2 = "0.5";
+        String test3 = "1.5";
+        String test4 = "250";
+        String test5 = "Blarg";
+
+        assertTrue(activity_instructor.verifyValidStartTime(test1));
+        assertFalse(activity_instructor.verifyValidStartTime(test2));
+        assertTrue(activity_instructor.verifyValidStartTime(test3));
+        assertFalse(activity_instructor.verifyValidStartTime(test4));
+        assertFalse(activity_instructor.verifyValidStartTime(test5));
+    }
+
 
 
     /*@org.junit.After
