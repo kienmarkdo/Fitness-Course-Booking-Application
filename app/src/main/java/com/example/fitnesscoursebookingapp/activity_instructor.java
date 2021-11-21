@@ -148,8 +148,16 @@ public class activity_instructor extends Activity {
         });
     }
 
-    public void checkSchedulingConflict() {
 
+    public static boolean verifyValidCapacityLimit(String capacityLimit) {
+
+        int capLim = Integer.parseInt(capacityLimit);
+
+        if (capLim <= 0) {
+            return false;
+        }
+
+        return true;
     }
 
 
