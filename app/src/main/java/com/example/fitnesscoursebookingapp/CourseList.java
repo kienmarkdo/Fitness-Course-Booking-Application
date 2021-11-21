@@ -37,9 +37,11 @@ public class CourseList extends ArrayAdapter<Course> {
         TextView textViewCapacity = (TextView) listViewItem.findViewById(R.id.capacityLimitView);
         TextView textViewDuration = (TextView) listViewItem.findViewById(R.id.durationTextView);
         TextView textViewInstructor = (TextView) listViewItem.findViewById(R.id.instructorNameView);
+        TextView textViewStartTime = (TextView) listViewItem.findViewById(R.id.startTimeView);
 
         Course course = courses.get(position);
         String nameStr = "Name: " + course.getName();
+        System.out.println(nameStr);
         textViewName.setText(nameStr);
 
         String experienceStr = "Expr: " + course.getExperienceLevel();
@@ -51,11 +53,18 @@ public class CourseList extends ArrayAdapter<Course> {
         String capStr = "Cap: " + String.valueOf(course.getStudentAmount());
         textViewCapacity.setText(capStr);
 
+        String startStr = "Start Time: " + String.valueOf(course.getStartTime());
+        System.out.println("start str: " + startStr);
+        textViewStartTime.setText(startStr);
+
         String durStr = "Dur: " + String.valueOf(course.getHourDuration());
         textViewDuration.setText(durStr);
 
+
         String insStr = "Inst: " + course.getTeacher().getLegalName();
         textViewInstructor.setText(insStr);
+
+
 
         return listViewItem;
     }

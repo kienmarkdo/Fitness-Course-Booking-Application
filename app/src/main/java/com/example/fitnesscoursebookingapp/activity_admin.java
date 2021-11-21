@@ -287,7 +287,8 @@ public class activity_admin extends Activity implements View.OnClickListener {
                 } else {
                     addCourseInput.setError(null);
                     DatabaseReference ref = reference.push(); // add new course here
-                    ref.setValue(new Course(courseNameStr, courseDescriptionStr, "Unassigned", 0, new Instructor("Unassigned"), "Unassigned", 0 ));
+                    ref.setValue(new Course(courseNameStr, courseDescriptionStr, "Unassigned", 0,
+                            new Instructor("Unassigned"), "Unassigned", 0, 0 ));
                     printCourseAddedSuccessMessage();
                 } // end of outer if/else
 

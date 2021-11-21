@@ -270,7 +270,8 @@ public class MainActivity extends AppCompatActivity {
                         dataSnapshot.child("hourDuration").getValue(Float.class),
                         Gym.listOfInstructors.get(dataSnapshot.child("teacher").getValue(String.class)),
                         dataSnapshot.child("experienceLevel").getValue(String.class),
-                        dataSnapshot.child("capacity").getValue(Integer.class)
+                        dataSnapshot.child("capacity").getValue(Integer.class),
+                        dataSnapshot.child("startTime").getValue(Float.class)
                 ));
             }
 

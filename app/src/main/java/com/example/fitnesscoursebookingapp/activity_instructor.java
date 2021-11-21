@@ -32,6 +32,7 @@ public class activity_instructor extends Activity {
     TextView capacityLimit;
     TextView duration;
     TextView instructor;
+    TextView startTime;
 
     EditText editCourseName;
     EditText editExperience;
@@ -40,6 +41,7 @@ public class activity_instructor extends Activity {
     EditText editDuration;
     EditText editNewDay;
     EditText editInstructor;
+    EditText editStartTime;
 
     Button createCourseButton;
     Button editCourseButton;
@@ -69,6 +71,7 @@ public class activity_instructor extends Activity {
         TextView textViewCapacity = (TextView) findViewById(R.id.capacityLimit);
         TextView textViewDuration = (TextView) findViewById(R.id.durationView);
         TextView textViewInstructor = (TextView) findViewById(R.id.instructorView);
+        TextView textViewStartTime = (TextView) findViewById(R.id.startTimeView);
 
         editCourseName = (EditText) findViewById(R.id.editCourseName);
         editExperience = (EditText) findViewById(R.id.editExperience);
@@ -77,6 +80,7 @@ public class activity_instructor extends Activity {
         editDuration= (EditText) findViewById(R.id.editDuration);
         editNewDay = (EditText) findViewById(R.id.newDateView);
         editInstructor = (EditText) findViewById(R.id.editInstructor);
+        editStartTime = (EditText) findViewById(R.id.editStartTime);
 
         createCourseButton = (Button) findViewById(R.id.createCourse);
         cancelCourseButton = (Button) findViewById(R.id.cancelButton);
@@ -160,6 +164,7 @@ public class activity_instructor extends Activity {
         String day = editDay.getText().toString();
         String capacityLimit = editCapacityLimit.getText().toString();
         String duration = editDuration.getText().toString();
+        String startTime = editStartTime.getText().toString();
 
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Courses");
@@ -188,7 +193,7 @@ public class activity_instructor extends Activity {
                     editCourseName.setError(null);
                     editCourseName.setError(null);
                     DatabaseReference ref = reference.push(); // add new course here
-                    ref.setValue(new Course(courseName, "placeholder", day, Float.parseFloat(duration), new Instructor(instructorId), experience, Integer.parseInt(capacityLimit)));
+                    ref.setValue(new Course(courseName, "placeholder", day, Float.parseFloat(duration), new Instructor(instructorId), experience, Integer.parseInt(capacityLimit), Float.parseFloat(startTime)));
                     editCourseName.setText("");
                     editExperience.setText("");
                     editDay.setText("");
@@ -291,6 +296,7 @@ public class activity_instructor extends Activity {
         String capacityLimit = editCapacityLimit.getText().toString();
         String duration = editDuration.getText().toString();
         String newDay = editNewDay.getText().toString();
+        String startTime = editStartTime.getText().toString();
 
         boolean check1 = courseName.equals("");
         boolean check2 = experience.equals("");
@@ -335,6 +341,7 @@ public class activity_instructor extends Activity {
                                 course.child("hourDuration").setValue(Float.parseFloat(duration));
                                 course.child("capacity").setValue(Integer.parseInt(capacityLimit));
                                 course.child("time").setValue(newDay);
+                                course.child("startTime").setValue(Float.parseFloat(startTime));
                                 return;
                             }
                         }

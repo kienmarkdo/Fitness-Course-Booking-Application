@@ -82,6 +82,18 @@
         android:layout_height="match_parent" >
 
         <TextView
+            android:id="@+id/startTimeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start time:" />
+
+        <EditText
+            android:id="@+id/editStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:hint="Start Time" />
+
+        <TextView
             android:id="@+id/durationView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,6 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:hint="Duration" />
+
     </TableRow>
 
     <TableRow

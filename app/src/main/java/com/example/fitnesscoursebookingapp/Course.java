@@ -16,6 +16,7 @@ public class Course {
     private String experienceLevel; // indicates the experience a student should have before enrolling (i.e.: beginner, expert...)
     private String time; // hour, date, month, year
     private float hourDuration; // how long the course lasts (i.e.: 1.5 hours)
+    private float startTime;
     private int numberOfStudents; // number of students enrolled in a course
     private ArrayList<GymMember> students; // list of all students (this stays as an array because there is a max num of students)
     private int capacity;
@@ -34,7 +35,7 @@ public class Course {
 
 
     public Course(String name, String description, String time, float hourDuration,
-                  Instructor teacher, String experienceLevel, int capacity) {
+                  Instructor teacher, String experienceLevel, int capacity, float startTime) {
         this.name = name;
         this.description = description;
         this.time = time;
@@ -42,6 +43,7 @@ public class Course {
         this.teacher = teacher;
         this.experienceLevel = experienceLevel;
         this.capacity = capacity;
+        this.startTime = startTime;
     }
 
     /** Get and Set methods */
@@ -113,6 +115,14 @@ public class Course {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public float getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(float startTime) {
+        this.startTime = startTime;
     }
 
 } // end of Course class
