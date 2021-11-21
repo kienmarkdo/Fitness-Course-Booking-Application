@@ -109,6 +109,13 @@ public class activity_instructor extends Activity {
             }
         });
 
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchCourse();
+            }
+        });
+
 
     }
 
@@ -154,24 +161,7 @@ public class activity_instructor extends Activity {
         String capacityLimit = editCapacityLimit.getText().toString();
         String duration = editDuration.getText().toString();
 
-        boolean check1 = courseName.equals("");
-        boolean check2 = experience.equals("");
-        boolean check3 = day.equals("");
-        boolean check4 = capacityLimit.equals("");
-        boolean check5 = duration.equals("");
 
-        // =======  check if the course name is empty or not  =======
-        /*if (!(check1 && check2 && check3 && check4 && check5)) {
-            editCourseName.setError("Cannot contain empty field");
-            editCourseName.requestFocus();
-            return;
-        }*/
-
-        // NOTE: The input is case sensitive, which means the course "Tennis" and "tennis" may co-exist at the same time
-
-        // =======  check if the course exists in the database or not  =======
-
-        // fetches instance of database.
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Courses");
 
         // Orders in search for the course name
@@ -382,11 +372,34 @@ public class activity_instructor extends Activity {
         //  to "Reset". Clear all text fields and redisplay all courses again.
 
         String courseName = editCourseName.getText().toString();
-        String experience = editExperience.getText().toString();
-        String day = editDay.getText().toString();
-        String capacityLimit = editCapacityLimit.getText().toString();
-        String duration = editDuration.getText().toString();
         String instructor = editInstructor.getText().toString();
+
+        boolean courseNameEmpty = courseName.equals("");
+        boolean instructorEmpty = instructor.equals("");
+
+        if (courseNameEmpty && instructorEmpty) {
+            databaseCourses.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    courseList.clear();
+                    for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+
+                        Course tempCourse = postSnapshot.getValue(Course.class);
+                        courseList.add(tempCourse);
+                    }
+                    CourseList courseAdapter = new CourseList(activity_instructor.this, courseList);
+                    listViewCourses.setAdapter(courseAdapter);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+
+            });
+
+            return;
+        }
 
 
 
@@ -397,7 +410,34 @@ public class activity_instructor extends Activity {
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 
                     Course tempCourse = postSnapshot.getValue(Course.class);
-                    courseList.add(tempCourse);
+
+                    boolean test1 = tempCourse.getTeacher().getLegalName().equals(instructor);
+                    boolean test2 = tempCourse.getName().equals(courseName);
+
+                    System.out.println("test1: " + test1);
+                    System.out.println("test2: " + test2);
+
+                    if (courseNameEmpty && !instructorEmpty) {
+                        if (test1) {
+                            System.out.println("Within 1st conditoin");
+                            courseList.add(tempCourse);
+                        }
+                    }
+
+                    else if (!courseNameEmpty && instructorEmpty) {
+                        if (test2) {
+                            System.out.println("Within 1st conditoin");
+                            courseList.add(tempCourse);
+                        }
+                    }
+
+                    else if (!courseNameEmpty && !instructorEmpty) {
+                        if (test1 && test2) {
+                            System.out.println("Within 1st conditoin");
+                            courseList.add(tempCourse);
+                        }
+                    }
+
                 }
                 CourseList courseAdapter = new CourseList(activity_instructor.this, courseList);
                 listViewCourses.setAdapter(courseAdapter);
