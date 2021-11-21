@@ -45,30 +45,19 @@
             android:id="@+id/dayView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Current Day:" />
+            android:text="Date: Day/Month/Year" />
 
-        <Spinner
-            android:id="@+id/current_day_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:spinnerMode="dropdown" />
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"/>
-
-        <TextView
-            android:id="@+id/dayView2"
+        <EditText
+            android:id="@+id/editDay"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Day:" />
+            android:layout_height="50dp"
+            android:hint="Current Date" />
 
-        <Spinner
-            android:id="@+id/new_day_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:spinnerMode="dropdown" />
-
+        <EditText
+            android:id="@+id/newDateView"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:hint="New Date" />
     </TableRow>
 
     <TableRow
@@ -102,7 +91,30 @@
             android:id="@+id/editDuration"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:hint="Hours" />
+            android:hint="Duration" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:id="@+id/createCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/editCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit" />
     </TableRow>
 
     <TableRow
@@ -113,41 +125,5 @@
             android:id="@+id/courseList"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="15dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/createCourse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Create" />
-
-                <Button
-                    android:id="@+id/searchCourseButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@android:string/search_go" />
-
-                <Button
-                    android:id="@+id/cancelButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cancel" />
-
-                <Button
-                    android:id="@+id/editCourse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Edit" />
-            </LinearLayout>
-        </ScrollView>
     </TableRow>
 </TableLayout>
