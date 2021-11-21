@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TableLayout
-        android:id="@+id/button_table"
+        android:id="@+id/editText_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -129,42 +129,50 @@
                 android:layout_height="48dp"
                 android:hint="Instructor" />
         </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/createCourse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Create" />
-
-            <Button
-                android:id="@+id/cancelButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cancel" />
-
-            <Button
-                android:id="@+id/editCourse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit" />
-
-            <Button
-                android:id="@+id/searchButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Search" />
-        </TableRow>
-
     </TableLayout>
+
+
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_table"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/createCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Create" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/editCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Edit" />
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Search" />
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/courseList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_table" />
+        android:layout_below="@id/buttons" />
 
 </RelativeLayout>
