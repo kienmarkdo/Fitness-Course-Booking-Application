@@ -71,7 +71,7 @@ public class activity_instructor extends Activity {
         TextView textViewCapacity = (TextView) findViewById(R.id.capacityLimit);
         TextView textViewDuration = (TextView) findViewById(R.id.durationView);
         TextView textViewInstructor = (TextView) findViewById(R.id.instructorView);
-        TextView textViewStartTime = (TextView) findViewById(R.id.startTimeView);
+        TextView textViewStartTime = (TextView) findViewById(R.id.startTime);
 
         editCourseName = (EditText) findViewById(R.id.editCourseName);
         editExperience = (EditText) findViewById(R.id.editExperience);

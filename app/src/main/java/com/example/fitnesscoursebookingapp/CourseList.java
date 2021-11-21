@@ -54,7 +54,7 @@ public class CourseList extends ArrayAdapter<Course> {
         textViewCapacity.setText(capStr);
 
         String startStr = "Start Time: " + String.valueOf(course.getStartTime());
-        System.out.println("start str: " + startStr);
+        //System.out.println("start str: " + startStr);
         textViewStartTime.setText(startStr);
 
         String durStr = "Dur: " + String.valueOf(course.getHourDuration());
