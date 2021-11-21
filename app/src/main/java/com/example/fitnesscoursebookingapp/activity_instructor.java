@@ -185,7 +185,7 @@ public class activity_instructor extends Activity {
             // using the parseInt() method
             int temp = Integer.parseInt(startTime);
 
-            if (temp <= 0 || temp >= 24) {
+            if (temp < 0 || temp >= 24) {
                 return false;
             }
 
@@ -215,15 +215,27 @@ public class activity_instructor extends Activity {
     }
 
 
-    public static boolean verifyDuration() {
-        return false;
+    public static boolean verifyDuration(String _duration) {
+        try {
+            float duration = Float.parseFloat(_duration);
+
+            if (duration != 1.0f && duration != 1.5f) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            // Print the message if exception occured
+            System.out.println("NumberFormatException occured");
+            return false;
+        }
+
+        return true;
     }
 
 
     public void createCourse() {
 
         // TODO: Error trap to see if the user inputted a valid DAY OF THE WEEK or not
-        //  this way, we can error trap from a list of 7 abbreviated strings (MON, TUES, WED...)
+        //  this way, we can error trap from a list of 7 abbreviated strings (MON, TUE, WED...)
 
 
         String courseName = editCourseName.getText().toString();
@@ -233,40 +245,69 @@ public class activity_instructor extends Activity {
         String duration = editDuration.getText().toString();
         String startTime = editStartTime.getText().toString();
 
+        boolean problem = false;
+        if (!verifyDuration(duration)) {
+            editDuration.setError("Must be 1 or 1.5");
+            editDuration.requestFocus();
+            problem = true;
+        } if (!verifyValidDay(day)) {
+            editDay.setError("Must be a valid day");
+            editDay.requestFocus();
+            problem = true;
+        } if (!verifyValidStartTime(startTime)) {
+            editStartTime.setError("Must be between 0 and 23 inclusive");
+            editStartTime.requestFocus();
+            problem = true;
+        } if (!verifyValidCapacityLimit(capacityLimit)) {
+            editCapacityLimit.setError("Must be a number larger than 0");
+            editCapacityLimit.requestFocus();
+            problem = true;
+        } if (experience == null || experience.isEmpty()) {
+            editExperience.setError("Must set an experience level");
+            editExperience.requestFocus();
+            problem = true;
+        } if (courseName == null || courseName.isEmpty()) {
+            editCourseName.setError("Must set a name");
+            editCourseName.requestFocus();
+            problem = true;
+        }
+        if (problem) {
+            return;
+        }
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Courses");
 
         // Orders in search for the course name
         Query checkCourse = reference.orderByChild("name").equalTo(courseName);
 
-
-
         checkCourse.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
+                    String description = null;
 
                     for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                         Course tempCourse = postSnapshot.getValue(Course.class);
 
                         if (tempCourse.getTime().equals(day)) {
-                            editCourseName.setError("Day already scheduled");
-                            editCourseName.requestFocus();
-                            editInstructor.setText(tempCourse.getTeacher().getLegalName());
+                            editDay.setError(courseName + " on " + day + " already scheduled by " + tempCourse.getTeacher().getLegalName());
                             return;
+                        } else if (tempCourse.getCapacity() == 0) {
+                            description = tempCourse.getDescription();
                         }
                     }
 
                     editCourseName.setError(null);
                     editCourseName.setError(null);
                     DatabaseReference ref = reference.push(); // add new course here
-                    ref.setValue(new Course(courseName, "placeholder", day, Float.parseFloat(duration), new Instructor(instructorId), experience, Integer.parseInt(capacityLimit), Float.parseFloat(startTime)));
+                    ref.setValue(new Course(courseName, description, day, Float.parseFloat(duration), new Instructor(instructorId), experience, Integer.parseInt(capacityLimit), Float.parseFloat(startTime)));
                     editCourseName.setText("");
                     editExperience.setText("");
                     editDay.setText("");
                     editCapacityLimit.setText("");
                     editDuration.setText("");
+                    editStartTime.setText("");
 
                 } else {
                     editCourseName.setError("Class type does not exist");
@@ -289,9 +330,6 @@ public class activity_instructor extends Activity {
         String day = editDay.getText().toString();
 
 
-        boolean check1 = courseName.equals("");
-
-        boolean check3 = day.equals("");
 
         // =======  check if the course name is empty or not  =======
         /*if (!(check1 && check2 && check3 && check4 && check5)) {
