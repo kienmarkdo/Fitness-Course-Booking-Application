@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class activity_instructor extends Activity {
+public class activity_instructor extends Activity implements AdapterView.OnItemSelectedListener {
 
 
     String instructorId;
@@ -46,6 +49,12 @@ public class activity_instructor extends Activity {
 
     List<Course> courseList;
 
+    Spinner weekdaysCurrentDayDropdown; // represents the drop-down menu for the weekdays in the "Select date" row
+    Spinner weekdaysNewDayDropdown;
+    String currentDayChoice; // value of the weekdays dropdown spinner
+    String newDayChoice;
+    String noWeekdaySelected;
+
     DatabaseReference databaseCourses;
 
     @Override
@@ -67,13 +76,34 @@ public class activity_instructor extends Activity {
 
         editCourseName = (EditText) findViewById(R.id.editCourseName);
         editExperience = (EditText) findViewById(R.id.editExperience);
-        editDay= (EditText) findViewById(R.id.editDay);
         editCapacityLimit = (EditText) findViewById(R.id.editCapacityLimit);
         editDuration= (EditText) findViewById(R.id.editDuration);
 
         createCourseButton = (Button) findViewById(R.id.createCourse);
         cancelCourseButton = (Button) findViewById(R.id.cancelButton);
         editCourseButton = (Button) findViewById(R.id.editCourse);
+
+
+        // START: spinner dropdown menu
+        weekdaysCurrentDayDropdown = findViewById(R.id.current_day_spinner);
+        weekdaysNewDayDropdown = findViewById(R.id.new_day_spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.weekdays_string_resource,
+                android.R.layout.simple_spinner_item); // to populate text in our dropdown menu
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        weekdaysCurrentDayDropdown.setAdapter(adapter);
+        weekdaysCurrentDayDropdown.setOnItemSelectedListener(this);
+        currentDayChoice = weekdaysCurrentDayDropdown.getSelectedItem().toString(); // gets the default value of the dropdown
+
+        weekdaysNewDayDropdown.setAdapter(adapter);
+        weekdaysCurrentDayDropdown.setOnItemSelectedListener(this);
+        newDayChoice = weekdaysNewDayDropdown.getSelectedItem().toString();
+
+        noWeekdaySelected = weekdaysNewDayDropdown.getSelectedItem().toString(); // default week day text
+        // END: spinner dropdown menu
 
         courseList = new ArrayList<>();
         databaseCourses = FirebaseDatabase.getInstance().getReference("Courses");
@@ -280,6 +310,7 @@ public class activity_instructor extends Activity {
 
     /**
      * Edit a course that this instructor currently teaches (a course that is within this java class's courseList).
+     * IMPORTANT: This means the instructor can only edit courses for which they are the instructor.
      */
     public void editCourse() {
 
@@ -287,7 +318,7 @@ public class activity_instructor extends Activity {
     }
 
     /**
-     * Searches and displays the courses found on the database.
+     * Searches and displays ALL courses found on the database.
      * Can display all courses taught by the following search criterias
      *  - Instructor name (i.e.: display all courses taught by John Doe)
      *  - Course type (i.e.: display all Basketball courses)
@@ -298,5 +329,38 @@ public class activity_instructor extends Activity {
         // TODO: Add a search course button
         //  once the user clicks on search (assume no errors), change the text in the "Search" button
         //  to "Reset". Clear all text fields and redisplay all courses again.
+
+
+    }
+
+    /**
+     * Spinner method for the weekdays dropdown menu
+     * @param adapterView
+     * @param view
+     * @param i retrieves the new item at position i
+     * @param l
+     */
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+        int parentID = adapterView.getId(); // checks which dropdown menu the user has selected (current day or new day)
+
+        if (parentID == R.id.current_day_spinner) {
+            currentDayChoice = adapterView.getItemAtPosition(i).toString(); // sets the new choice to the weekdaysChoice attribute
+        } else if (parentID == R.id.new_day_spinner) {
+            newDayChoice = adapterView.getItemAtPosition(i).toString();
+        }
+    }
+
+    /**
+     * Spinner method for the weekdays dropdown menu
+     * @param adapterView
+     * @param view
+     * @param i
+     * @param l
+     */
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

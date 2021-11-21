@@ -45,19 +45,24 @@
             android:id="@+id/dayView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date: Day/Month/Year" />
+            android:text="Day:" />
 
-        <EditText
-            android:id="@+id/editDay"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="Current Date" />
+        <Spinner
+            android:id="@+id/current_day_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:spinnerMode="dropdown" />
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"/>
 
-        <EditText
-            android:id="@+id/newDateView"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="New Date" />
+        <Spinner
+            android:id="@+id/new_day_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:spinnerMode="dropdown" />
+
     </TableRow>
 
     <TableRow
@@ -74,7 +79,7 @@
             android:id="@+id/editCapacityLimit"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:hint="Capacity" />
+            android:hint="Capacity (i.e.: 30)" />
     </TableRow>
 
     <TableRow
@@ -91,30 +96,7 @@
             android:id="@+id/editDuration"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:hint="Duration" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <Button
-            android:id="@+id/createCourse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create" />
-
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel" />
-
-        <Button
-            android:id="@+id/editCourse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit" />
+            android:hint="Duration (i.e.: 1.5)" />
     </TableRow>
 
     <TableRow
@@ -125,5 +107,41 @@
             android:id="@+id/courseList"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="50dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/createCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Create" />
+
+                <Button
+                    android:id="@+id/searchCourseButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@android:string/search_go" />
+
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel" />
+
+                <Button
+                    android:id="@+id/editCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Edit" />
+            </LinearLayout>
+        </ScrollView>
     </TableRow>
 </TableLayout>
