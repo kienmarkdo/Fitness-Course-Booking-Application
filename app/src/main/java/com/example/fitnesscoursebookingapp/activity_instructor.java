@@ -205,6 +205,9 @@ public class activity_instructor extends Activity {
 
 
     public static boolean verifyValidDay(String day) {
+        if (day == null || day.isEmpty()) {
+            return false;
+        }
 
         for (int i = 0; i < 5; i++) {
             if (day.equals(dayStrings[i])) {
@@ -329,7 +332,19 @@ public class activity_instructor extends Activity {
         String courseName = editCourseName.getText().toString();
         String day = editDay.getText().toString();
 
-
+        boolean problem = false;
+        if (courseName == null || courseName.isEmpty()) {
+            editCourseName.setError("Must set a name");
+            editCourseName.requestFocus();
+            problem = true;
+        } if (!verifyValidDay(day)) {
+            editDay.setError("Must be a valid day");
+            editDay.requestFocus();
+            problem = true;
+        }
+        if (problem) {
+            return;
+        }
 
         // =======  check if the course name is empty or not  =======
         /*if (!(check1 && check2 && check3 && check4 && check5)) {
@@ -371,14 +386,16 @@ public class activity_instructor extends Activity {
                             }
 
                             else {
-                                editCourseName.setError("Must edit your own course.");
+                                editCourseName.setError("Must cancel your own course.");
                                 editCourseName.requestFocus();
                                 return;
                             }
                         }
                     }
 
-
+                    // no course was found during the specified day
+                    editDay.setError("There is no class to cancel on this day");
+                    editDay.requestFocus();
 
 
                 } else {
