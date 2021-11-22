@@ -277,7 +277,7 @@ public class activity_instructor extends Activity {
             editExperience.setError("Must set an experience level");
             editExperience.requestFocus();
             problem = true;
-        } if (verifyValidName(courseName)) {
+        } if (!verifyValidName(courseName)) {
             editCourseName.setError("Must set a name");
             editCourseName.requestFocus();
             problem = true;
@@ -342,7 +342,7 @@ public class activity_instructor extends Activity {
         String day = editDay.getText().toString();
 
         boolean problem = false;
-        if (verifyValidName(courseName) ) {
+        if (!verifyValidName(courseName) ) {
             editCourseName.setError("Must set a name");
             editCourseName.requestFocus();
             problem = true;
@@ -443,7 +443,7 @@ public class activity_instructor extends Activity {
         boolean check5 = duration.equals("");
 
         boolean problem = false;
-        if (courseName.isEmpty()) {
+        if (!verifyValidName(courseName)) {
             editCourseName.setError("Must set a name");
             editCourseName.requestFocus();
             problem = true;
