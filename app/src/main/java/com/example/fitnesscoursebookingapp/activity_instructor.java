@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class activity_instructor extends Activity {
 
@@ -198,6 +199,8 @@ public class activity_instructor extends Activity {
                 return false;
             }
 
+
+
         }
 
         // Catch block to handle NumberFormatException
@@ -272,6 +275,12 @@ public class activity_instructor extends Activity {
         } if (!verifyValidCapacityLimit(capacityLimit)) {
             editCapacityLimit.setError("Must be a number larger than 0");
             editCapacityLimit.requestFocus();
+            problem = true;
+        } if (!experience.toLowerCase(Locale.ROOT).equals("beginner") &&
+                !experience.toLowerCase(Locale.ROOT).equals("intermediate") &&
+                !experience.toLowerCase(Locale.ROOT).equals("advanced")) {
+            editExperience.setError("Invalid experience (beginner, intermediate, advanced)");
+            editExperience.requestFocus();
             problem = true;
         } if (experience == null || experience.isEmpty()) {
             editExperience.setError("Must set an experience level");
@@ -354,13 +363,6 @@ public class activity_instructor extends Activity {
         if (problem) {
             return;
         }
-
-        // =======  check if the course name is empty or not  =======
-        /*if (!(check1 && check2 && check3 && check4 && check5)) {
-            editCourseName.setError("Cannot contain empty field");
-            editCourseName.requestFocus();
-            return;
-        }*/
 
         // NOTE: The input is case sensitive, which means the course "Tennis" and "tennis" may co-exist at the same time
 
@@ -455,7 +457,7 @@ public class activity_instructor extends Activity {
             editCapacityLimit.setError("Must be a number larger than 0");
             editCapacityLimit.requestFocus();
             problem = true;
-        } if (!startTime.isEmpty() && verifyValidStartTime(startTime)) {
+        } if (!startTime.isEmpty() && !verifyValidStartTime(startTime)) {
             editStartTime.setError("Must be between 0 and 23 inclusive");
             editStartTime.requestFocus();
             problem = true;
@@ -468,12 +470,6 @@ public class activity_instructor extends Activity {
             return;
         }
 
-        // =======  check if the course name is empty or not  =======
-        /*if (!(check1 && check2 && check3 && check4 && check5)) {
-            editCourseName.setError("Cannot contain empty field");
-            editCourseName.requestFocus();
-            return;
-        }*/
 
         // NOTE: The input is case sensitive, which means the course "Tennis" and "tennis" may co-exist at the same time
 

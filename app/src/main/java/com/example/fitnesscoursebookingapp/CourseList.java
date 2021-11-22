@@ -50,7 +50,7 @@ public class CourseList extends ArrayAdapter<Course> {
         String courseStr = "Date: " + course.getTime();
         textViewDay.setText(courseStr);
 
-        String capStr = "Cap: " + String.valueOf(course.getStudentAmount());
+        String capStr = "Cap: " + String.valueOf(course.getCapacity());
         textViewCapacity.setText(capStr);
 
         String startStr = "Start Time: " + String.valueOf(course.getStartTime());
