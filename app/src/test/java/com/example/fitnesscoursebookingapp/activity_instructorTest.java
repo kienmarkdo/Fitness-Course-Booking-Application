@@ -43,7 +43,7 @@ public class activity_instructorTest {
         assertFalse(activity_instructor.verifyValidDay(test1));
         assertFalse(activity_instructor.verifyValidDay(test2));
         assertTrue(activity_instructor.verifyValidDay(test3));
-        assertTrue(activity_instructor.verifyValidDay(test4));
+        assertFalse(activity_instructor.verifyValidDay(test4));
         assertFalse(activity_instructor.verifyValidDay(test5));
 
     }
@@ -59,13 +59,15 @@ public class activity_instructorTest {
         String test4 = "TUES";
         String test5 = "Blarg";
 
-        assertFalse(activity_instructor.verifyValidStartTime(test1));
-        assertFalse(activity_instructor.verifyValidStartTime(test2));
-        assertTrue(activity_instructor.verifyValidStartTime(test3));
-        assertTrue(activity_instructor.verifyValidStartTime(test4));
+
+        assertTrue(activity_instructor.verifyValidStartTime(test1));
+        assertTrue(activity_instructor.verifyValidStartTime(test2));
+        assertFalse(activity_instructor.verifyValidStartTime(test3));
+        assertFalse(activity_instructor.verifyValidStartTime(test4));
         assertFalse(activity_instructor.verifyValidStartTime(test5));
     }
 
+    @Test
     public void testVerifyDuration() {
         System.out.println("In verify duration");
 
@@ -75,11 +77,29 @@ public class activity_instructorTest {
         String test4 = "250";
         String test5 = "Blarg";
 
-        assertTrue(activity_instructor.verifyValidStartTime(test1));
-        assertFalse(activity_instructor.verifyValidStartTime(test2));
-        assertTrue(activity_instructor.verifyValidStartTime(test3));
-        assertFalse(activity_instructor.verifyValidStartTime(test4));
-        assertFalse(activity_instructor.verifyValidStartTime(test5));
+        assertTrue(activity_instructor.verifyDuration(test1));
+        assertFalse(activity_instructor.verifyDuration(test2));
+        assertTrue(activity_instructor.verifyDuration(test3));
+        assertFalse(activity_instructor.verifyDuration(test4));
+        assertFalse(activity_instructor.verifyDuration(test5));
+    }
+
+    @Test
+    public void testVerifyName() {
+        System.out.println("In verify name");
+
+        String test1 = "1";
+        String test2 = "";
+        String test3 = "1.5";
+        String test4 = "";
+        String test5 = "Blarg";
+
+        assertTrue(activity_instructor.verifyValidName(test1));
+        assertFalse(activity_instructor.verifyValidName(test2));
+        assertTrue(activity_instructor.verifyValidName(test3));
+        assertFalse(activity_instructor.verifyValidName(test4));
+        assertTrue(activity_instructor.verifyValidName(test5));
+
     }
 
 

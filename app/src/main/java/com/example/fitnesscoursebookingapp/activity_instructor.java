@@ -150,6 +150,15 @@ public class activity_instructor extends Activity {
         });
     }
 
+    public static boolean verifyValidName(String inputName) {
+
+        if (inputName.isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
+
 
     public static boolean verifyValidCapacityLimit(String capacityLimit) {
         try {
@@ -222,6 +231,8 @@ public class activity_instructor extends Activity {
         try {
             float duration = Float.parseFloat(_duration);
 
+            System.out.println(duration);
+
             if (duration != 1.0f && duration != 1.5f) {
                 return false;
             }
@@ -266,7 +277,7 @@ public class activity_instructor extends Activity {
             editExperience.setError("Must set an experience level");
             editExperience.requestFocus();
             problem = true;
-        } if (courseName == null || courseName.isEmpty()) {
+        } if (verifyValidName(courseName)) {
             editCourseName.setError("Must set a name");
             editCourseName.requestFocus();
             problem = true;
@@ -331,7 +342,7 @@ public class activity_instructor extends Activity {
         String day = editDay.getText().toString();
 
         boolean problem = false;
-        if (courseName == null || courseName.isEmpty()) {
+        if (verifyValidName(courseName) ) {
             editCourseName.setError("Must set a name");
             editCourseName.requestFocus();
             problem = true;
