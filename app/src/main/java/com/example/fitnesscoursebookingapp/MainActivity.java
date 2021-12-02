@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     // list of possible activities this activity may navigate to
     private enum NextActivity {
-        REGISTER_USER, ADMIN, WELCOME_SCREEN, INSTRUCTOR;
+        REGISTER_USER, ADMIN, WELCOME_SCREEN, INSTRUCTOR, GYMMEMBER;
     }
 
     @Override
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         else {
                             //String role = user.child("userType").getValue(String.class);
                             String[] infoArr = {role, usernameInput};
-                            switchActivities(NextActivity.WELCOME_SCREEN, infoArr);
+                            switchActivities(NextActivity.GYMMEMBER, infoArr);
                         }
 
                     }
@@ -174,6 +174,11 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this, activity_welcome_screen.class);
                 intent.putExtra("strings", extra);
                 break;
+            case GYMMEMBER:
+                intent = new Intent(this, activity_gym_member.class);
+                intent.putExtra("strings", extra);
+                break;
+
         }
         startActivity(intent);
 
