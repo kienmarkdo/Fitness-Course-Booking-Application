@@ -43,6 +43,8 @@ public class activity_gym_member extends AppCompatActivity {
 
     static String[] dayStrings = {"MON", "TUE", "WED", "THU", "FRI"};
 
+    int listEnrolledState = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -60,6 +62,7 @@ public class activity_gym_member extends AppCompatActivity {
         listEnrolledButton= (Button) findViewById(R.id.listEnrolledButton);
 
         courseList = new ArrayList<>();
+        enrolledList = new ArrayList<>();
         databaseCourses = FirebaseDatabase.getInstance().getReference("Courses");
 
         listViewCourses= findViewById(R.id.courseList);
@@ -81,7 +84,7 @@ public class activity_gym_member extends AppCompatActivity {
         listEnrolledButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                placeHolder();
+                listEnrolledCourses();
             }
         });
     }
@@ -122,20 +125,6 @@ public class activity_gym_member extends AppCompatActivity {
         String day = editDay.getText().toString();
 
 
-        /*boolean problem = false;
-        } if (!verifyValidDay(day)) {
-            editDay.setError("Must be a valid day");
-            editDay.requestFocus();
-            problem = true;
-        } if (!verifyValidName(courseName)) {
-            editCourseName.setError("Must set a name");
-            editCourseName.requestFocus();
-            problem = true;
-        }
-        if (problem) {
-            return;
-        }*/
-
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Courses");
 
         // Orders in search for the course name
@@ -153,6 +142,8 @@ public class activity_gym_member extends AppCompatActivity {
                         if (tempCourse.getTime().equals(day)) {
 
                             enrolledList.add(tempCourse);
+                            System.out.println(enrolledList);
+                            return;
                         }
                     }
 
@@ -175,6 +166,46 @@ public class activity_gym_member extends AppCompatActivity {
         }); // end of checkCourse listener
 
     }
+
+    public void listEnrolledCourses() {
+
+        System.out.println(enrolledList);
+
+        if (listEnrolledState == 0) {
+            CourseList courseAdapter = new CourseList(activity_gym_member.this, enrolledList);
+            listViewCourses.setAdapter(courseAdapter);
+            listEnrolledState = 1;
+        }
+
+        else {
+            databaseCourses.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    courseList.clear();
+                    for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+
+                        Course tempCourse = postSnapshot.getValue(Course.class);
+                        courseList.add(tempCourse);
+                    }
+                    CourseList courseAdapter = new CourseList(activity_gym_member.this, courseList);
+                    listViewCourses.setAdapter(courseAdapter);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+
+            });
+            listEnrolledState = 0;
+        }
+
+
+
+
+    }
+    
+
 
 
     /*private void clearErrors() {
