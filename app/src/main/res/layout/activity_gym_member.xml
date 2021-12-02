@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity_gym_member">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/classNameView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class Name:" />
+
+        <EditText
+            android:id="@+id/editClassName"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:hint="Class Name" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/weekDayView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weekday:" />
+
+        <EditText
+            android:id="@+id/editWeekDay"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:hint="Weekday" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/enrollButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enroll" />
+
+        <Button
+            android:id="@+id/unenrollButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unenroll" />
+
+        <Button
+            android:id="@+id/listEnrolledButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="List" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </TableRow>
+</TableLayout>

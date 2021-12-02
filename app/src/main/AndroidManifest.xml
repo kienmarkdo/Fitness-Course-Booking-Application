@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitnessCourseBookingApp">
         <activity
+            android:name=".activity_gym_member"
+            android:exported="false" />
+        <activity
             android:name=".activity_welcome_screen"
             android:exported="false" />
         <activity android:name=".activity_admin" />
