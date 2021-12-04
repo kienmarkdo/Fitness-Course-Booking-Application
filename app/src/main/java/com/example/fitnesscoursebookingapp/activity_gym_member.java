@@ -3,6 +3,7 @@ package com.example.fitnesscoursebookingapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +40,15 @@ public class activity_gym_member extends AppCompatActivity {
 
     List<Course> enrolledList;
 
+    String activeUser;
+
     DatabaseReference databaseCourses;
+
+    DatabaseReference databaseUsers;
+
+    Query checkUser;
+
+
 
     static String[] dayStrings = {"MON", "TUE", "WED", "THU", "FRI"};
 
@@ -48,8 +57,13 @@ public class activity_gym_member extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gym_member);
+
+        Intent intent = getIntent();
+        String[] localStrings = intent.getStringArrayExtra("strings");
+        activeUser = localStrings[1];
 
         courseName = (TextView) findViewById(R.id.courseNameView);
         weekDay = (TextView) findViewById(R.id.weekDayView);
@@ -64,6 +78,12 @@ public class activity_gym_member extends AppCompatActivity {
         courseList = new ArrayList<>();
         enrolledList = new ArrayList<>();
         databaseCourses = FirebaseDatabase.getInstance().getReference("Courses");
+        //currentUser = FirebaseDatabase.getInstance().getReference("")
+
+        databaseUsers = FirebaseDatabase.getInstance().getReference("Users");
+
+        // Orders in search for the course name
+        checkUser = databaseUsers.orderByChild("username").equalTo(activeUser);
 
         listViewCourses= findViewById(R.id.courseList);
 
@@ -112,10 +132,64 @@ public class activity_gym_member extends AppCompatActivity {
             }
 
         });
+
+        databaseUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                enrolledList.clear();
+                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+
+                    GymMember tempMember= postSnapshot.getValue(GymMember.class);
+                    if (tempMember.getUsername().equals(activeUser)) {
+                        ArrayList<Course> tempEnrolledList = tempMember.getCoursesAttending();
+                        for (int i = 0; i < tempEnrolledList.size(); i++) {
+                            enrolledList.add(tempEnrolledList.get(i));
+                        }
+                    }
+                }
+                CourseList courseAdapter = new CourseList(activity_gym_member.this, courseList);
+                listViewCourses.setAdapter(courseAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
     }
 
     public void placeHolder() {
         System.out.println("aplce");
+    }
+
+    public void pushListToDataBase() {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
+        Query checkUser = userRef.orderByChild("userName").equalTo(activeUser);
+
+        checkUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //enrolledList.clear();
+                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+
+                    GymMember tempMember= postSnapshot.getValue(GymMember.class);
+                    if (tempMember.getUsername().equals(activeUser)) {
+                        DatabaseReference userRef = dataSnapshot.getChildren().iterator().next().getRef();
+                        userRef.child("coursesAttending").setValue(enrolledList);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
     }
 
     public void enrollCourse() {
@@ -139,10 +213,14 @@ public class activity_gym_member extends AppCompatActivity {
                     for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                         Course tempCourse = postSnapshot.getValue(Course.class);
 
+                        DatabaseReference course = dataSnapshot.getChildren().iterator().next().getRef();
+
                         if (tempCourse.getTime().equals(day)) {
 
                             enrolledList.add(tempCourse);
+                            course.child("coursesAttending").setValue(enrolledList);
                             System.out.println(enrolledList);
+                            pushListToDataBase();
                             return;
                         }
                     }

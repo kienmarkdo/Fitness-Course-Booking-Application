@@ -1,7 +1,7 @@
 package com.example.fitnesscoursebookingapp;
 
+import java.util.LinkedList;
 import java.util.ArrayList;
-
 /**
  * Represents a Gym Member that participates in the Courses within this Gym
  *
@@ -12,6 +12,11 @@ public class GymMember extends User {
     ArrayList<Course> coursesAttending;
 
     /** Constructor */
+
+    public GymMember() {
+
+    }
+
     public GymMember(String username, String password) {
         super(username, password);
         usertype = "gymMember";
@@ -27,6 +32,13 @@ public class GymMember extends User {
         super(username, password);
         usertype = isBothTypes ? "both" : "gymMember";
         this.legalName = legalName;
+    }
+
+    public GymMember(String username, String password, String legalName, ArrayList<Course> coursesAttending) {
+        super(username, password);
+        usertype = "gymMember";
+        this.legalName = legalName;
+        this.coursesAttending = coursesAttending;
     }
 
     /** Class methods */
@@ -63,4 +75,15 @@ public class GymMember extends User {
     public void setLegalName(String legalName) {
         this.legalName = legalName;
     }
+
+
+    public ArrayList<Course> getCoursesAttending() {
+        return coursesAttending;
+    }
+
+    public void setCourseAttending(ArrayList<Course> coursesAttending) {
+        this.coursesAttending = coursesAttending;
+    }
+
+
 }

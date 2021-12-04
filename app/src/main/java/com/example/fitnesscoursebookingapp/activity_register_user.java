@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import java.util.LinkedList;
 
 import androidx.annotation.NonNull;
 
@@ -21,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * Register new account page of the Fitness Course Booking Application
@@ -208,7 +211,10 @@ public class activity_register_user extends Activity {
 
                     // account type is gym member
                     if (memberBtn.isChecked() && !instructorBtn.isChecked()) {
-                        User newMember = new GymMember(usernameInputStr, passwordInputStr, fullNameInputStr);
+                        ArrayList<Course> emptyList = new ArrayList<Course>();
+                        Course placeHolder = new Course("Placeholder", "None");
+                        emptyList.add(placeHolder);
+                        User newMember = new GymMember(usernameInputStr, passwordInputStr, fullNameInputStr, emptyList);
                         reference.push().setValue(newMember); // add the new Gym Member here
                         printUserAddedSuccessMessage();
                     }
