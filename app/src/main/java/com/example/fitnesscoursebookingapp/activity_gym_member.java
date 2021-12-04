@@ -228,6 +228,14 @@ public class activity_gym_member extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Validates whether the number of students has reached the course's preset capacity.
+     * @return True if there is still room leftover for the gym member to enroll in the course, False otherwise.
+     */
+    public boolean validateEnrollWithinCapacity() {
+        return true; // TODO: Implement this
+    }
+
 
 
     // =====================  main methods  =====================
