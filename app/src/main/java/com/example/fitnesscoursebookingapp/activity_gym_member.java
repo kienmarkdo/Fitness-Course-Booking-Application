@@ -172,20 +172,23 @@ public class activity_gym_member extends AppCompatActivity {
     public void pushListToDataBase() {
         System.out.println("Entered pushlist");
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
-        Query checkUser = userRef.orderByChild("userName").equalTo(activeUser);
-
+        Query checkUser = userRef.orderByChild("username").equalTo(activeUser);
+        System.out.println("After checkuser");
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //enrolledList.clear();
+
+                System.out.println("Entered on data change");
+
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 
                     GymMember tempMember= postSnapshot.getValue(GymMember.class);
                     System.out.println("User while scanning : " + tempMember.getUsername());
                     if (tempMember.getUsername().equals(activeUser)) {
+                        DatabaseReference user = dataSnapshot.getChildren().iterator().next().getRef();
                         System.out.println("Found user " + tempMember.getUsername());
-                        DatabaseReference userRef = dataSnapshot.getChildren().iterator().next().getRef();
-                        userRef.child("coursesAttending").setValue(enrolledList);
+                        user.child("coursesAttending").setValue(enrolledList);
                     }
                 }
 
