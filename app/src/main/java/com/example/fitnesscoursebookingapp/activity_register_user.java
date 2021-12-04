@@ -212,7 +212,8 @@ public class activity_register_user extends Activity {
                     // account type is gym member
                     if (memberBtn.isChecked() && !instructorBtn.isChecked()) {
                         ArrayList<Course> emptyList = new ArrayList<Course>();
-                        Course placeHolder = new Course("Placeholder", "None");
+                        Course placeHolder = new Course("Placeholder", "None", "Unassigned", 0,
+                                new Instructor("Unassigned"), "Unassigned", 0, 0 );
                         emptyList.add(placeHolder);
                         User newMember = new GymMember(usernameInputStr, passwordInputStr, fullNameInputStr, emptyList);
                         reference.push().setValue(newMember); // add the new Gym Member here

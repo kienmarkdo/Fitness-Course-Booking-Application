@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -110,6 +111,7 @@ public class activity_gym_member extends AppCompatActivity {
     }
 
 
+
     protected void onStart() {
         super.onStart();
 
@@ -142,7 +144,9 @@ public class activity_gym_member extends AppCompatActivity {
                     GymMember tempMember= postSnapshot.getValue(GymMember.class);
                     if (tempMember.getUsername().equals(activeUser)) {
                         ArrayList<Course> tempEnrolledList = tempMember.getCoursesAttending();
+                        System.out.println("List retrieved is " + tempEnrolledList);
                         for (int i = 0; i < tempEnrolledList.size(); i++) {
+                            System.out.println("Adding course " + tempEnrolledList.get(i).getName());
                             enrolledList.add(tempEnrolledList.get(i));
                         }
                     }
@@ -166,17 +170,20 @@ public class activity_gym_member extends AppCompatActivity {
     }
 
     public void pushListToDataBase() {
+        System.out.println("Entered pushlist");
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
         Query checkUser = userRef.orderByChild("userName").equalTo(activeUser);
 
-        checkUser.addValueEventListener(new ValueEventListener() {
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //enrolledList.clear();
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 
                     GymMember tempMember= postSnapshot.getValue(GymMember.class);
+                    System.out.println("User while scanning : " + tempMember.getUsername());
                     if (tempMember.getUsername().equals(activeUser)) {
+                        System.out.println("Found user " + tempMember.getUsername());
                         DatabaseReference userRef = dataSnapshot.getChildren().iterator().next().getRef();
                         userRef.child("coursesAttending").setValue(enrolledList);
                     }
@@ -198,28 +205,22 @@ public class activity_gym_member extends AppCompatActivity {
         String courseName = editCourseName.getText().toString();
         String day = editDay.getText().toString();
 
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Courses");
-
-        // Orders in search for the course name
-        Query checkCourse = reference.orderByChild("name").equalTo(courseName);
-
-        checkCourse.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseCourses.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
 
+                    System.out.println("Now scanning for correct course to enroll");
+
                     for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                         Course tempCourse = postSnapshot.getValue(Course.class);
 
-                        DatabaseReference course = dataSnapshot.getChildren().iterator().next().getRef();
+                        System.out.println("Current coures scanning is " + tempCourse.getName());
 
                         if (tempCourse.getTime().equals(day)) {
 
                             enrolledList.add(tempCourse);
-                            course.child("coursesAttending").setValue(enrolledList);
-                            System.out.println(enrolledList);
                             pushListToDataBase();
                             return;
                         }
@@ -250,6 +251,7 @@ public class activity_gym_member extends AppCompatActivity {
         System.out.println(enrolledList);
 
         if (listEnrolledState == 0) {
+            System.out.println("In state zero dispalying enrolled");
             CourseList courseAdapter = new CourseList(activity_gym_member.this, enrolledList);
             listViewCourses.setAdapter(courseAdapter);
             listEnrolledState = 1;
