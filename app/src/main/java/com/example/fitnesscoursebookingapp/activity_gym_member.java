@@ -230,10 +230,29 @@ public class activity_gym_member extends AppCompatActivity {
 
     /**
      * Validates whether the number of students has reached the course's preset capacity.
+     * Throws an error if the course cannot be found.
      * @return True if there is still room leftover for the gym member to enroll in the course, False otherwise.
      */
-    public boolean validateEnrollWithinCapacity() {
-        return true; // TODO: Implement this
+    public boolean validateEnrollWithinCapacity (String courseName, String courseDay) {
+
+        for (Course course : enrolledList) {
+            if (course.getName().equals(courseName) && course.getTime().equals(courseDay) &&
+                    course.getStudentAmount() < course.getCapacity()) {
+                return true;
+            } else if (course.getName().equals(courseName) && course.getTime().equals(courseDay) &&
+                    course.getStudentAmount() >= course.getCapacity()) {
+                return false;
+            }
+        }
+
+        try {
+            throw new Exception("Course could not be found");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false; // course not found
+
     }
 
 
@@ -312,6 +331,12 @@ public class activity_gym_member extends AppCompatActivity {
             return;
         }
 
+        if (!validateEnrollWithinCapacity(courseName, day)) {
+            editCourseName.requestFocus();
+            editCourseName.setError("Failed. Class reached maximum student capacity.");
+            return;
+        }
+
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Courses");
         Query checkCourse = userRef.orderByChild("name").equalTo(courseName);
 
@@ -334,6 +359,7 @@ public class activity_gym_member extends AppCompatActivity {
                         editDay.requestFocus();
                         return;
                     }
+
 
                     // error trapping END
 
