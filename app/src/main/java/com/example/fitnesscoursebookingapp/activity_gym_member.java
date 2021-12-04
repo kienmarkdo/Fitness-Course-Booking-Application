@@ -3,13 +3,16 @@ package com.example.fitnesscoursebookingapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -174,6 +177,61 @@ public class activity_gym_member extends AppCompatActivity {
 
     }
 
+    // =====================  validate methods  =====================
+
+    /**
+     * Checks whether the inputted weekday conflicts with another weekday within the gym member's
+     *  enrolled list.
+     *  NOTE: Assume the parameter String day is in the correct format.
+     * @param day Valid weekday as a String
+     * @return True if weekday does not conflict with any other classes; False otherwise.
+     */
+    public boolean validateEnrollDay(String day) {
+        for (Course course : enrolledList) {
+            if (course.getTime().equals(day)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Validates the day inputted by the user (MON, TUE, WED, THU, FRI)
+     * @param day Day as a String
+     * @return True if the inputted String is a valid weekday; False otherwise.
+     */
+    public static boolean validateDayInput(String day) {
+        if (day == null || day.isEmpty()) {
+            return false;
+        }
+
+        for (int i = 0; i < 5; i++) {
+            if (day.equals(dayStrings[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Validates whether the user has NOT YET enrolled in this course.
+     *  Used in the enroll method. If the user is already enrolled in Judo on THU, they cannot
+     *  enroll into this course again because they are already in it.
+     * @return True if gym member has NOT enrolled in this course yet.
+     */
+    public boolean validateNotYetEnrolled(String courseName, String courseDay) {
+        for (Course course : enrolledList) {
+            if (course.getName().equals(courseName) && course.getTime().equals(courseDay)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+    // =====================  main methods  =====================
+
     public void unenroll() {
         String courseName = editCourseName.getText().toString();
         String day = editDay.getText().toString();
@@ -183,8 +241,15 @@ public class activity_gym_member extends AppCompatActivity {
             if (courseName.equals(temp.getName()) && day.equals(temp.getTime())) {
                 enrolledList.remove(i);
                 pushListToDataBase();
+                printUnenrollSuccessMessage();
+                return;
             }
         }
+
+        editCourseName.setError("Cannot find this course on this day.");
+        editCourseName.requestFocus();
+
+
     }
 
     public void placeHolder() {
@@ -224,20 +289,19 @@ public class activity_gym_member extends AppCompatActivity {
         });
     }
 
+    /**
+     * Enrolls in a course
+     */
     public void enrollCourse() {
-        //clearErrors();
-
-
 
         String courseName = editCourseName.getText().toString();
         String day = editDay.getText().toString();
 
-        for (int i = 0; i < enrolledList.size(); i++) {
-            Course temp = enrolledList.get(i);
-            if (courseName.equals(temp.getName()) && day.equals(temp.getTime())) {
-                editCourseName.setError("Already enrolled in this class");
-                return;
-            }
+        // cannot enroll if gym member is already enrolled in this class on this day
+        if (!validateNotYetEnrolled(courseName, day)) {
+            editCourseName.requestFocus();
+            editCourseName.setError("Failed. Already enrolled in this course on this day.");
+            return;
         }
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Courses");
@@ -249,7 +313,21 @@ public class activity_gym_member extends AppCompatActivity {
 
                 if (dataSnapshot.exists()) {
 
-                    System.out.println("Now scanning for correct course to enroll");
+                    // error trapping START
+                    if (!validateDayInput(day)) {
+                        editDay.setError("Invalid. Enter MON, TUE, WED, THU, or FRI.");
+                        editDay.setText("");
+                        editDay.requestFocus();
+                        return;
+                    }
+
+                    if (!validateEnrollDay(day)) {
+                        editDay.setError("Failed. Already enrolled in a course on this day.");
+                        editDay.requestFocus();
+                        return;
+                    }
+
+                    // error trapping END
 
                     for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                         Course tempCourse = postSnapshot.getValue(Course.class);
@@ -260,12 +338,14 @@ public class activity_gym_member extends AppCompatActivity {
 
                             enrolledList.add(tempCourse);
                             pushListToDataBase();
+
+                            printEnrollSuccessMessage();
                             return;
                         }
                     }
 
                     // no course was found during the specified day
-                    editDay.setError("There is no class to cancel on this day");
+                    editDay.setError("Please enter a class name");
                     editDay.requestFocus();
 
 
@@ -323,6 +403,9 @@ public class activity_gym_member extends AppCompatActivity {
 
     }
 
+    /**
+     * Searches for a course
+     */
     public void searchCourse() {
         //clearErrors();
 
@@ -344,6 +427,8 @@ public class activity_gym_member extends AppCompatActivity {
                     }
                     CourseList courseAdapter = new CourseList(activity_gym_member.this, courseList);
                     listViewCourses.setAdapter(courseAdapter);
+
+                    clearErrors();
                 }
 
                 @Override
@@ -403,8 +488,68 @@ public class activity_gym_member extends AppCompatActivity {
 
 
 
-    /*private void clearErrors() {
+    /**
+     * Displays a small pop-up at the bottom of the screen indicating enroll course was successful
+     */
+    private void printEnrollSuccessMessage() {
+
+        // hides the keyboard
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+        String courseName = editCourseName.getText().toString();
+        String weekDay = editDay.getText().toString();
+
+        clearErrors();
+
+        // displays the success message
+        Context context = getApplicationContext();
+        CharSequence text = "Successfully enrolled in " + courseName +
+                " on " + weekDay  + "!";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    /**
+     * Displays a small pop-up at the bottom of the screen indicating unenroll course was successful
+     */
+    private void printUnenrollSuccessMessage() {
+
+        // hides the keyboard
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+        String courseName = editCourseName.getText().toString();
+        String weekDay = editDay.getText().toString();
+
+        clearErrors();
+
+        // displays the success message
+        Context context = getApplicationContext();
+        CharSequence text = "Successfully un-enrolled in " + courseName +
+                " on " + weekDay  + "!";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    } // end of printUserAddedSuccessMessage()
+
+    /**
+     * Helper method that clears all errors in the input text fields
+     */
+    private void clearErrors() {
+        // clear text fields and remove error messages
+        editCourseName.getText().clear();
+        editDay.getText().clear();
         editCourseName.setError(null);
-        editWeekDay.setError(null);
-    }*/
+        editDay.setError(null);
+    }
 }

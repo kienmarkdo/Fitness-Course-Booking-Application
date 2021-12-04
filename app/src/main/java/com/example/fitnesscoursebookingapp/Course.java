@@ -14,7 +14,7 @@ public class Course {
     private String name;
     private String description;
     private String experienceLevel; // indicates the experience a student should have before enrolling (i.e.: beginner, expert...)
-    private String time; // hour, date, month, year
+    private String time; // weekdays. Could be MON, TUE, WED, THU, FRI.
     private float hourDuration; // how long the course lasts (i.e.: 1.5 hours)
     private float startTime;
     private int numberOfStudents; // number of students enrolled in a course
