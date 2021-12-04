@@ -34,6 +34,7 @@ public class activity_gym_member extends AppCompatActivity {
     Button enrollButton;
     Button unenrollButton;
     Button listEnrolledButton;
+    Button searchButton;
 
     ListView listViewCourses;
 
@@ -75,6 +76,7 @@ public class activity_gym_member extends AppCompatActivity {
         enrollButton = (Button) findViewById(R.id.enrollButton);
         unenrollButton = (Button) findViewById(R.id.unenrollButton);
         listEnrolledButton= (Button) findViewById(R.id.listEnrolledButton);
+        searchButton = (Button) findViewById(R.id.searchCourseButton);
 
         courseList = new ArrayList<>();
         enrolledList = new ArrayList<>();
@@ -98,7 +100,7 @@ public class activity_gym_member extends AppCompatActivity {
         unenrollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                placeHolder();
+                unenroll();
             }
         });
 
@@ -106,6 +108,13 @@ public class activity_gym_member extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 listEnrolledCourses();
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchCourse();
             }
         });
     }
@@ -165,6 +174,19 @@ public class activity_gym_member extends AppCompatActivity {
 
     }
 
+    public void unenroll() {
+        String courseName = editCourseName.getText().toString();
+        String day = editDay.getText().toString();
+
+        for (int i = 0; i < enrolledList.size(); i++) {
+            Course temp = enrolledList.get(i);
+            if (courseName.equals(temp.getName()) && day.equals(temp.getTime())) {
+                enrolledList.remove(i);
+                pushListToDataBase();
+            }
+        }
+    }
+
     public void placeHolder() {
         System.out.println("aplce");
     }
@@ -205,10 +227,23 @@ public class activity_gym_member extends AppCompatActivity {
     public void enrollCourse() {
         //clearErrors();
 
+
+
         String courseName = editCourseName.getText().toString();
         String day = editDay.getText().toString();
 
-        databaseCourses.addValueEventListener(new ValueEventListener() {
+        for (int i = 0; i < enrolledList.size(); i++) {
+            Course temp = enrolledList.get(i);
+            if (courseName.equals(temp.getName()) && day.equals(temp.getTime())) {
+                editCourseName.setError("Already enrolled in this class");
+                return;
+            }
+        }
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Courses");
+        Query checkCourse = userRef.orderByChild("name").equalTo(courseName);
+
+        checkCourse.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -287,7 +322,84 @@ public class activity_gym_member extends AppCompatActivity {
 
 
     }
-    
+
+    public void searchCourse() {
+        //clearErrors();
+
+        String courseName = editCourseName.getText().toString();
+        String day = editDay.getText().toString();
+
+        boolean courseNameEmpty = courseName.equals("");
+        boolean dayEmpty = day.equals("");
+
+        if (courseNameEmpty && dayEmpty) {
+            databaseCourses.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    courseList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                        Course tempCourse = postSnapshot.getValue(Course.class);
+                        courseList.add(tempCourse);
+                    }
+                    CourseList courseAdapter = new CourseList(activity_gym_member.this, courseList);
+                    listViewCourses.setAdapter(courseAdapter);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+
+            });
+
+            return;
+        }
+
+
+        databaseCourses.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                courseList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    Course tempCourse = postSnapshot.getValue(Course.class);
+
+                    boolean test1 = tempCourse.getTime().equals(day);
+                    boolean test2 = tempCourse.getName().equals(courseName);
+
+                    System.out.println("test1: " + test1);
+                    System.out.println("test2: " + test2);
+
+                    if (courseNameEmpty && !dayEmpty) {
+                        if (test1) {
+                            System.out.println("Within 1st conditoin");
+                            courseList.add(tempCourse);
+                        }
+                    } else if (!courseNameEmpty && dayEmpty) {
+                        if (test2) {
+                            System.out.println("Within 1st conditoin");
+                            courseList.add(tempCourse);
+                        }
+                    } else if (!courseNameEmpty && !dayEmpty) {
+                        if (test1 && test2) {
+                            System.out.println("Within 1st conditoin");
+                            courseList.add(tempCourse);
+                        }
+                    }
+
+                }
+                CourseList courseAdapter = new CourseList(activity_gym_member.this, courseList);
+                listViewCourses.setAdapter(courseAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+    }
 
 
 
