@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * Only exists to display a courselist into a UI.
+ */
 public class CourseList extends ArrayAdapter<Course> {
 
     private Activity context;

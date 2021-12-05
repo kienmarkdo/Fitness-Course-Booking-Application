@@ -22,11 +22,14 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class activity_gym_member extends AppCompatActivity {
+
+    // ==================== start of attributes ====================
 
     TextView courseName;
     TextView weekDay;
@@ -53,11 +56,11 @@ public class activity_gym_member extends AppCompatActivity {
 
     Query checkUser;
 
-
-
     static String[] dayStrings = {"MON", "TUE", "WED", "THU", "FRI"};
 
     int listEnrolledState = 0;
+
+    // ==================== end of attributes ====================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,7 +180,7 @@ public class activity_gym_member extends AppCompatActivity {
 
     }
 
-    // =====================  validate methods  =====================
+    // =====================  validating methods  =====================
 
     /**
      * Checks whether the inputted weekday conflicts with another weekday within the gym member's
@@ -220,6 +223,7 @@ public class activity_gym_member extends AppCompatActivity {
      * @return True if gym member has NOT enrolled in this course yet.
      */
     public boolean validateNotYetEnrolled(String courseName, String courseDay) {
+
         for (Course course : enrolledList) {
             if (course.getName().equals(courseName) && course.getTime().equals(courseDay)) {
                 return false;
@@ -233,25 +237,9 @@ public class activity_gym_member extends AppCompatActivity {
      * Throws an error if the course cannot be found.
      * @return True if there is still room leftover for the gym member to enroll in the course, False otherwise.
      */
-    public boolean validateEnrollWithinCapacity (String courseName, String courseDay) {
+    public boolean validateEnrollWithinCapacity (Course course) {
 
-        for (Course course : enrolledList) {
-            if (course.getName().equals(courseName) && course.getTime().equals(courseDay) &&
-                    course.getStudentAmount() < course.getCapacity()) {
-                return true;
-            } else if (course.getName().equals(courseName) && course.getTime().equals(courseDay) &&
-                    course.getStudentAmount() >= course.getCapacity()) {
-                return false;
-            }
-        }
-
-        try {
-            throw new Exception("Course could not be found");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return false; // course not found
+        return (course.getStudentAmount() < course.getCapacity());
 
     }
 
@@ -269,13 +257,15 @@ public class activity_gym_member extends AppCompatActivity {
                 enrolledList.remove(i);
                 pushListToDataBase();
                 printUnenrollSuccessMessage();
-                return;
+                break;
             }
         }
 
+
+        // ===========  cannot find the course  ===========
+
         editCourseName.setError("Cannot find this course on this day.");
         editCourseName.requestFocus();
-
 
     }
 
@@ -283,6 +273,9 @@ public class activity_gym_member extends AppCompatActivity {
         System.out.println("aplce");
     }
 
+    /**
+     * Updates the gym member's list of courses after the gym member enrolls/un-enrolls from a course.
+     */
     public void pushListToDataBase() {
         System.out.println("Entered pushlist");
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -331,14 +324,9 @@ public class activity_gym_member extends AppCompatActivity {
             return;
         }
 
-        if (!validateEnrollWithinCapacity(courseName, day)) {
-            editCourseName.requestFocus();
-            editCourseName.setError("Failed. Class reached maximum student capacity.");
-            return;
-        }
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Courses");
-        Query checkCourse = userRef.orderByChild("name").equalTo(courseName);
+        Query checkCourse = userRef.orderByChild("name").equalTo(courseName); // gets appropriate name
 
         checkCourse.addValueEventListener(new ValueEventListener() {
             @Override
@@ -368,9 +356,21 @@ public class activity_gym_member extends AppCompatActivity {
 
                         System.out.println("Current coures scanning is " + tempCourse.getName());
 
+
+                        // since the name is already found through the query, we only need to check
+                        //  if the date matches up now
                         if (tempCourse.getTime().equals(day)) {
 
+                            // error trapping
+                            if (!validateEnrollWithinCapacity(tempCourse)) {
+                                editCourseName.requestFocus();
+                                editCourseName.setError("Failed. Class reached maximum student capacity.");
+                                return;
+                            }
+
+                            tempCourse.setStudentAmount(tempCourse.getStudentAmount()+1);
                             enrolledList.add(tempCourse);
+                            postSnapshot.child("studentAmount").getRef().setValue(tempCourse.getStudentAmount());
                             pushListToDataBase();
 
                             printEnrollSuccessMessage();
@@ -398,6 +398,9 @@ public class activity_gym_member extends AppCompatActivity {
 
     }
 
+    /**
+     * Displays all courses in which the gym member is enrolled.
+     */
     public void listEnrolledCourses() {
 
         System.out.println(enrolledList);
