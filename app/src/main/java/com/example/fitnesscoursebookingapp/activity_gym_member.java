@@ -244,6 +244,38 @@ public class activity_gym_member extends AppCompatActivity {
 
     }
 
+    public void updateUsersStudentAmount(int newSA, String courseName, String day) {
+
+        databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot currentSnapshot: snapshot.getChildren()) {
+                    User tempUser = snapshot.getValue(User.class);
+
+                    if (tempUser.getUserType().equals("gymMember")) {
+                        GymMember tempMember = snapshot.getValue(GymMember.class);
+
+                        ArrayList<Course> coursesList = tempMember.getCoursesAttending();
+
+                        for (int i = 0; i < courseList.size(); i++) {
+                            if (courseList.get(i).getName().equals(courseName) && courseList.get(i).getTime().equals(day)){
+                                coursesList.get(i).setStudentAmount(newSA);
+                            }
+                        }
+
+                        currentSnapshot.child("coursesAttending").getRef().setValue(coursesList);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 
 
     // =====================  main methods  =====================
@@ -415,12 +447,14 @@ public class activity_gym_member extends AppCompatActivity {
                                 return;
                             }
 
-                            tempCourse.setStudentAmount(tempCourse.getStudentAmount()+1);
+                            int newSA = tempCourse.getStudentAmount()+1;
+                            tempCourse.setStudentAmount(newSA);
                             enrolledList.add(tempCourse);
                             postSnapshot.child("studentAmount").getRef().setValue(tempCourse.getStudentAmount());
                             pushListToDataBase();
 
                             printEnrollSuccessMessage();
+                            updateUsersStudentAmount(newSA, courseName, day);
                             return;
                         }
                     }
@@ -460,7 +494,7 @@ public class activity_gym_member extends AppCompatActivity {
         }
 
         else {
-            databaseCourses.addValueEventListener(new ValueEventListener() {
+            databaseCourses.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     courseList.clear();
@@ -500,7 +534,7 @@ public class activity_gym_member extends AppCompatActivity {
         boolean dayEmpty = day.equals("");
 
         if (courseNameEmpty && dayEmpty) {
-            databaseCourses.addValueEventListener(new ValueEventListener() {
+            databaseCourses.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     courseList.clear();
