@@ -107,6 +107,7 @@ public class activity_gym_member extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 unenroll();
+                System.out.println("EXITED UN-ENROLL BUTTON");
             }
         });
 
@@ -261,6 +262,52 @@ public class activity_gym_member extends AppCompatActivity {
             }
         }
 
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Courses");
+        Query checkCourse = userRef.orderByChild("name").equalTo(courseName); // gets appropriate name
+
+        checkCourse.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+                    for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        Course tempCourse = postSnapshot.getValue(Course.class);
+                        int tempStudentAmount = tempCourse.getStudentAmount();
+
+                        System.out.println("Current coures scanning is " + tempCourse.getName());
+
+
+                        // since the name is already found through the query, we only need to check
+                        //  if the date matches up now
+                        if (tempCourse.getTime().equals(day)) {
+                            System.out.println("I FOUND THE COURSE (in unenroll() )!!!");
+
+                            postSnapshot.child("studentAmount").getRef().setValue(tempStudentAmount-1);
+
+                            return;
+                        }
+
+                    }
+
+                    // no course was found during the specified day
+                    editDay.setError("Please enter a class name");
+                    editDay.requestFocus();
+
+
+                } else {
+                    editCourseName.setError("Class does not exist");
+                    editCourseName.requestFocus();
+                } // end of outer if/else
+
+            } // end of onDataChange()
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            } // end of onCalled()
+        }); // end of checkCourse listener
+
 
         // ===========  cannot find the course  ===========
 
@@ -328,7 +375,7 @@ public class activity_gym_member extends AppCompatActivity {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Courses");
         Query checkCourse = userRef.orderByChild("name").equalTo(courseName); // gets appropriate name
 
-        checkCourse.addValueEventListener(new ValueEventListener() {
+        checkCourse.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
