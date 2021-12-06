@@ -310,11 +310,6 @@ public class activity_gym_member extends AppCompatActivity {
         }); // end of checkCourse listener
 
 
-        // ===========  cannot find the course  ===========
-
-        editCourseName.setError("Cannot find this course on this day.");
-        editCourseName.requestFocus();
-
     }
 
     public void placeHolder() {
