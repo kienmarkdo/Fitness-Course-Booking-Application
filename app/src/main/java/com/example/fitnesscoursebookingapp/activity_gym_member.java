@@ -183,6 +183,24 @@ public class activity_gym_member extends AppCompatActivity {
 
     // =====================  validating methods  =====================
 
+
+    /**
+     * Checks whether a given course occurs on a desired day
+     *  NOTE: Assume the parameter String day is in the correct format.
+     * @param course valid Course to check for the day
+     * @param day Valid weekday as a String
+     * @return True if weekday does not conflict with any other classes; False otherwise.
+     */
+    public static boolean verifyDayEquals(Course course, String day){
+        if(course.getTime().equals(day)){
+            return true;
+        }
+        return false;
+    }
+
+
+
+
     /**
      * Checks whether the inputted weekday conflicts with another weekday within the gym member's
      *  enrolled list.
