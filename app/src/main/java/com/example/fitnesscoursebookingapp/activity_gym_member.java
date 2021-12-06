@@ -244,38 +244,6 @@ public class activity_gym_member extends AppCompatActivity {
 
     }
 
-    public void updateUsersStudentAmount(int newSA, String courseName, String day) {
-
-        databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot currentSnapshot: snapshot.getChildren()) {
-                    User tempUser = snapshot.getValue(User.class);
-
-                    if (tempUser.getUserType().equals("gymMember")) {
-                        GymMember tempMember = snapshot.getValue(GymMember.class);
-
-                        ArrayList<Course> coursesList = tempMember.getCoursesAttending();
-
-                        for (int i = 0; i < courseList.size(); i++) {
-                            if (courseList.get(i).getName().equals(courseName) && courseList.get(i).getTime().equals(day)){
-                                coursesList.get(i).setStudentAmount(newSA);
-                            }
-                        }
-
-                        currentSnapshot.child("coursesAttending").getRef().setValue(coursesList);
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 
 
     // =====================  main methods  =====================
@@ -316,6 +284,7 @@ public class activity_gym_member extends AppCompatActivity {
                             System.out.println("I FOUND THE COURSE (in unenroll() )!!!");
 
                             postSnapshot.child("studentAmount").getRef().setValue(tempStudentAmount-1);
+                            int newSA = tempStudentAmount-1;
 
                             return;
                         }
@@ -454,7 +423,6 @@ public class activity_gym_member extends AppCompatActivity {
                             pushListToDataBase();
 
                             printEnrollSuccessMessage();
-                            updateUsersStudentAmount(newSA, courseName, day);
                             return;
                         }
                     }
