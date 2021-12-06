@@ -4,7 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Isaac Kuruvilla/Documents/Fitness-Course-Booking-App/app/src/main/res/layout/activity_admin.xml" value="0.2296875" />
-        <entry key="..\:/Users/Isaac Kuruvilla/Documents/Fitness-Course-Booking-App/app/src/main/res/layout/activity_instructor.xml" value="0.1265625" />
+        <entry key="..\:/Users/Isaac Kuruvilla/Documents/Fitness-Course-Booking-App/app/src/main/res/layout/activity_gym_member.xml" value="0.19202898550724637" />
+        <entry key="..\:/Users/Isaac Kuruvilla/Documents/Fitness-Course-Booking-App/app/src/main/res/layout/activity_instructor.xml" value="0.264" />
         <entry key="..\:/Users/Isaac Kuruvilla/Documents/Fitness-Course-Booking-App/app/src/main/res/layout/activity_main.xml" value="0.12291666666666666" />
         <entry key="..\:/Users/Isaac Kuruvilla/Documents/Fitness-Course-Booking-App/app/src/main/res/layout/activity_member.xml" value="0.12291666666666666" />
         <entry key="..\:/Users/Isaac Kuruvilla/Documents/Fitness-Course-Booking-App/app/src/main/res/layout/activity_register_user.xml" value="0.25416666666666665" />
@@ -13,7 +14,6 @@
         <entry key="..\:/Users/Isaac Kuruvilla/Documents/Fitness-Course-Booking-App/app/src/main/res/layout/layout_courses_list.xml" value="0.14447463768115942" />
         <entry key="..\:/Users/Isaac Kuruvilla/Documents/Fitness-Course-Booking-App/app/src/main/res/layout/layout_user_list.xml" value="0.14447463768115942" />
         <entry key="..\:/Users/Jordan2/Documents/2UOttawaSecondYear2022/SEG2105/Final Project/app/src/main/res/layout/activity_admin.xml" value="0.4" />
-        <entry key="..\:/Users/Jordan2/Documents/2UOttawaSecondYear2022/SEG2105/Final Project/app/src/main/res/layout/activity_gym_member.xml" value="0.35144927536231885" />
         <entry key="..\:/Users/Jordan2/Documents/2UOttawaSecondYear2022/SEG2105/Final Project/app/src/main/res/layout/activity_instructor.xml" value="0.4" />
         <entry key="..\:/Users/Jordan2/Documents/2UOttawaSecondYear2022/SEG2105/Final Project/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Jordan2/Documents/2UOttawaSecondYear2022/SEG2105/Final Project/app/src/main/res/layout/activity_member.xml" value="0.2015625" />

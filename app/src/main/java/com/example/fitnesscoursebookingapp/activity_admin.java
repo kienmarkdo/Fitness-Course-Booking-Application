@@ -154,6 +154,7 @@ public class activity_admin extends Activity implements View.OnClickListener {
         layout.setVisibility(View.VISIBLE);
         ValueAnimator animator = slideAnimator(layout, 0, 1500); // TODO: Third parameter was layoutHeight before. Fix this so that the height is automatic.
         animator.start();
+
     }
 
     private void collapse(final RelativeLayout layout) {

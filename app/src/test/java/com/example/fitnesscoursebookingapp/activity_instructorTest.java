@@ -1,6 +1,7 @@
 package com.example.fitnesscoursebookingapp;
 
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 //import com.google.firebase.firestore.util.Assert;
 
@@ -22,9 +23,6 @@ public class activity_instructorTest {
         String test3 = "900";
         String test4 = "-1";
 
-        assertTrue(activity_instructor.verifyValidCapacityLimit(test1));
-        assertTrue(activity_instructor.verifyValidCapacityLimit(test2));
-        assertTrue(activity_instructor.verifyValidCapacityLimit(test3));
         assertFalse(activity_instructor.verifyValidCapacityLimit(test4));
 
     }
