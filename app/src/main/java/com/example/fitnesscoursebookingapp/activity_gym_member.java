@@ -46,7 +46,7 @@ public class activity_gym_member extends AppCompatActivity {
 
     List<Course> courseList;
 
-    List<Course> enrolledList;
+    static List<Course> enrolledList;
 
     String activeUser;
 
@@ -190,7 +190,7 @@ public class activity_gym_member extends AppCompatActivity {
      * @param day Valid weekday as a String
      * @return True if weekday does not conflict with any other classes; False otherwise.
      */
-    public boolean validateEnrollDay(String day) {
+    public static boolean validateEnrollDay(String day) {
         for (Course course : enrolledList) {
             if (course.getTime().equals(day)) {
                 return false;
@@ -223,7 +223,7 @@ public class activity_gym_member extends AppCompatActivity {
      *  enroll into this course again because they are already in it.
      * @return True if gym member has NOT enrolled in this course yet.
      */
-    public boolean validateNotYetEnrolled(String courseName, String courseDay) {
+    public static boolean validateNotYetEnrolled(String courseName, String courseDay) {
 
         for (Course course : enrolledList) {
             if (course.getName().equals(courseName) && course.getTime().equals(courseDay)) {
@@ -238,7 +238,7 @@ public class activity_gym_member extends AppCompatActivity {
      * Throws an error if the course cannot be found.
      * @return True if there is still room leftover for the gym member to enroll in the course, False otherwise.
      */
-    public boolean validateEnrollWithinCapacity (Course course) {
+    public static boolean validateEnrollWithinCapacity (Course course) {
 
         return (course.getStudentAmount() < course.getCapacity());
 
