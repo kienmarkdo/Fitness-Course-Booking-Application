@@ -1,10 +1,16 @@
 # Fitness-Course-Booking-App
-This Android mobile application will implement a basic fitness class booking service for a particular
-fitness centre. Members will be able to enroll into drop-in classes, instructors will be able
-to schedule a class and edit details, and an administrator will manage all users and classes.
+This Android mobile application implements a basic fitness class booking service for a particular
+fitness centre. Members can enroll into drop-in classes, instructors can schedule a class and edit details, and an administrator can manage all users and classes.
 
 ## Implementation
-All components of this application are implemented from scratch, from the design specification, to UML models, graphical assets, source code, as well as unit tests and integration tests for quality assurance.
+All components of this application are implemented from scratch, from the design specification, to UML models, graphical assets, source code, as well as unit tests for quality assurance. 
+
+The following are the tools used for this application:
+- **Environment:** Android Studio
+- **UML class diagrams:** Lucid.app
+- **Programming:** Java
+- **Database:** Firebase
+- **Unit testing:** JUnit 4.0 framework
 
 ## User Types
 - Administrator: 
