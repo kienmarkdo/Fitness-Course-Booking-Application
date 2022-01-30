@@ -2,6 +2,8 @@
 This Android mobile application implements a basic fitness class booking service for a particular
 fitness centre. Members can enroll into drop-in classes, instructors can schedule a class and edit details, and an administrator can manage all users and classes.
 
+Link to the original repo prior to cloning: https://github.com/SEG2105-Group-21/Fitness-Course-Booking-App
+
 ## Implementation
 All components of this application are implemented from scratch, from the design specification, to UML models, graphical assets, source code, as well as unit tests for quality assurance. 
 
